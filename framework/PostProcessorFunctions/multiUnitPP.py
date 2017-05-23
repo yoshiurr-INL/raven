@@ -39,6 +39,11 @@ class multiUnitPP(PostProcessorInterfaceBase):
     numberSamples        = inputDic['data']['output'][self.variables[0]].size
     numberVariables      = len(self.variables)
     numberConfigurations = 2**numberVariables
+    PCprobValues         = np.zeros(numberConfigurations)
+    
+    if 'metadata' in inputDic.keys():
+      if 'ProbabilityWeight' in inputDic['metadata'].keys():
+        pbWeights = copy.deepcopy(inputDic['metadata']['ProbabilityWeight'])
     
     dataRestructured = np.zeros((numberSamples,1))
     
@@ -48,15 +53,24 @@ class multiUnitPP(PostProcessorInterfaceBase):
       else:
         self.raiseAnError(IOError, 'multiUnitPP Interfaced Post-Processor ' + str(self.name) + '; output variable ' + str(var) + ' contains values other than 0 or 1')
     
-    # see https://stackoverflow.com/questions/14931769/how-to-get-all-combination-of-n-binary-value
+    dataRestructuredToList = dataRestructured.tolist()
     
+    # see https://stackoverflow.com/questions/14931769/how-to-get-all-combination-of-n-binary-value    
     plantConfiguration = list(itertools.product([0, 1], repeat=numberVariables)) 
     
-    inputDict = {'data':{}, 'metadata':{}}
+    outputDict = {'data':{}, 'metadata':{}}
     
-    for PC in plantConfiguration:
-      indexes = np.unique(np.where(b==np.asarray(PC))[0])
-      
+    for index,PC in plantConfiguration:
+      if PC in plantConfiguration:
+        indexes = dataRestructuredToList.index()
+        PCprobValues[index] = np.sum(pbWeights[indexes])
+        
+    for idx,var in self.variables:
+      outputDict['data']['input'][var] = dataRestructured[:,idx]
+    
+    outputDict['data']['output']['probability'] = PCprobValues
+    
+    return outputDict
     
   def readMoreXML(self,xmlNode):
     """
