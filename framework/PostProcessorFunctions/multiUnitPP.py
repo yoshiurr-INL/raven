@@ -2,9 +2,19 @@
 Created on May 22, 2017
 
 '''
+ 
+#for future compatibility with Python 3--------------------------------------------------------------
 from __future__ import division, print_function, unicode_literals, absolute_import
 import warnings
 warnings.simplefilter('default',DeprecationWarning)
+if not 'xrange' in dir(__builtins__):
+  xrange = range
+#End compatibility block for Python 3----------------------------------------------------------------
+
+#External Modules------------------------------------------------------------------------------------
+import numpy as np
+import copy
+#External Modules End--------------------------------------------------------------------------------
 
 from PostProcessorInterfaceBaseClass import PostProcessorInterfaceBase
 
@@ -35,7 +45,9 @@ class multiUnitPP(PostProcessorInterfaceBase):
     """
     if len(inputDic)>1:
       self.raiseAnError(IOError, 'multiUnitPP Interfaced Post-Processor ' + str(self.name) + ' accepts only one dataObject')
-     
+    
+    inputDic = inputDic[0]
+    
     numberSamples        = inputDic['data']['output'][self.variables[0]].size
     numberVariables      = len(self.variables)
     numberConfigurations = 2**numberVariables
@@ -47,7 +59,7 @@ class multiUnitPP(PostProcessorInterfaceBase):
     
     dataRestructured = np.zeros((numberSamples,1))
     
-    for idx,var in self.variables:
+    for idx,var in enumerate(self.variables):
       if np.array_equal(inputDic['data']['output'][var], inputDic['data']['output'][var].astype(bool)):
         dataRestructured[:,idx] = inputDic['data']['output'][var]
       else:
@@ -80,4 +92,4 @@ class multiUnitPP(PostProcessorInterfaceBase):
     """
     for child in xmlNode:
       if child.tag == 'variables':
-        self.variables = child.text.split(',').strip()
+        self.variables = child.text.split(',')
