@@ -14,6 +14,7 @@ if not 'xrange' in dir(__builtins__):
 #External Modules------------------------------------------------------------------------------------
 import numpy as np
 import copy
+import itertools
 #External Modules End--------------------------------------------------------------------------------
 
 from PostProcessorInterfaceBaseClass import PostProcessorInterfaceBase
@@ -55,12 +56,12 @@ class multiUnitPP(PostProcessorInterfaceBase):
     
     if 'metadata' in inputDic.keys():
       if 'ProbabilityWeight' in inputDic['metadata'].keys():
-        pbWeights = copy.deepcopy(inputDic['metadata']['ProbabilityWeight'])
-    
-    dataRestructured = np.zeros((numberSamples,1))
+        pbWeights = copy.deepcopy(inputDic['metadata']['ProbabilityWeight'])/np.sum(inputDic['metadata']['ProbabilityWeight'])
+
+    dataRestructured = np.zeros((numberSamples,numberVariables))
     
     for idx,var in enumerate(self.variables):
-      if np.array_equal(inputDic['data']['output'][var], inputDic['data']['output'][var].astype(bool)):
+      if inputDic['data']['output'][var].checkBool():
         dataRestructured[:,idx] = inputDic['data']['output'][var]
       else:
         self.raiseAnError(IOError, 'multiUnitPP Interfaced Post-Processor ' + str(self.name) + '; output variable ' + str(var) + ' contains values other than 0 or 1')
@@ -69,16 +70,16 @@ class multiUnitPP(PostProcessorInterfaceBase):
     
     # see https://stackoverflow.com/questions/14931769/how-to-get-all-combination-of-n-binary-value    
     plantConfiguration = list(itertools.product([0, 1], repeat=numberVariables)) 
-    
     outputDict = {'data':{}, 'metadata':{}}
-    
-    for index,PC in plantConfiguration:
-      if PC in plantConfiguration:
-        indexes = dataRestructuredToList.index()
+    outputDict['data']['input']  = {}
+    outputDict['data']['output'] = {}
+    for index,PC in enumerate(plantConfiguration):
+      if list(PC) in dataRestructuredToList:
+        indexes = np.where(np.all(dataRestructured == np.asarray(PC),axis=1))[0]
         PCprobValues[index] = np.sum(pbWeights[indexes])
         
-    for idx,var in self.variables:
-      outputDict['data']['input'][var] = dataRestructured[:,idx]
+    for idx,var in enumerate(self.variables):
+      outputDict['data']['input'][var] = np.asarray(plantConfiguration)[:,idx]
     
     outputDict['data']['output']['probability'] = PCprobValues
     
