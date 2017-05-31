@@ -213,3 +213,6 @@ class c1darray(object):
       @ Out, __repr__, string, the representation string
     """
     return repr(self.values[:self.size])
+  
+  def checkBool(self):
+    return np.array_equal(self.values, self.values.astype(bool))
