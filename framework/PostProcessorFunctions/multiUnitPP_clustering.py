@@ -19,7 +19,7 @@ import itertools
 
 from PostProcessorInterfaceBaseClass import PostProcessorInterfaceBase
 
-class multiUnitPP(PostProcessorInterfaceBase):
+class multiUnitPP_clustering(PostProcessorInterfaceBase):
   """ This class inherits form the base class PostProcessorInterfaceBase and it ... :
       - initialize
       - run
@@ -52,11 +52,6 @@ class multiUnitPP(PostProcessorInterfaceBase):
     numberSamples        = inputDic['data']['output'][self.variables[0]].size
     numberVariables      = len(self.variables)
     numberConfigurations = 2**numberVariables
-    PCprobValues         = np.zeros(numberConfigurations)
-    
-    if 'metadata' in inputDic.keys():
-      if 'ProbabilityWeight' in inputDic['metadata'].keys():
-        pbWeights = copy.deepcopy(inputDic['metadata']['ProbabilityWeight'])/np.sum(inputDic['metadata']['ProbabilityWeight'])
 
     dataRestructured = np.zeros((numberSamples,numberVariables))
     
@@ -68,24 +63,17 @@ class multiUnitPP(PostProcessorInterfaceBase):
     
     dataRestructuredToList = dataRestructured.tolist()
     
-    # see https://stackoverflow.com/questions/14931769/how-to-get-all-combination-of-n-binary-value    
-    plantConfiguration = list(itertools.product([0, 1], repeat=numberVariables)) 
-    outputDict = {'data':{}, 'metadata':{}}
-    outputDict['data']['input']  = {}
-    outputDict['data']['output'] = {}
+    outputDict = copy.deepcopy(inputDic)
     
-    label=np.zeros(numberConfigurations)
-    
+    label=np.zeros(numberSamples)
+    plantConfiguration = list(itertools.product([0, 1], repeat=numberVariables))
+    print(self.variables)
     for index,PC in enumerate(plantConfiguration):
       if list(PC) in dataRestructuredToList:
         indexes = np.where(np.all(dataRestructured == np.asarray(PC),axis=1))[0]
-        PCprobValues[index] = np.sum(pbWeights[indexes])
-      label[index] = index
-        
-    for idx,var in enumerate(self.variables):
-      outputDict['data']['input'][var] = np.asarray(plantConfiguration)[:,idx]
-    
-    outputDict['data']['output']['probability'] = PCprobValues
+        label[indexes] = index
+      print(str(list(PC)) + ' -- ' + str(index))       
+      
     outputDict['data']['output']['label'] = label
     
     return outputDict
