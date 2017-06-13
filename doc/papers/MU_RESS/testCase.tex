@@ -1,2 +1,46 @@
-\section{toolkit}
-\label{sec:toolkit}
+\section{Test Case}
+\label{sec:testCase}
+
+\subsection{Plant Description}
+For the scope of this paper we have chosen a 3-unit plant as shown in Figure 2. 
+In more detail, the system we have considered is the following (see Table 1):
+\begin{itemize}
+  \item Unit 1: 1 PWR (see Figure 3) at full power (100 \%) and it own Spent Fuel Pool (SFP)
+  \item Unit 2: 1 PWR in mid-loop operation (i.e., shut-doen mode) and it own SFP. 
+                The mid-loop status is characterized by a primary coolant system drained to the 
+                hot leg centerline and the existence of openings which a further reduction of 
+                the mass inventory poses a serious risk, due to boil off and possible entrainment 
+                or spill over of liquid
+  \item Unit 3: 1 PWR at full power (108 \%) that restarted a few weeks earlier and its own SFP 
+                with a higher heat load since it contains used fuel recently moved from the reactor.
+\end{itemize}
+
+In addition, special attention has been given to the design of the electrical and hydraulic systems (see Figure 5):
+\begin{itemize}
+  \item The plant electrical system is shown in Figure 4. Two electrical switchyards can provide 
+        electrical power to all units. All units have a set of Emergency Diesel Generators (EDGs) 
+        and, in addition, a swing EDG (i.e., EDGS) can be employed to provide an alternate AC power to either
+        Unit 1 or Unit 2. Note also that the 6.6 KV emergengy buses of Unit 1 and Unit 2 can be cross-tied.
+  \item The auxiliary feedwtaer (AF) system of Unit 1 and Unit 3 can be cross-tied. Thus cooling to the 
+        secondary side can be provided from one unit to the other one.
+  \item The Condensate Storage Tanks (CSTs) of Units 2 and Unit 3 can be cross-tied. Thus the water source 
+        for the secondary side of either unit can be used as water source for the other one.
+\end{itemize}
+
+Plant recovery crew is a shared resource within the plant. As part of the accident secnario, the recovery 
+crew can perform AC power and safety injection using mobile equipment located within each unit.
+
+
+\subsection{Initiaiting Event}
+
+The considered accident scenario is a seisimc event which causes the following events:
+\begin{itemize}
+  \item Both swityards are disabled
+  \item All EDGs are disabled except EDGS which is initially aligned to Unit 2
+  \item CST of Unit 2 has lost 80\% of its capacity 
+  \item CST of Unit 3 is completely lost
+  \item The seisimic event might also rupture the SFPs. Thus a leak might be present during the accident scenario
+\end{itemize}
+
+The proposed accident scenario resembles a Station Black Out  (SBO) event at the plant level except for the 
+fact that the EDGS is the only source of AC power available and it can be directed toward either Unit 1 or Unit 2.

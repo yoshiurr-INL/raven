@@ -1,2 +1,23 @@
-\section{toolkit}
-\label{sec:toolkit}
+\section{Plant Analysis Results}
+\label{sec:plantAnalysisResults}
+
+Historically the concept of core damage (CD) probability has been typically associated to a single unit. 
+At a plant level, a separate value of CD probabaility can be asscoiated to all PWRs and SFPs. 
+However, note that there is a high correlation among the six models of the plant (PWRs and SFPs). 
+Thus it is also expectd that a high correlation among CD probabilities among the six models.
+Thus, instaed of defining a single CD probability value for each PWR and SFP we define a probabiliuty 
+value to a Plant Damage State (PDS) variable. This variable is a $6$-dimensional vector where each vector 
+element describes the status of a plant model. For the scope of this paper we allowed two possible values 
+for each element of the vector: OK or CD. Hence $2^6=64$ possible combinations are allowed.
+
+The objective of this analysis is to rank PDSs based on their probability values.
+Using a Monte-Carlo [14] sampling strategy we have simulated about 2000 accident scenarios. 
+For each simualtion run we have performed the following steps:
+\begin{enumerate}
+  \item Sample a value for each stochastic parameter that is part of the set of parameters $p$ (e.g., timing of events)
+  \item Performing the actual simulation run given $p$ sampled in Step 1 for each model of the multi-unit plant
+  \item Collect the output (OK or CD) from each model and construct the PDS associated to the run
+  \item Associate a unique probability value to the PDS accordingly to the chosen sampling
+  \item Repeat Steps 1 trough 4, $M$ times 
+\end{enumerate}
+Group simulation runs based on their own PDS and evaluate probability associated to each of the 64 allowed PDSs.

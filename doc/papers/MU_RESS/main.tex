@@ -1,9 +1,13 @@
-\documentclass[review]{elsarticle}
+% Material found at https://www.elsevier.com/authors/author-schemas/latex-instructions
+
+\documentclass{elsarticle}
 
 \usepackage{lineno,hyperref}
 \modulolinenumbers[5]
 
 %=== Added for MU paper ====
+\usepackage{amsmath}
+\usepackage{mathtools}
 \usepackage{nomencl}
 \makenomenclature
 
@@ -46,7 +50,7 @@
 \begin{frontmatter}
 
 \title{Multi-Unit PRA: a Simulation-Based Approach}
-\tnotetext[mytitlenote]{Fully documented templates are available in the elsarticle package on \href{http://www.ctan.org/tex-archive/macros/latex/contrib/elsarticle}{CTAN}.}
+%% \tnotetext[mytitlenote]{Fully documented templates are available in the elsarticle package on \href{http://www.ctan.org/tex-archive/macros/latex/contrib/elsarticle}{CTAN}.}
 
 %% Group authors per affiliation:
 \author{D. Mandelli, C. Parisi, A. Alfonsi, D. Maljovec, S. St Germain, R. Boring, S. Ewing, C. Smith}
@@ -61,7 +65,7 @@
 
 \begin{keyword}
 %% keywords here, in the form: keyword \sep keyword
-multi-unit \sep PRA \sep dynamic PRA \sep Reduced Order Modeling \sep Surrogate Model
+Multi-unit \sep PRA \sep Dynamic PRA \sep Reduced Order Modeling \sep Surrogate Model
 \end{keyword}
 
 \end{frontmatter}
