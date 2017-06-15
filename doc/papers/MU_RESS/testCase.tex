@@ -58,14 +58,14 @@ Special attention has been given to the design of the electrical and hydraulic s
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.5]{electricalScheme.pdf}
+    \centerline{\includegraphics[scale=0.6]{electricalScheme.pdf}}
     \caption{Overview of the plant electrical scheme}
     \label{fig:electricalScheme}
 \end{figure}
 
 \subsection{Initiating Event}
 
-The considered inititaing event is a seismic event which causes the following events:
+The considered initiating event is a seismic event which causes the following events:
 \begin{itemize}
   \item Both switch-yards are disabled
   \item All EDGs are disabled except EDGS which is initially aligned to Unit 2
@@ -126,7 +126,9 @@ Fig.~\ref{fig:strategy2Scheme} and Fig.~\ref{fig:strategy3Scheme}). These scheme
 for all units. The initiating event (i.e., SBO condition) occurs at the top of each figure and accident progression 
 occurs moving downward.
 
-Section~\ref{sec:EDGSinvolAlign} 
+Section~\ref{sec:EDGSinvolAlign} introduce a disruptive element in the simulation: the involuntary alignment of the EDGs
+from Unit 2 to Unit 1.
+
 
 \subsubsection{Strategy 1}
 \label{sec:strategy1}
@@ -212,3 +214,29 @@ A temporal scheme of the temporal evolution of this accident scenario is shown i
 
 \subsubsection{EDGS involuntary alignment}
 \label{sec:EDGSinvolAlign}
+
+As part of the simulation we have introduced a stochastic event: the involuntary alignment of the EDGs.
+This event can occur anytime during the simulation and it represents the involuntary alignment of the EDGS 
+(initially aligned to Unit 2) to Unit 1. 
+
+\hl{CHECK THIS WITH RON}
+
+While this event can be considered an error or commission from an HRA perspective, from an operational point of view 
+it does leave Unit 2 in an unsafe situation but it provide a safe condition to Unit 1. 
+
+Note that now this stochastic element add an additional degree of freedom in the accident progression since the 
+occurrence of this event change the prioritization of the next unit to have the EPE connected.
+
+As an example, Fig.~\ref{fig:strategy3SchemeInvolAlign} shows a possible sequence of events if Strategy 3 
+(refer to~\ref{sec:strategy3}) has been chosen but with the involuntary alignment of EDGS while the EPE team
+is working on Unit 3. Given the unexpected event, the EPE team moves to Unit 2 instead of Unit 1 since Unit 2
+has higher priority. The difference sequence of events caused by involuntary alignment of EDGS can be viewed
+by comparing Fig.~\ref{sec:strategy3} with Fig.~\ref{fig:strategy3SchemeInvolAlign}.
+
+\begin{figure}
+    \centering
+    \centerline{\includegraphics[scale=0.7]{strategy3InvolAlign.pdf}}
+    \caption{Sequence of events of recovery strategy 3 with involuntary alignment of EDGS}
+    \label{fig:strategy3SchemeInvolAlign}
+\end{figure}
+
