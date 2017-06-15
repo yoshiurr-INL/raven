@@ -65,7 +65,7 @@ Special attention has been given to the design of the electrical and hydraulic s
 
 \subsection{Initiating Event}
 
-The considered accident scenario is a seismic event which causes the following events:
+The considered inititaing event is a seismic event which causes the following events:
 \begin{itemize}
   \item Both switch-yards are disabled
   \item All EDGs are disabled except EDGS which is initially aligned to Unit 2
@@ -98,3 +98,117 @@ Prior the seismic event, the three units initial conditions are summarized in Ta
 \end{table}
 
 
+\subsection{Accident progression}
+
+Given the initiating event and the status of the plant, the analyzed accident focuses on the recovery strategy 
+in order to place all PWRs and SFPs in a safe condition. For the scope of this analysis we consider a unit in
+safe state when Emergency Portable Equipments (EPEs) are connected to the unit (i.e., both PWR and SFP). These EPEs 
+are located between the plant site boundaries and once connected to a unit can provide AC power and water injection.
+
+An EPE is available for each unit and we assume that the the seismic event have not damaged the three EPEs available 
+within the NPP. It is assumed that the EPE team can assist only one unit at a time, i.e., if three units need their 
+own EPE, then the EPE team must first prioritize the units that require an immediate assistance.
+  
+In our case, even tough Unit 2 it is the one with AC power available it is in the most vulnerable situation since it 
+is in mid-loop condition: low water inventory in the primary system and RPV head removed. Hence, in case or core damage
+(CD) radioactive material will be directly released in the containment.
+
+Unit 3 is the unit in the most critical condition since it is in SBO condition and heat removal from the RPV is limited
+due to the fact that only 20\% of the CST inventory is available.
+
+Unit 1 is in SBO condition like Unit 3 but it has more time margin before reaching CD due to the fact that core injection 
+can be employed for several hours.
+
+Given this assessment, three different strategies have been hypothesised as possible courses of action; these strategies
+are described in detail in Sections \ref{sec:strategy1}, \ref{sec:strategy2} and \ref{sec:strategy3}.
+For all these three strategies a temporal scheme is provided (see Fig.~\ref{fig:strategy1Scheme}, 
+Fig.~\ref{fig:strategy2Scheme} and Fig.~\ref{fig:strategy3Scheme}). These schemes indicate the sequencing of events 
+for all units. The initiating event (i.e., SBO condition) occurs at the top of each figure and accident progression 
+occurs moving downward.
+
+Section~\ref{sec:EDGSinvolAlign} 
+
+\subsubsection{Strategy 1}
+\label{sec:strategy1}
+This strategy prioritizes Unit 2 since it is in mid-loop condition. Hence the EPE team is initially directed toward
+this unit. 
+Once this task has been accomplished, Unit 3 becomes now the priority. In order to put this unit in a safe 
+condition two parallel directions are followed:
+
+\begin{itemize}
+  \item Move the EPE team toward Unit 3 
+  \item Align the EDGS from Unit 2 to Unit 1 so that also Unit 1 can be place in a safe condition and provide cooling 
+        through AFW cross-tie between PWR 1 and PWR 3 (once completed). Note that the AFW cross-tie does not provide 
+        cooling to the SFP
+\end{itemize}
+
+Finally, once Unit 3 EPE has been connected the EPE team move Unit 1. At this point Unit 1 should be already in a 
+safe condition since EGSS has been aligned to Unit 1, this step has been added since the simulation run (for 
+both PWR and SFP) stops when the EPE connected to the unit.
+
+A temporal scheme of the temporal evolution of this accident scenario is shown in Fig.~\ref{fig:strategy1Scheme}.   
+
+\begin{figure}
+    \centering
+    \centerline{\includegraphics[scale=0.7]{strategy1.pdf}}
+    \caption{Sequence of events of recovery strategy 1}
+    \label{fig:strategy1Scheme}
+\end{figure}
+
+\subsubsection{Strategy 2}
+\label{sec:strategy2}
+
+This strategy, similarly to Strategy 1, prioritizes Unit 2 since it is in mid-loop condition; thus, the EPE 
+team is initially directed toward this unit. 
+Once this task has been accomplished, Unit 3 becomes again now the priority. In order to put this unit in a safe 
+condition two parallel directions are followed:
+
+\begin{itemize}
+  \item Move the EPE team toward Unit 3 
+  \item Align the EDGS from Unit 2 to Unit 1 so that also Unit 1 can be place in a safe condition and provide 
+        CST inventory from PWR 2 and PWR 3 (once completed). Note that the CST cross-tie does not provide cooling 
+        to the SFP
+\end{itemize}
+
+Finally, once Unit 3 EPE has been connected the EPE team move Unit 1 as indicated also for Strategy 1.
+
+A temporal scheme of the temporal evolution of this accident scenario is shown in Fig.~\ref{fig:strategy2Scheme}.  
+
+\begin{figure}
+    \centering
+    \centerline{\includegraphics[scale=0.7]{strategy2.pdf}}
+    \caption{Sequence of events of recovery strategy 2}
+    \label{fig:strategy2Scheme}
+\end{figure}
+(see Fig.~\ref{fig:strategy2Scheme})
+
+
+\subsubsection{Strategy 3}
+\label{sec:strategy3}
+
+This strategy prioritizes Unit 3; hence the EPE team is initially directed toward this unit. 
+Once this task has been accomplished, Unit 1 becomes now the priority. In order to put this unit in a safe 
+condition two parallel directions are followed: 
+
+\begin{itemize}
+  \item Move the EPE team toward Unit 1 
+  \item Perform an AC cross-tie so that AC power generated by EDGS can be employed to provide power to both Unit
+        1 and Unit 2. Note that it is here assumed that a correct AC management is implemented in order to avoid
+        over-load of the EDGS.
+\end{itemize}
+
+Finally, once Unit 1 EPE has been connected the EPE team move Unit 2. At this point Unit 2 should be already in a 
+safe condition since EGSS is still aligned to Unit 2, again, this step has been added since the simulation run (for 
+both PWR and SFP) stops when the EPE connected to the unit.
+
+A temporal scheme of the temporal evolution of this accident scenario is shown in Fig.~\ref{fig:strategy3Scheme}
+
+\begin{figure}
+    \centering
+    \centerline{\includegraphics[scale=0.7]{strategy3.pdf}}
+    \caption{Sequence of events of recovery strategy 3}
+    \label{fig:strategy3Scheme}
+\end{figure}
+
+\subsubsection{EDGS involuntary alignment}
+\label{sec:EDGSinvolAlign}
