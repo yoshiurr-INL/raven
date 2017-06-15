@@ -1,7 +1,7 @@
 \section{RISMC approach to PRA}
 \label{sec:rismc}
 The RISMC approach~\cite{RISMC} employs both deterministic and stochastic methods 
-in a single analysis framework (see Figure~\ref{}). In the deterministic method 
+in a single analysis framework (see Figure~\ref{fig:RISMCoverview}). In the deterministic method 
 set we include:
 \begin{itemize}
   \item Modeling of the thermal-hydraulic behavior of the plant~\cite{BWR_SBO_Mandelli,BWRanalysis}
@@ -9,12 +9,20 @@ set we include:
   \item Modeling of the operators’ responses to the accident scenario~\cite{HRA_BoringReport2014}
 \end{itemize}
 
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{RISMCoverview.pdf}
+    \caption{Overview of the RISMC approach}
+    \label{fig:RISMCoverview}
+\end{figure}
+
 Note that deterministic modeling of plant or external events can be performed by employing 
 specific simulator codes but also surrogate models, known as reduced order models (ROM)~\cite{ROM_Khalik}. 
 ROMs would be employed in order to decrease the high computational costs of employed codes.
 In addition, multi-fidelity codes can be employed to model the same system; the idea is to 
 switch from low-fidelity to high-fidelity code when higher accuracy is needed (e.g., use 
 low-fidelity codes for steady-state conditions and high-fidelity code for transient conditions).
+
 In stochastic modeling we include all stochastic parameters that are of interest in the PRA 
 analysis such as:
 \begin{itemize}
