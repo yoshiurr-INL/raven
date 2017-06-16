@@ -44,23 +44,38 @@ For each PWR, the systems considered in the analysis are the following:
 
 Special attention has been given to the design of the electrical and hydraulic systems:
 \begin{itemize}
-  \item The plant electrical system is shown in Fig.~\ref{fig:electricalScheme}. Two electrical switch-yards can 
-        provide electrical power to all units. All units have a set of Emergency Diesel Generators (EDGs) 
-        and, in addition, a swing EDG (i.e., EDGS) can be employed to provide an alternate AC power to either
-        Unit 1 or Unit 2. Note also that the 6.6 KV emergency buses of Unit 1 and Unit 2 can be cross-tied.
-  \item The auxiliary feed-water (AFW) system of Unit 1 and Unit 3 can be cross-tied. Thus cooling to the 
-        secondary side can be provided from one unit to the other one.
-  \item The Condensate Storage Tanks (CSTs) of Units 2 and Unit 3 can be cross-tied. Thus the water source 
-        for the secondary side of either unit can be used as water source for the other one. 
-        \item Plant recovery crew is a shared resource within the plant. As part of the accident scenario, 
-        the recovery crew can perform AC power and safety injection using mobile equipment located within each unit.
+  \item The plant electrical system is shown in Fig.~\ref{fig:electricalScheme}. Two 
+        electrical switch-yards can provide electrical power to all units. All units 
+        have a set of Emergency Diesel Generators (EDGs)  and, in addition, a swing 
+        EDG (i.e., EDGS) can be employed to provide an alternate AC power to either
+        Unit 1 or Unit 2. Note also that the 6.6 KV emergency buses of Unit 1 and 
+        Unit 2 can be cross-tied.
+  \item The Auxiliary Feed-Water (AFW) system of Unit 1 and Unit 3 can be cross-tied. 
+        Thus cooling to the secondary side can be provided from one unit to the other one.
+  \item The Condensate Storage Tanks (CSTs) of Units 2 and Unit 3 can be cross-tied. 
+        Thus the water source  for the secondary side of either unit can be used as
+        water source for the other one. 
+  \item Plant recovery crew is a shared resource within the plant. In case of severe 
+        accident scenarios, Emergency Portable Equipments (EPEs) can be employed in order
+        to restore water flow or AC power into the PWRs or SFPs. Each unit has its own 
+        set of EPEs but it is here assumed that a single EPE team (i.e., plant recovery 
+        crew) is present within the plant boundaries.
 \end{itemize}
 
 \begin{figure}
     \centering
     \centerline{\includegraphics[scale=0.6]{electricalScheme.pdf}}
-    \caption{Overview of the plant electrical scheme}
+    \caption{Plant electrical scheme}
     \label{fig:electricalScheme}
+\end{figure}
+
+Figure~\ref{fig:schemeDep} summarizes the dependencies among the three units.
+
+\begin{figure}
+    \centering
+    \centerline{\includegraphics[scale=0.4]{schemeDep.pdf}}
+    \caption{Summary of the dependencies among the three units}
+    \label{fig:schemeDep}
 \end{figure}
 
 \subsection{Initiating Event}
@@ -102,7 +117,7 @@ Prior the seismic event, the three units initial conditions are summarized in Ta
 
 Given the initiating event and the status of the plant, the analyzed accident focuses on the recovery strategy 
 in order to place all PWRs and SFPs in a safe condition. For the scope of this analysis we consider a unit in
-safe state when Emergency Portable Equipments (EPEs) are connected to the unit (i.e., both PWR and SFP). These EPEs 
+safe state when EPEs are connected to the unit (i.e., both PWR and SFP). These EPEs 
 are located between the plant site boundaries and once connected to a unit can provide AC power and water injection.
 
 An EPE is available for each unit and we assume that the the seismic event have not damaged the three EPEs available 

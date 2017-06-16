@@ -23,7 +23,7 @@ By statistical analysis we include:
 \begin{itemize}
   \item Sampling of codes, either stochastic (e.g., Monte-Carlo~\cite{DynamicReliabilityMonteCarlo} 
         and Latin Hypercube Sampling~\cite{LHShelton}, deterministic (e.g., grid and
-        Dynamic Event Tree~\cite{AMENDOLAdylam,cojazziDylam}) or adaptive~\cite{ANS_S_2014_raven_LS}
+        Dynamic Event Tree~\cite{AMENDOLAdylam,cojazziDylam}) or adaptive~\cite{ANS_S_2014_raven_LS,mandelliSVMANS}
   \item Generation of Reduced Order Models (ROMs)~\cite{ROM_Khalik}, also known as Surrogate models
   \item Post-processing of the sampled data and generation of statistical parameters (e.g., mean, 
         variance, covariance matrix).
@@ -34,7 +34,8 @@ Figure~\ref{fig:ravenScheme} shows a general overview of the elements that compr
 \begin{itemize}
   \item Model: it represents the pipeline between input and output space. It comprises both codes 
         (e.g., RELAP5-3D~\cite{relap5}) and also ROMs 
-  \item Sampler: it is the driver for any specific sampling strategy (e.g., Monte-Carlo, LHS, DET~\cite{ANS2014_adaptDET})
+  \item Sampler: it is the driver for any specific sampling strategy (e.g., Monte-Carlo, LHS, 
+        DET~\cite{ANS2014_adaptDET,PSA2013_Raven})
   \item Database: the data storing entity
   \item Post-processing module: the module that performs statistical analyses and visualizes results.
 \end{itemize}
