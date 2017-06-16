@@ -112,7 +112,6 @@ Prior the seismic event, the three units initial conditions are summarized in Ta
   \label{tab:unitsStatus}
 \end{table}
 
-
 \subsection{Accident progression}
 \label{sec:accidentProgression}
 
@@ -241,18 +240,34 @@ While this event can be considered an error or commission from an HRA perspectiv
 it does leave Unit 2 in an unsafe situation but it provide a safe condition to Unit 1. 
 
 Note that now this stochastic element add an additional degree of freedom in the accident progression since the 
-occurrence of this event change the prioritization of the next unit to have the EPE connected.
+occurrence of this event changes the prioritization of the next unit to have the EPE connected.
 
 As an example, Fig.~\ref{fig:strategy3SchemeInvolAlign} shows a possible sequence of events if Strategy 3 
-(refer to~\ref{sec:strategy3}) has been chosen but with the involuntary alignment of EDGS while the EPE team
+(refer to Section~\ref{sec:strategy3}) has been chosen but with the involuntary alignment of EDGS while the EPE team
 is working on Unit 3. Given the unexpected event, the EPE team moves to Unit 2 instead of Unit 1 since Unit 2
 has higher priority. The difference sequence of events caused by involuntary alignment of EDGS can be viewed
-by comparing Fig.~\ref{sec:strategy3} with Fig.~\ref{fig:strategy3SchemeInvolAlign}.
+by comparing Fig.~\ref{fig:strategy3Scheme} with Fig.~\ref{fig:strategy3SchemeInvolAlign}.
 
 \begin{figure}
-    \centering
-    \centerline{\includegraphics[scale=0.7]{strategy3InvolAlign.pdf}}
-    \caption{Sequence of events of recovery strategy 3 with involuntary alignment of EDGS}
-    \label{fig:strategy3SchemeInvolAlign}
+  \centering
+  \centerline{\includegraphics[scale=0.7]{strategy3InvolAlign.pdf}}
+  \caption{Sequence of events of recovery strategy 3 with involuntary alignment of EDGS}
+  \label{fig:strategy3SchemeInvolAlign}
 \end{figure}
+
+\subsection{EPE actions}
+Depending on the unit status different actions can be employed when connecting EPEs to their respective unit.
+\hl{CHECK THIS WITH CARLO}
+
+\begin{table}
+  \begin{tabular}{|r|r|r|p{5cm}|}
+     \hline
+                 & PWR1       & PWR2         & PWR3                                                                   \\ \hline \hline
+     Strategy 1  & Refill CST & PS injection & Provide AC power and employ 1 LPIS and 1 HPIS or perform PS injection  \\ \hline
+     Strategy 2  & Refill CST & PS injection & Perform PS injection or refill CST                                     \\ \hline
+     Strategy 3  & Refill CST & PS injection & Provide AC power and employ 1 LPIS and 1 HPIS or perform PS injection  \\ \hline
+  \end{tabular}
+  \caption{EPE actions for each unit and for each recovery strategy}
+  \label{fig:EPEactions}
+\end{table} 
 
