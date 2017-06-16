@@ -1,4 +1,13 @@
 \section{Multi-unit PRA}
 \label{sec:multiUnitPRA}
 
-MC analysis
+The objective of this analysis is to rank PDSs based on their probability values.
+Using a Monte-Carlo [14] sampling strategy we have simulated about 2000 accident scenarios. 
+For each simulation run we have performed the following steps:
+\begin{enumerate}
+  \item Sample a value for each stochastic parameter that is part of the set of parameters $p$ (e.g., timing of events)
+  \item Performing the actual simulation run given $p$ sampled in Step 1 for each model of the multi-unit plant
+  \item Collect the output (OK or CD) from each model and construct the PDS associated to the run
+  \item Associate a unique probability value to the PDS accordingly to the chosen sampling
+  \item Repeat Steps 1 trough 4, $M$ times 
+\end{enumerate}
