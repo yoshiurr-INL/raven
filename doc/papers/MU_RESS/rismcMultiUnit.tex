@@ -36,6 +36,7 @@ stochastic parameters.
 [RON]
 
 \subsection{Plant Stochastic Modeling}
+\label{sec:plantStochasticModeling}
 For the scope of this analysis, we have identified 23 stochastic parameters. We have 
 partition this list of parameters based on their area of interest.
 
@@ -73,42 +74,57 @@ the actual procedure associated to the EPE for Unit 3.
 As indicated in Section~\ref{sec:EPEactions}, depending on the  recovery strategy, 
 then the EPE connection on Unit 3 can be performed in different modes. 
 
-A summary of the chosen stochastic parameters are listed in Table~\ref{tab:stochasticParameters} 
+A summary of the chosen stochastic parameters are listed in Tables~\ref{tab:stochasticParameters} 
+and~\ref{tab:stochasticParameters2}
 along a description and with their probabilistic distribution.
 
 \begin{table}
-  %\centering
+  \centering
   \begin{center}
-      \begin{tabular}{ | l | p{5cm} | p{5cm} |}
+      \begin{tabular}{ | l | p{5cm} | c | p{5cm} |}
         \hline
-         Parameter          & Distribution & Description                      \\ \hline \hline
-         AUXFWxtieTime      &              & Time to perform AFW cross-tie    \\ \hline
-         CSTxtieTime        &              & Time to perform CST cross-tie    \\ \hline
-         recoveryStrategy   &              & Recovery strategy to be followed \\ \hline
-         EPETime1           &              & Time to connect EPE to Unit 1    \\ \hline
-         EPETime2           &              & Time to connect EPE to Unit 2    \\ \hline
-         EPETime3           &              & Time to connect EPE to Unit 3    \\ \hline
-         EDGSinvolAlign     &              & Probability of occurrence for EDGS involuntary alignment   \\ \hline
-         EDGSinvolAlignTime &              & Time of occurrence for EDGS involuntary alignment          \\ \hline
-         EDGSswitchTime     &              & Time required to change EDGS alignment  \\ \hline
-         ACxTieUnit12       &              & Time to perform AC cross-tie     \\ \hline
-         batteryTime1       &              & Battery life for Unit 1          \\ \hline
-         batteryTime3       &              & Battery life for Unit 3          \\ \hline
-         locaTimePWR1       &              & Time of occurrence for PWR1 seal LOCA   \\ \hline
-         locaTimePWR3       &              & Time of occurrence for PWR3 seal LOCA   \\ \hline
-         locaSizeSFP1       &              & LOCA size for SFP1               \\ \hline
-         locaSizeSFP2       &              & LOCA size for SFP1               \\ \hline
-         locaSizeSFP3       &              & LOCA size for SFP1               \\ \hline    
-         locaTimeSFP1       &              & Time of occurrence for SFP1 LOCA \\ \hline
-         locaTimeSFP2       &              & Time of occurrence for SFP2 LOCA \\ \hline
-         locaTimeSFP3       &              & Time of occurrence for SFP3 LOCA \\ \hline
-         flex3Strategy13    &              & Type of EPE connection for Unit 3 during recovery strategy 1 and 3  \\ \hline
-         flex3Strategy2     &              & Type of EPE connection for Unit 3 during recovery strategy 1 and 3  \\ 
+         Parameter          & Description                      & Unit   & Distribution                                         \\ \hline \hline
+         AUXFWxtieTime      & Time to perform AFW cross-tie    & hour   & Uniform (lower bound=.5, upper bound=1.5)            \\ \hline
+         CSTxtieTime        & Time to perform CST cross-tie    & hour   & Uniform (lower bound=.5, upper bound=1.5)            \\ \hline
+         recoveryStrategy   & Recovery strategy to be followed & -      & Categorical(1,2,3) (p(1)=.3, p(2)=.3, p(3)=.4)       \\ \hline
+         recovProcedTime    & Time to start plant recovery procedure    & hours        & Truncated normal (mean=1., sigma=.2, lower bound=.5, upper bound=1.5)       \\ \hline
+         EPETime1           & Time to connect EPE to Unit 1    & hour   & Truncated normal (mean=2., sigma=.3, lower bound=1., upper bound=3.)   \\ \hline
+         EPETime2           & Time to connect EPE to Unit 2    & hour   & Truncated normal (mean=2., sigma=.3, lower bound=1., upper bound=3.)   \\ \hline
+         EPETime3           & Time to connect EPE to Unit 3    & hour   & Truncated normal (mean=2., sigma=.3, lower bound=1., upper bound=3.)   \\ \hline
+         EDGSinvolAlign     & Probability of occurrence for EDGS involuntary alignment & -      & Bernoulli (p=??)                               \\ \hline
+         EDGSinvolAlignTime & Time of occurrence for EDGS involuntary alignment        & -      & Uniform (lower bound=.0, upper bound=1.)       \\ \hline
+         EDGSswitchTime     & Time required to change EDGS alignment       & hour  & Uniform (lower bound=.25, upper bound=.75)                  \\ 
         \hline
       \end{tabular}
   \end{center}
   \caption{Summary of the stochastic parameters chosen for the multi-unit analysis and their associated distribution}
-  \label{tab:stochasticParameters}
+  \label{tab:stochasticParameters1}
+\end{table}
+
+\begin{table}
+  \centering
+  \begin{center}
+      \begin{tabular}{ | l | p{5cm} | c | p{5cm} |}
+        \hline
+         Parameter          & Description                      & Unit      & Distribution                                         \\ \hline \hline
+         ACxTieUnit12       & Time to perform AC cross-tie     & hour      & Uniform (lower bound=.5, upper bound=1.)             \\ \hline
+         batteryTime1       & Battery life for Unit 1          & hour      & Triangular (lower bound=6., upper bound=8., peak=7.) \\ \hline
+         batteryTime3       & Battery life for Unit 3          & hour      & Triangular (lower bound=6., upper bound=8., peak=7.) \\ \hline
+         locaTimePWR1       & Time of occurrence for PWR1 seal LOCA & hour & Uniform (lower bound=.1667, upper bound=.25)         \\ \hline
+         locaTimePWR3       & Time of occurrence for PWR3 seal LOCA & hour & Uniform (lower bound=.1667, upper bound=.25)         \\ \hline
+         locaSizeSFP1       & LOCA size for SFP1               & gpm       & Categorical(0.0004,0.0035,0.056) (p(0.0004)=.85, p(0.0035)=.1, p(0.056)=.05)   \\ \hline
+         locaSizeSFP2       & LOCA size for SFP1               & gpm       & Categorical(0.0004,0.0035,0.056) (p(0.0004)=.85, p(0.0035)=.1, p(0.056)=.05)   \\ \hline
+         locaSizeSFP3       & LOCA size for SFP1               & gpm       & Categorical(0.0004,0.0035,0.056) (p(0.0004)=.85, p(0.0035)=.1, p(0.056)=.05)   \\ \hline    
+         locaTimeSFP1       & Time of occurrence for SFP1 LOCA & hour      & Categorical(0.,.1667,.333,.5,24.) (p(0.)=.025, p(.1667)=.025, p(.333)=.025, p(.5)=.025, p(24.)=.9)  \\ \hline
+         locaTimeSFP2       & Time of occurrence for SFP2 LOCA & hour      & Categorical(0.,.1667,.333,.5,24.) (p(0.)=.025, p(.1667)=.025, p(.333)=.025, p(.5)=.025, p(24.)=.9)  \\ \hline
+         locaTimeSFP3       & Time of occurrence for SFP3 LOCA & hour      & Categorical(0.,.1667,.333,.5,24.) (p(0.)=.025, p(.1667)=.025, p(.333)=.025, p(.5)=.025, p(24.)=.9)  \\ \hline
+         flex3Strategy13    & Type of EPE connection for Unit 3 during recovery strategy 1 and 3  & -      & Categorical(1,2) (p(1)=.3, p(2)=.7)             \\ \hline
+         flex3Strategy2     & Type of EPE connection for Unit 3 during recovery strategy 2        & -      & Categorical(1,2) (p(1)=.4, p(2)=.6)             \\ 
+        \hline
+      \end{tabular}
+  \end{center}
+  \caption{Summary of the stochastic parameters chosen for the multi-unit analysis and their associated distribution (cont.)}
+  \label{tab:stochasticParameters2}
 \end{table}
 
 
