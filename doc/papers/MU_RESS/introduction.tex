@@ -1,31 +1,34 @@
 \section{Introduction}
 \label{sec:introduction}
 
-Multi-unit Nuclear Power Plants (NPPs) are defined as plants that are composed by 
+Multi-unit Nuclear Power Plant (NPPs) sites are defined as sites that are composed by 
 more than one reactor. In the U.S. the situation is the following:
 \begin{itemize}
-  \item 25 power plants have 1 reactor
-  \item 33 power plants have 2 reactors
-  \item 3 power plants have 3 reactors
-  \item 1 power plant has 4 reactors
+  \item 25 power plant sites have 1 reactor
+  \item 33 power plant sites have 2 reactors
+  \item 3 power plant sites have 3 reactors
+  \item 1 power plant site has 2 reactors and 2 additional reactors under construction
 \end{itemize}
 The situation is similar for other countries such as Canada and Japan were 
-several power plants include a large number of reactors (6, 7 or even 8 reactors). 
+several NPP sites include a large number of reactors (6, 7 or even 8 reactors). 
 Worldwide about 80 plants have more than 2 reactors and 32 power plants have more 
 than 3 reactors. 
 
-Following the accident event occurred in 2011 at the Fukushima Daiichi special 
+Following the accident event occurred in 2011 at the Fukushima Daiichi~\cite{Fukushima} special 
 attention has been given to multi-unit plants. This attention has focused on the 
 safety aspects of nuclear reactors that cannot be considered as entities isolated 
 from each other. 
 
-Historically, the analysis of the safety aspects of multi-unit plants has been performed 
-in the past for a few selected cases using classical ET/FT tools. 
+Historically, the first 
+Furthermore, the analysis of the safety aspects of multi-unit plants has been performed 
+in the past for a few selected cases using classical Probabilistic Risk Assessment (PRA) methods 
+based on Event-Tree (ET) and Fault-Trees (FT) 
+tools~\cite{MultiUnitKumara,MultiUnitModarres,MultiUnitZhang}. 
 
 The objective of this paper is to propose an analysis of a multi-unit power 
 plant without using classical ET/FT tools~\cite{Nureg1150} but employing a fully 
 coupled simulation-based (i.e., Dynamic PRA~\cite{DynamicReliabilityMonteCarlo}) approach: 
-the RISMC approach~\cite{RISMC,mandelliNewAlgo}. 
+the Risk Informed Safety Margin Characterization (RISMC) approach~\cite{RISMC,mandelliNewAlgo}. 
 
 The rationale behind this choice is that great modeling improvements can be achieved by 
 employing system simulators instead of static Boolean structures like ETs/FTs. 
@@ -34,6 +37,13 @@ structure) but it is entirely simulated given a set of initial and boundary cond
 Note that timing and sequencing of events are implicitly modeled in the analysis along 
 with interactions between accident evolution and system dynamics.
 
-\section{Historical Perspective}
-\label{sec:historicalPerspective}
+Modeling limitations of ETs/FT based methods are even more limiting when dealing with 
+multiple complex systems that are coupled to each other. In fact, the presence of shared 
+systems and structures among the units can add degree of freedom in accident progression 
+temporal evolution.
+In addition, note that in a multi-unit site, multiple radiological sources are in fact present, 
+either nuclear reactors and spent fuel pools. 
+ 
+
+
 

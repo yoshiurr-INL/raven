@@ -22,12 +22,13 @@ where:
         and systems of the model (e.g., status of emergency core cooling system, AC system)
 \end{itemize}
 
-By using the RISMC approach, if Monte-Carlo sampling is chosen, the PRA analysis is performed by [8]:
+By using the RISMC approach, if Monte-Carlo sampling is chosen, the PRA analysis is performed 
+by~\cite{BWR_SBO_Mandelli}:
 \begin{itemize}
   \item Associating a probabilistic distribution function (pdf) to the set of uncertain 
         parameters $\boldsymbol p$ (e.g., timing of events)
   \item Performing stochastic sampling of the pdfs defined in Step 1
-  \item Performing a simulation run given $\boldsymbol p$ sampled in Step 2, i.e., solve Eq. (1)
+  \item Performing a simulation run given $\boldsymbol p$ sampled in Step 2, i.e., solve Eq.~\ref{eq:trajectory}
   \item Repeating Steps 2 and 3 $M$ times and evaluating user defined stochastic parameters such as 
         Core Damage (CD) probability $P_{CD}$ as
         \begin{equation}
@@ -41,9 +42,10 @@ In a multi-unit type of scenario, the dynamic of each unit is not independent bu
 interact with the other units. Example of interactions are: electrical cross-ties and shared plant 
 resources such as portable AC generators
 
-Since Equation 1 refers to a single unit, when multiple units are considered then it is needed to track 
-the temporal evolution of each unit: multiple θ needs to be evaluated (one for each unit). 
-Assuming that a three-unit plant is considered, Equation 1 now becomes as follows:
+Equation~\ref{eq:trajectory} refers to a single unit plant site; when multiple units are considered 
+then it is needed to track the temporal evolution of each unit: multiple $\theta$ needs to be evaluated 
+(one for each unit). 
+Assuming that a three-unit plant is considered, Eq.~\ref{eq:trajectory} now becomes as follows:
 
 \begin{equation}
   \begin{matrix}
@@ -56,12 +58,12 @@ Assuming that a three-unit plant is considered, Equation 1 now becomes as follow
   \label{eq:MU_looseCoupled}
 \end{equation}
 
-Note that now the vector $s_i (i=1,…,3)$ of each unit is shared among other units. This feature 
+Note that now the vector $s_i (i=1,\ldots,3)$ of each unit is shared among other units. This feature 
 captures shared resources and possible system cross-ties among units.
 In addition, intra-unit interactions such as a sub-set of human actions in a unit may be driven 
 by the actual status of other unit (e.g., thermo-hydraulic limit and operational boundaries). 
 Again, these actions may have cascade effects on the other units. This is particularly relevant 
-for severe accident scenarios. Thus, now Eq. 2 becomes as follows:
+for severe accident scenarios. Thus, now Eq.~\ref{eq:MU_looseCoupled} becomes:
 
 \begin{equation}
   \begin{matrix}
@@ -77,16 +79,18 @@ for severe accident scenarios. Thus, now Eq. 2 becomes as follows:
   \label{eq:MU_tightCoupled}
 \end{equation}
 
-From a modeling point of view, solving Eq. 2 or Eq. 3 poses different challenges. Equation 2 can in fact be solved by:
+From a modeling point of view, solving Eq.~\ref{eq:MU_looseCoupled} or Eq.~\ref{eq:MU_tightCoupled} poses 
+different challenges. Equation~\ref{eq:MU_looseCoupled} can in fact be solved by:
 \begin{itemize}
   \item Sampling the set of uncertain parameters $\boldsymbol p$
   \item Determining the temporal profile of $\boldsymbol{s}_1$, $\boldsymbol{s}_2$, $\boldsymbol{s}_3$
   \item Run the simulator for each unit independently given $\boldsymbol p$, $\boldsymbol{s}_1$, $\boldsymbol{s}_2$, $\boldsymbol{s}_3$
 \end{itemize}
-On the other side, solving Eq. 3 requires a system simulator that allows running the simulation of 
-each unit simultaneously and sharing the variables $\boldsymbol{\theta}_1$, $\boldsymbol{\theta}_2$, $\boldsymbol{\theta}_3$ among them.
-Even though we are investigating cases that can be described by both Eq. 2 and Eq. 3, this paper will 
-focus on multi-unit case that can be described by Eq. 2. 
+
+On the other side, solving Eq.~\ref{eq:MU_tightCoupled} requires a system simulator that allows 
+running the simulation of each unit simultaneously and sharing the variables
+$\boldsymbol{\theta}_1$, $\boldsymbol{\theta}_2$, $\boldsymbol{\theta}_3$ among them.
+This paper will focus on multi-unit case that can be described by Eq.~\ref{eq:MU_looseCoupled}. 
 
 
 

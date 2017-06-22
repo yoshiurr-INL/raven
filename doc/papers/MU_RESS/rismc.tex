@@ -1,4 +1,4 @@
-\section{RISMC approach to PRA}
+\section{RISMC Approach to PRA}
 \label{sec:rismc}
 The RISMC approach~\cite{RISMC} employs both deterministic and stochastic methods 
 in a single analysis framework (see Figure~\ref{fig:RISMCoverview}). In the deterministic method 
@@ -11,13 +11,13 @@ set we include:
 
 \begin{figure}
     \centering
-    \centerline{\includegraphics[scale=0.6]{RISMCoverview.pdf}}
+    \centerline{\includegraphics[scale=0.4]{RISMCoverview.pdf}}
     \caption{Overview of the RISMC approach}
     \label{fig:RISMCoverview}
 \end{figure}
 
 Note that deterministic modeling of plant or external events can be performed by employing 
-specific simulator codes but also surrogate models, known as reduced order models (ROM)~\cite{ROM_Khalik}. 
+specific simulator codes but also surrogate models, known as Reduced Order Models (ROMs)~\cite{ROM_Khalik}. 
 ROMs would be employed in order to decrease the high computational costs of employed codes.
 In addition, multi-fidelity codes can be employed to model the same system; the idea is to 
 switch from low-fidelity to high-fidelity code when higher accuracy is needed (e.g., use 
@@ -58,8 +58,7 @@ make it challenging to perform a full PRA analysis of complex systems such as nu
 In order to overcome this challenge, two possible solutions are available: reduce the required 
 number of samples or reduce the computational cost of each simulation run.
 
-Both solutions rely on the development of Reduced Order Models (ROMs)~\cite{ROM_Khalik}, also 
-known as surrogate models. 
+Both solutions rely on the development of ROMs~\cite{ROM_Khalik}, also known as surrogate models. 
 ROMs are mathematical models that infer the structure of a given set of data points using a
 blend of regression and interpolation techniques. In Solution 1, ROMs are built in order to generate 
 the minimum set of samples that allows to determine the outcome variables: this is called smart or 

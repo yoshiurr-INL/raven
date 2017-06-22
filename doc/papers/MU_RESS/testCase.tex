@@ -2,7 +2,7 @@
 \label{sec:testCase}
 
 \subsection{Plant Description}
-For our analysis we have chosen a 3-unit plant as shown in Fig.~\ref{fig:layout}. The chosen layout 
+For our analysis we have chosen a 3-unit plant site as shown in Fig.~\ref{fig:layout}. The chosen layout 
 is not representative of any existing plant but it is simply fictitious.
 From a topographical perspective, a large body of water is located in proximity of the NPP and it is 
 employed as ultimate heat-sink for the plant.
@@ -14,13 +14,13 @@ employed as ultimate heat-sink for the plant.
     \label{fig:layout}
 \end{figure}
 
-All three units are composed by PWR systems (see Fig.~\ref{fig:PWRscheme}); the design of the PWR systems 
-are identical for all the three units and it 
+All three units are composed by Pressurized Water System (PWR) systems (see Fig.~\ref{fig:PWRscheme}); 
+the design of the PWR systems are identical for all the three units and it 
 can be considered generic, i.e., it is not specific to an existing plant. 
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.5]{PWRscheme.pdf}
+    \includegraphics[scale=0.4]{PWRscheme.pdf}
     \caption{Generic scheme of a PWR system}
     \label{fig:PWRscheme}
 \end{figure}
@@ -50,7 +50,7 @@ Special attention has been given to the design of the electrical and hydraulic s
         EDG (i.e., EDGS) can be employed to provide an alternate AC power to either
         Unit 1 or Unit 2. Note also that the 6.6 KV emergency buses of Unit 1 and 
         Unit 2 can be cross-tied.
-  \item The Auxiliary Feed-Water (AFW) system of Unit 1 and Unit 3 can be cross-tied. 
+  \item The AFW system of Unit 1 and Unit 3 can be cross-tied. 
         Thus cooling to the secondary side can be provided from one unit to the other one.
   \item The Condensate Storage Tanks (CSTs) of Units 2 and Unit 3 can be cross-tied. 
         Thus the water source  for the secondary side of either unit can be used as
@@ -83,7 +83,7 @@ Figure~\ref{fig:schemeDep} summarizes the dependencies among the three units.
 The considered initiating event is a seismic event which causes the following events:
 \begin{itemize}
   \item Both switch-yards are disabled
-  \item All EDGs are disabled except EDGS which is initially aligned to Unit 2
+  \item All EDGs are disabled except EDGS which is operating and it is initially aligned to Unit 2
   \item CST of Unit 2 has lost 80\% of its capacity 
   \item CST of Unit 3 is completely lost
   \item The seismic event might also rupture the SFPs. Thus a leak might be present during the accident scenario
@@ -92,7 +92,7 @@ The considered initiating event is a seismic event which causes the following ev
 The proposed accident scenario resembles a Station Black Out (SBO) event at the plant level except for the 
 fact that the EDGS is the only source of AC power available and it can be directed toward either Unit 1 or Unit 2.
 
-Prior the seismic event, the three units initial conditions are summarized in Table~\ref{tab:unitsStatus}:
+Prior the seismic event, the three units initial conditions are summarized in Table~\ref{tab:unitsStatus}.
 
 \begin{table}
   \begin{tabular}{ | l | p{10cm} | }
@@ -125,8 +125,8 @@ within the NPP. It is assumed that the EPE team can assist only one unit at a ti
 own EPE, then the EPE team must first prioritize the units that require an immediate assistance.
   
 In our case, even tough Unit 2 it is the one with AC power available it is in the most vulnerable situation since it 
-is in mid-loop condition: low water inventory in the primary system and RPV head removed. Hence, in case or core damage
-(CD) radioactive material will be directly released in the containment.
+is in mid-loop condition: low water inventory in the primary system and RPV head removed. Hence, in case of
+CD condition, radioactive material will be directly released in the containment.
 
 Unit 3 is the unit in the most critical condition since it is in SBO condition and heat removal from the RPV is limited
 due to the fact that only 20\% of the CST inventory is available.
@@ -167,7 +167,7 @@ A temporal scheme of the temporal evolution of this accident scenario is shown i
 
 \begin{figure}
     \centering
-    \centerline{\includegraphics[scale=0.7]{strategy1.pdf}}
+    \centerline{\includegraphics[scale=0.6]{strategy1.pdf}}
     \caption{Sequence of events of recovery strategy 1}
     \label{fig:strategy1Scheme}
 \end{figure}
@@ -193,12 +193,10 @@ A temporal scheme of the temporal evolution of this accident scenario is shown i
 
 \begin{figure}
     \centering
-    \centerline{\includegraphics[scale=0.7]{strategy2.pdf}}
+    \centerline{\includegraphics[scale=0.6]{strategy2.pdf}}
     \caption{Sequence of events of recovery strategy 2}
     \label{fig:strategy2Scheme}
 \end{figure}
-(see Fig.~\ref{fig:strategy2Scheme})
-
 
 \subsubsection{Strategy 3}
 \label{sec:strategy3}
@@ -222,7 +220,7 @@ A temporal scheme of the temporal evolution of this accident scenario is shown i
 
 \begin{figure}
     \centering
-    \centerline{\includegraphics[scale=0.7]{strategy3.pdf}}
+    \centerline{\includegraphics[scale=0.6]{strategy3.pdf}}
     \caption{Sequence of events of recovery strategy 3}
     \label{fig:strategy3Scheme}
 \end{figure}
@@ -250,7 +248,7 @@ by comparing Fig.~\ref{fig:strategy3Scheme} with Fig.~\ref{fig:strategy3SchemeIn
 
 \begin{figure}
   \centering
-  \centerline{\includegraphics[scale=0.7]{strategy3InvolAlign.pdf}}
+  \centerline{\includegraphics[scale=0.6]{strategy3InvolAlign.pdf}}
   \caption{Sequence of events of recovery strategy 3 with involuntary alignment of EDGS}
   \label{fig:strategy3SchemeInvolAlign}
 \end{figure}

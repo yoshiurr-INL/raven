@@ -67,7 +67,6 @@ class multiUnitPP_clustering(PostProcessorInterfaceBase):
     
     label=np.zeros(numberSamples)
     plantConfiguration = list(itertools.product([0, 1], repeat=numberVariables))
-    print(self.variables)
     for index,PC in enumerate(plantConfiguration):
       if list(PC) in dataRestructuredToList:
         indexes = np.where(np.all(dataRestructured == np.asarray(PC),axis=1))[0]
