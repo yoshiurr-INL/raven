@@ -15,6 +15,7 @@ if not 'xrange' in dir(__builtins__):
 import numpy as np
 import copy
 import itertools
+from scipy.stats import beta
 #External Modules End--------------------------------------------------------------------------------
 
 from PostProcessorInterfaceBaseClass import PostProcessorInterfaceBase
@@ -36,6 +37,7 @@ class multiUnitPP(PostProcessorInterfaceBase):
     PostProcessorInterfaceBase.initialize(self)
     self.inputFormat  = 'PointSet'
     self.outputFormat = 'PointSet'
+    self.estimator    = None
 
   def run(self,inputDic):
     """
@@ -53,6 +55,8 @@ class multiUnitPP(PostProcessorInterfaceBase):
     numberVariables      = len(self.variables)
     numberConfigurations = 2**numberVariables
     PCprobValues         = np.zeros(numberConfigurations)
+    percentiles_5        = np.zeros(numberConfigurations)
+    percentiles_95       = np.zeros(numberConfigurations)
     
     if 'metadata' in inputDic.keys():
       if 'ProbabilityWeight' in inputDic['metadata'].keys():
@@ -79,13 +83,28 @@ class multiUnitPP(PostProcessorInterfaceBase):
     for index,PC in enumerate(plantConfiguration):
       if list(PC) in dataRestructuredToList:
         indexes = np.where(np.all(dataRestructured == np.asarray(PC),axis=1))[0]
-        PCprobValues[index] = np.sum(pbWeights[indexes])
+        if self.estimator is None:
+          PCprobValues[index] = np.sum(pbWeights[indexes])
+        elif self.estimator == "MC":
+          if pbWeights[indexes].size > 0:
+            aPrior = pbWeights[indexes].size
+            bPrior = pbWeights.size - pbWeights[indexes].size + 0.5
+            PCprobValues[index]   = aPrior/(aPrior+bPrior)
+            percentiles_5[index]  = beta.ppf(.05, aPrior, bPrior)
+            percentiles_95[index] = beta.ppf(.95, aPrior, bPrior)
+          else:
+            PCprobValues[index]   = 0.0
+            percentiles_5[index]  = 0.0
+            percentiles_95[index] = 0.0            
+          
       label[index] = index
         
     for idx,var in enumerate(self.variables):
       outputDict['data']['input'][var] = np.asarray(plantConfiguration)[:,idx]
     
-    outputDict['data']['output']['probability'] = PCprobValues
+    outputDict['data']['output']['probability']    = PCprobValues
+    outputDict['data']['output']['percentiles_5']  = percentiles_5
+    outputDict['data']['output']['percentiles_95'] = percentiles_95
     outputDict['data']['output']['label'] = label
     
     return outputDict
@@ -99,3 +118,6 @@ class multiUnitPP(PostProcessorInterfaceBase):
     for child in xmlNode:
       if child.tag == 'variables':
         self.variables = child.text.split(',')
+      elif child.tag == "estimator":
+        self.estimator = child.text
+        
