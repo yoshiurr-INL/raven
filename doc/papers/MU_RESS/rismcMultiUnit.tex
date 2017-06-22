@@ -1,4 +1,4 @@
-\section{RISMC approach to multi-unit modeling}
+\section{RISMC Approach to Multi-Unit Modeling}
 \label{sec:RISMC_MU_modeling}
 
 The actual multi-unit model has been modeled using both RELAP5-3D and RAVEN.
@@ -7,7 +7,7 @@ connections and dependencies have been coded as an external model in RAVEN.
 The connections between the RELAP5-3D models and the RAVEN plant model are 
 shown in Fig.~\ref{fig:ensembleModel}.
 Section~\ref{sec:systemModels} describes in detail the RELAP5-3D models for 
-the SFPs and the PWRs while~\ref{sec:plantModel} describes the RAVEN plant model.
+the SFPs and the PWRs while Section~\ref{sec:plantModel} describes the RAVEN plant model.
  
 \begin{figure}
     \centering
@@ -40,7 +40,8 @@ stochastic parameters.
 For the scope of this analysis, we have identified 23 stochastic parameters. We have 
 partition this list of parameters based on their area of interest.
 
-Regarding the SFPs, we have have identified seismic induced rupture, i.e. a SFP LOCA, as 
+Regarding the SFPs, we have have identified seismic induced rupture, i.e. a SFP Loss Of
+Coolant Accident (LOCA), as 
 element to include into the analysis. It has been modeled by choosing two stochastic 
 parameters: time of  occurrence and size of the SFP LOCA. In this work we have identified 
 with locaTimeSFP1, locaTimeSFP2 and locaTimeSFP3 as the time of occurrence of the SFP 
@@ -48,8 +49,10 @@ LOCAs while locaSizeSFP1, locaSizeSFP2 and locaSizeSFP3 represents the actual si
 the SFP LOCAs.
 
 Regarding the PWRs, we focused on two elements: lifetime of the batteries and the LOCA 
-associated to the seal of the RCPs. Battery systems provides DC power to I\&C systems 
-of the PWRs such as the control of the PORVs. DC systems are considered for only 
+associated to the seal of the Reactor Coolant Pumps (RCPs). Battery systems provides 
+DC power to I\&C systems 
+of the PWRs such as the control of the Pilot Operated Relief Valves (PORVs).
+DC systems are considered for only 
 Unit 1 and Unit 3; since Unit 2 is in mid-loop operation mode, its DC systems are not 
 considered.
 
@@ -67,14 +70,14 @@ representing them with a single stochastic parameter which represents the
 time to connect the EPE to its own unit.
 
 Lastly, the recovery plan followed by the plant crew has been modeled using a single
-parameter: recovery strategy (see Section~\cite{sec:accidentProgression}).
+parameter: recovery strategy (see Section~\ref{sec:accidentProgression}).
 
 In addition to recovery strategy, we have given an additional degree of freedom on 
 the actual procedure associated to the EPE for Unit 3. 
 As indicated in Section~\ref{sec:EPEactions}, depending on the  recovery strategy, 
 then the EPE connection on Unit 3 can be performed in different modes. 
 
-A summary of the chosen stochastic parameters are listed in Tables~\ref{tab:stochasticParameters} 
+A summary of the chosen stochastic parameters are listed in Tables~\ref{tab:stochasticParameters1} 
 and~\ref{tab:stochasticParameters2}
 along a description and with their probabilistic distribution.
 
@@ -87,7 +90,7 @@ along a description and with their probabilistic distribution.
          AUXFWxtieTime      & Time to perform AFW cross-tie    & hour   & Uniform (lower bound=.5, upper bound=1.5)            \\ \hline
          CSTxtieTime        & Time to perform CST cross-tie    & hour   & Uniform (lower bound=.5, upper bound=1.5)            \\ \hline
          recoveryStrategy   & Recovery strategy to be followed & -      & Categorical(1,2,3) (p(1)=.3, p(2)=.3, p(3)=.4)       \\ \hline
-         recovProcedTime    & Time to start plant recovery procedure    & hours        & Truncated normal (mean=1., sigma=.2, lower bound=.5, upper bound=1.5)       \\ \hline
+         recovProcedTime    & Time to start plant recovery procedure    & hour        & Truncated normal (mean=1., sigma=.2, lower bound=.5, upper bound=1.5)       \\ \hline
          EPETime1           & Time to connect EPE to Unit 1    & hour   & Truncated normal (mean=2., sigma=.3, lower bound=1., upper bound=3.)   \\ \hline
          EPETime2           & Time to connect EPE to Unit 2    & hour   & Truncated normal (mean=2., sigma=.3, lower bound=1., upper bound=3.)   \\ \hline
          EPETime3           & Time to connect EPE to Unit 3    & hour   & Truncated normal (mean=2., sigma=.3, lower bound=1., upper bound=3.)   \\ \hline
