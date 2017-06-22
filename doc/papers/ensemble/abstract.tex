@@ -1,1 +1,18 @@
-test abstract
+The development of high-fidelity codes has undergone a significant acceleration in the last years. The newly deployed codes are characterized by 
+remarkable improvements in the approximation of the underline physics (high approximation order and reduced use of empirical correlations). This
+ improved fidelity is generally accompanied by a larger computational effort (computation time increased). This issue represents an obstacle in the 
+ application of traditional computational techniques of uncertainty quantification (UQ) and risk (RA) associated with the operation of any industrial 
+ plant (e.g, a nuclear reactor).
+In order to overcome these limitations, several techniques are under investigation and parallel development. In the RAVEN framework, these 
+techniques heavily use the concept of Reduced Order Modeling in order to accelerate the Risk assessment and uncertainty quantification. The 
+Reduced Order Models (ROMs) are mathematical representations of a system, used to predict a selected output space of a physical system. In other 
+words, they are mathematical objects that can be ``trained'' in order to predict some selected Figure of Merits (FOMs) of a system, within its training 
+domain.
+The usage of the ROMs can represent a valid solution to speed up the UQ and RA process, overall if multiple ROMs are combined together in order 
+to simulate all the physical aspects that can describe the system (e.g. neutronic FOMs, Thermal- hydraulic FOMs, etc). The aim of this paper is the 
+description of a newly developed technique (RAVEN object) to assemble multiple ROMs, in particular, and any model (physical codes, post-
+processing algorithms, etc.), in general. This new RAVEN object allows the user to assemble multiple models in an entity that has been named 
+``EnsembleModel'', identifying the input/output connections, and, consequentially the order of execution and which sub-models can be executed in 
+parallel.
+The ``Ensemble-Model'' concept represents a key development in the RAVEN code, since it allows to perform an integrated PRA and UQ analysis 
+without the need to ``interrogate'' the high-fidelity codes if not strictly necessary, determining a remarkable speed-up of the whole process.
