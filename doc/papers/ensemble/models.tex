@@ -1,0 +1,41 @@
+\section{Model Entities in RAVEN}
+\label{sec:models}
+The Model entity, in the RAVEN environment, represents a ``connection pipeline'' between the input and the output space. The RAVEN framework does not own any 
+physical model (i.e. it does not posses the equations needed to simulate a generic system), but implements APIs by which any generic model can be integrated and 
+interrogated. In the RAVEN framework four different model categories (entities) are defined:
+• Codes;
+• Externals;
+• ROMs;
+• Post-Processors.
+The Code model represents the interface object that establishes the communication pipe between RAVEN and any driven code. Currently, RAVEN has APIs for 
+several different codes:
+\begin{enumerate}
+  \item RELAP5-3D, the most widely used Safety Code (thermal-hydraulic);
+  \item RELAP-7, safety code eventual future replacement of RELAP5-3D code;
+  \item any MOOSE-based application;
+  \item SAS4A/SASSYS-1, safety analysis code for fast reactors (Argonne)
+  \item Modelica, object-oriented, declarative, multi-domain modeling language for component-oriented modeling of complex systems;
+  \item MELCOR, engineering-level computer code that models the progression of severe accidents in light-water reactor nuclear power plants (contributed by the 
+           University of Rome “La Sapienza”);
+  \item MAAP5, computer code that models the progression of severe accidents in light-water reactor nuclear power plants (coupling performed by the Ohio State 
+          University).         
+\end{enumerate}
+
+The data exchange between RAVEN and the driven code can be performed either by direct software interface or by files.
+The
+If the system code is parallelized, the data exchanging by files is generally the way to follow since it can be much more optimized in large clusters.
+The External model allows the user to create, in a Python file (imported, at run-time, in the RAVEN framework), its own model (e.g. set of equations representing a 
+physical model, connection to another code, control logic, etc.). This model will be interpreted/used by the framework and, at run-time, will become part of RAVEN 
+itself.
+The ROM (Reduced Order Model) represents an API to several different algorithms. A ROM is a mathematical representation of a system, used to predict a selected 
+output space of a physical system. The creation and sub-sequential usage of a ROM involves a procedure named ``training''. The ``training'' is a process that uses 
+sampling of the physical model to improve the prediction capability (capability to predict the status of the system given a realization of the input space) of the ROM. 
+More specifically, in RAVEN the ROM is trained to emulate a high fidelity numerical representation (system codes) of the physical system.
+The Post-Processor model is aimed to manipulate the data generated, for example, employing a sampling strategy. In RAVEN several different post-processors are 
+available: 1) Statistics Post-Processor, aimed to compute all the statistical figure of merits (e.g. expected values, variance, skewness, covariance matrix, sensitivity 
+coefficients, etc.); 2) Limit Surface, which computes the Limit Surface, inquiring a goal function (i.e. a function that determines if a certain coordinate in the input space 
+led to a failure or success), and so many others.
+As already mentioned, in several cases multiple models need to interface with each other since the initial conditions of some are dependent on the outcomes of others. 
+In order to face this problematic in the RAVEN framework, a new model category (e.g. class), named EnsambleModel, has been implemented. This class is able to 
+assemble multiple models of other categories (i.e. Code, External Model, ROM), identifying the input/output connections, and, consequentially the order of execution 
+and which sub-models can be executed in parallel.
