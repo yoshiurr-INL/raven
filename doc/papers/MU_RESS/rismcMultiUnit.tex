@@ -33,7 +33,34 @@ for all six system models (i.e., PWRs and SFPs) given the sampled values of the
 stochastic parameters.
 
 \subsection{Human models}
-[RON]
+To consider the performance of field workers, a simple human reliability analysis was 
+performed and incorporated into the event simulation. Although many human actions are 
+required, the analysis considers two human events: time to start recovery procedures 
+after initiating event and EDGS involuntary alignment
+
+Regarding the first, we employed a detailed subtask modeling using the HUNTER (Human Unimodel 
+for Nuclear Technology to Enhance Reliability)~\cite{boringHUNTER} framework. The details about 
+the model can be found in~\cite{hunterReport2016}; for the scope of this report, this event 
+is modeled as a stochastic variable with a pdf derived from~\cite{hunterReport2016}. 
+
+Regarding the second human related event, in order to screen the impact of the possible error, 
+the human error probability 
+(HEP) was obtained from the Technique for Human Error Rate Prediction (THERP) 
+method~\cite{NUREGCR1278}. 
+EDGS involuntary alignment corresponds well to THERP Table 20-13, Item 5: ``Making an error 
+of selection in changing or restoring locally operated valve when the valve to be manipulated 
+is unclearly or ambiguously labeled, part of a group of two or more valves that are similar in 
+all of the following, size and shape, state, and presence of tags.'' This THERP item captures 
+the nature of the task, particularly regarding complexity and ambiguity about pipe arrangements 
+and corresponding valve operation. 
+
+THERP produces an HEP equal to $1.0 10^{-2}$, with an uncertainty 
+error factor of 3. THERP includes provision for considering additional degradation of performance 
+due to lack of experience and situational stress. These factors were not deemed likely contributors 
+to the event outcome. Event recovery was not modeled.
+
+Thus in the analysis, we have modeled involuntary alignment of EDGS with a Bernoulli 
+distribution with value of $p=1.0 10^{-2}$.
 
 \subsection{Plant Stochastic Modeling}
 \label{sec:plantStochasticModeling}
