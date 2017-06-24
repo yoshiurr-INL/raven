@@ -21,12 +21,11 @@ quantifying the probability that a safety metric (e.g. as peak pressure in a pip
 been focused on providing dynamic risk assessment capability to RELAP-7~\cite{RELAP7}, currently under development at the INL. All the methodologies
 developed have been modularized in order to be applied to any computer modeling system (e.g., BISON, RELAP-7, RELAP5-3D, MELCOR, etc.).
 
-The aim of this manuscript is to present a peculiar capability within the RAVEN framework named \textit{``EnsembleModels''}.
-
-RAVEN is currently able to construct multi-targets Reduced Order Models (Ref.4), which are aimed to represent the response of a system (in a 
-fixed configuration) for multiple Figures of Merits (FOMs) and time-dependent ROMs (see Ref.5). These capabilities represent the initial steps for a larger 
-implementation about the interaction of multiple models. In fact, in several cases, multiple models need to interface with each other since the initial conditions of 
-one are dependent on the outcomes of another.
+Among the several capabilities present in RAVEN, a peculiar one is represented by the \textit{``EnsembleModels''}, subject of this paper.
+Indeed, RAVEN is currently able to construct multi-targets Reduced Order Models ~\cite{MultiTarget}, which are aimed to represent the response of a system (in a 
+fixed configuration) for multiple Figures of Merits (FOMs) and time-dependent ROMs (~\cite{TimeDependentROM}). These capabilities represented the initial steps 
+for a larger implementation about the interaction of multiple models. In fact, in several cases, multiple models need to interface with each other since the initial 
+conditions of one are dependent on the outcomes of another.
 To better understand the problem that here is solved, it is useful to consider two simple examples:
 \begin{enumerate}
   \item The following problem is considered: a weather forecast simulation code ``a'' is used to compute the external (i.e. ambient) temperature in a certain location. 
