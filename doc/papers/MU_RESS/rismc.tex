@@ -34,6 +34,21 @@ found in~\cite{BWR_SBO_Mandelli,BWRanalysis,PRA_comparison_PSA2015}.
 
 \subsection{Human Modeling}
 
+Human performance has been found to be a significance contributor to overall system 
+risk~\cite{NUREG/CR-6753}. 
+For this reason, human performance modeling is considered in parallel with system modeling so 
+that a complete representation of risk and uncertainty can be accounted for in RAVEN. 
+A dynamic human reliability analysis (HRA) framework called the Human Unimodel for 
+Nuclear Technology to Enhance
+Reliability (HUNTER)~\cite{boringHUNTER} is being developed. In HUNTER, a virtual operator is modeled to 
+complement the virtual plant model enabled by using RAVEN as a task sequencer for thermo-hydraulic 
+code. The HUNTER framework is agnostic relative to HRA methods. To date, it has focused 
+extensively on mapping operating procedures to human behavior primitives~\cite{GOMSHRA} and to
+auto-calculating the effects of performance shaping factors~\cite{DynamicizingSPAR}. Development work is
+ ongoing, but these elements have been successfully incorporated into RAVEN to allow dynamic 
+ calculation of the effects of human error probabilities~\cite{boringTaskProcedures} and task 
+ duration~\cite{boringOperatorTiming} on overall event outcomes.
+
 
 \subsection{External Event Modeling}
 Modeling of external events (e.g., seismic or flooding) follows the same philosophy behind the RISMC

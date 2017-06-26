@@ -27,3 +27,39 @@ In order to perform such analysis, two post-processors were developed in RAVEN i
 addition to the ones already developed within RAVEN itself.
 Thus the process of data generation, reduced order modeling and data analysis 
 have been fully completed using the RAVEN code.
+
+\subsection{Error estimation}
+
+Bayesian inference is a method in statistics where not enough data or information is 
+available, thus parameter estimates are updated as more information becomes available. 
+The results for the simulation are consistently provided as an occurrence of event 
+divided by the total number of events to produce a percentage. Instinctually it is 
+clear that this type of data corresponds to a beta-binominal distribution.  
+Since it is not desired to project the rate of occurrence or probability for each event,
+ a non-informative prior is implemented on the beta-binominal distribution [1].
+``Some priors are chosen to be non-informative," that is, diffuse enough that they correspond 
+to very little prior information. The Jeffreys non-informative prior is often used in this way. 
+If information is available, it is more realistic to build that information into the prior, 
+but sometimes the information is difficult to find and not worth the trouble. 
+In such a case, the Jeffreys non-informative prior can be used [2].''
+``The Jeffreys non-informative prior is intended to convey little prior belief or information, 
+thus allowing the data to speak for itself. This is useful when no informed consensus exists 
+about the true value of the unknown parameter. It is also useful when the prior distribution 
+may be challenged by people with various agendas. Some authors use the term reference prior 
+instead of "non-informative prior," suggesting that the prior is a standard default, a prior 
+that allows consistency and comparability from one study to another.''
+
+The basic equations for this method is as follows:
+
+\begin{equation}
+  \alpha_prior = N_i + 0.5  ,  \beta_prior = N_T - N_i + 0.5
+  mean = \frac{\alpha_prior}{\beta_prior}
+  \label{eq:priorDef}
+\end{equation}
+
+where $N_i$ is a specific outcome and $N_T$ is the total number of outcomes for the simulation. 
+The parameters of the beta-binominal distribution are then fed to a function that automatically 
+produces the $5^{th}$ and $95^{th}$ percentiles of the distribution.  This is reported rather than the 
+variance, as variance in a beta-binominal distribution does not adhere to the classic normal 
+distribution format of $95^{th}$ confidence interval
+
