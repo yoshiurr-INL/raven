@@ -36,12 +36,12 @@ The results for the simulation are consistently provided as an occurrence of eve
 divided by the total number of events to produce a percentage. Instinctually it is 
 clear that this type of data corresponds to a beta-binominal distribution.  
 Since it is not desired to project the rate of occurrence or probability for each event,
- a non-informative prior is implemented on the beta-binominal distribution [1].
+ a non-informative prior is implemented on the beta-binominal distribution~\cite{stat}.
 ``Some priors are chosen to be non-informative," that is, diffuse enough that they correspond 
 to very little prior information. The Jeffreys non-informative prior is often used in this way. 
 If information is available, it is more realistic to build that information into the prior, 
 but sometimes the information is difficult to find and not worth the trouble. 
-In such a case, the Jeffreys non-informative prior can be used [2].''
+In such a case, the Jeffreys non-informative prior can be used~\cite{NUREGCR6823}.''
 ``The Jeffreys non-informative prior is intended to convey little prior belief or information, 
 thus allowing the data to speak for itself. This is useful when no informed consensus exists 
 about the true value of the unknown parameter. It is also useful when the prior distribution 
@@ -61,5 +61,10 @@ where $N_i$ is a specific outcome and $N_T$ is the total number of outcomes for 
 The parameters of the beta-binominal distribution are then fed to a function that automatically 
 produces the $5^{th}$ and $95^{th}$ percentiles of the distribution.  This is reported rather than the 
 variance, as variance in a beta-binominal distribution does not adhere to the classic normal 
-distribution format of $95^{th}$ confidence interval
+distribution format of 
+
+\begin{equation}
+  95^{th} confidence interval = mean \pm 1.96 \frac{standard deviation}{\sqrt{N_T}}
+  \label{eq:priorDef}
+\end{equation}
 
