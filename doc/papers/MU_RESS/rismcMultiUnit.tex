@@ -22,36 +22,57 @@ the SFPs and the PWRs while Section~\ref{sec:plantModel} describes the RAVEN pla
 \subsubsection{PWR1 and PWR3}
 RELAP5-3D PWR models are based on the so-called INL Generic PWR (IGPWR) 
 model~\cite{parisiExternalHazard,ronaldoRISMC}. 
-The input deck is modeling a ~2.5 GWth Westinghouse 3-loops PWR, including the reactor 
-pressure vessel (RPV), the 3 loops and the primary and secondary sides of the steam 
-generators (SG) as shown in Figure????
+The input deck is modeling a ~2.5 GWth Westinghouse 3-loops PWR, including the RPV,
+the 3 loops and the primary and secondary sides of the steam 
+generators as shown in Fig.~\ref{fig:PWRnodalization}.
 Four independent channels are used for representing the reactor core. Three channels model 
 the active core and one channel models the core bypass. Different power values are assigned 
 to the three core channels in order to take into account the radial power distribution. 
 Passive and active heat structures simulate the heat transfer between the coolant and fuel, 
 the structures and the secondary side of the IGPWR.
-The possible operator actions that can occur during a Station Blackout Event (SBO) with 
+The possible operator actions that can occur during a SBO event with 
 the reactor at full power (Unit 1 and Unit 3) are implemented through the RELAP5-3D control 
 logic. These actions include SG cool-down, feed and bleed, AFW flow control, primary/secondary 
-side emergency injection, etc..
+side emergency injection, etc.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{nodalizationTMI.pdf}
+    \caption{PWRs nodalization}
+    \label{fig:PWRnodalization}
+\end{figure}
 
 \subsubsection{PWR2}
 Unit 2 is based on the same RELAP5-3D IGPWR model, consistently modified for simulating the 
 mid-loop conditions~\cite{NUREGCR6144}. The model is representing Unit 2 
-during the refueling outage phase, with SG 3 manway opened for maintenance and PRZ safety 
+during the refueling outage phase, with steam generator 3 manway opened for maintenance and pressurizer safety 
 valves removed. Decay heat is removed by the residual heat removal system (RHRS). Because the 
-openings on the primary system (in the PRZ and SG3), the use of SGs for reflux cooling in case 
+openings on the primary system (in the pressurizer and steam generator 3), the use of steam generators 
+for reflux cooling in case 
 of loss of RHR is prevented. However cooling by gravity drain from the RWST is possible.
 
 The water level in the primary circuit is kept at the middle plane of the hot and cold legs 
-by a recirculation circuit modeling the RHRS (see fig. ????). 
+by a recirculation circuit modeling the RHRS. 
 The parts of the primary and the secondary systems with no water contain air at atmospheric condition.  
-Main physical parameters values are reported in Table ????.
+Main physical parameters values are reported in Table~\ref{tab:midLoopParamteres}.
+
+\begin{table}
+  \begin{tabular}{|c|c|}
+     \hline
+     \textbf{Parameter}           & \textbf{Value}   \\ \hline \hline
+     Core Power (MW)              & 13.0    \\ \hline
+     RHR mass flow (kg/s)         & 235.0   \\ \hline
+     RHR inlet temperature (K)    & 313     \\ \hline
+     RHR outlet temperature (K)   & 327     \\ \hline
+     Core average temperature (K) & 330     \\ \hline
+  \end{tabular}
+  \caption{Plant operating parameters at mid loop operation}
+  \label{tab:midLoopParamteres}
+\end{table} 
 
 \subsubsection{SFPs}
 The three Spent Fuel Pools were also modeled using RELAP5-3D code~\cite{parisiExternalAnalysis}. 
-A scheme of a typical 
-NPP SFP is given in Figure ??. 
+A scheme of a typical SFP is given in Fig.~\ref{fig:SFPnodalization}. 
 For the sake of simplicity, the two cooling loops were modeled just as boundary conditions 
 (assigned water inlet/outlet mass flow rates and temperatures). The opening of a valve on the pool bottom
 could simulate the fuel pool break by seismic effects. The RELAP5-3D model is reported in Figure YY.
@@ -59,17 +80,25 @@ could simulate the fuel pool break by seismic effects. The RELAP5-3D model is re
 The RELAP5-3D model was kept as simple as possible in order to reduce calculation times, e.g. 120 s 
 of computer time was required for 86400 seconds transient. The thermal-hydraulic scheme is based on
 43 volumes and 49 junctions. 2 Heat Structures are used for modeling 15x15 Westinghouse FA. 
-The two independent cooling systems are modeled as boundary conditions (i.e., mass flow and temperature inlet are imposed). A couple of valves are used to model medium and large breaks of the pool bottom.
+The two independent cooling systems are modeled as boundary conditions (i.e., mass flow and 
+temperature inlet are imposed). A couple of valves are used to model medium and large breaks of the pool bottom.
 
 The following control logic is also implemented. The cooling systems pumps trip if: 
 \begin{itemize}
-  \item SFP liquid level < 0.1 m or
-  \item SFP temperature > 349 K
+  \item SFP liquid level lower than 0.1 m or
+  \item SFP temperature greater than 349 K
 \end{itemize}
 
 Emergency crew action (emergency water injection) is assumed when both the recirculation pumps trip. 
 The average time of action of the emergency crew is derived from human reliability analysis is assumed 
 to be 30 minutes.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{nodalizationSFP.pdf}
+    \caption{SFPs nodalization}
+    \label{fig:SFPnodalization}
+\end{figure}
 
 
 \subsection{Plant Model}
@@ -101,13 +130,13 @@ all of the following, size and shape, state, and presence of tags.'' This THERP 
 the nature of the task, particularly regarding complexity and ambiguity about pipe arrangements 
 and corresponding valve operation. 
 
-THERP produces an HEP equal to $1.0 10^{-2}$, with an uncertainty 
+THERP produces an HEP equal to $1.0 \cdot 10^{-2}$, with an uncertainty 
 error factor of 3. THERP includes provision for considering additional degradation of performance 
 due to lack of experience and situational stress. These factors were not deemed likely contributors 
 to the event outcome. Event recovery was not modeled.
 
 Thus in the analysis, we have modeled involuntary alignment of EDGS with a Bernoulli 
-distribution with value of $p=1.0 10^{-2}$.
+distribution with value of $p=1.0 \cdot 10^{-2}$.
 
 \subsection{Plant Stochastic Modeling}
 \label{sec:plantStochasticModeling}
@@ -160,7 +189,7 @@ along a description and with their probabilistic distribution.
   \begin{center}
       \begin{tabular}{ | l | p{5cm} | c | p{5cm} |}
         \hline
-         Parameter          & Description                      & Unit   & Distribution                                         \\ \hline \hline
+         \textbf{Parameter}          & \textbf{Description}                      & \textbf{Unit}   & \textbf{Distribution}                                         \\ \hline \hline
          AUXFWxtieTime      & Time to perform AFW cross-tie    & hour   & Uniform (lower bound=.5, upper bound=1.5)            \\ \hline
          CSTxtieTime        & Time to perform CST cross-tie    & hour   & Uniform (lower bound=.5, upper bound=1.5)            \\ \hline
          recoveryStrategy   & Recovery strategy to be followed & -      & Categorical(1,2,3) (p(1)=.3, p(2)=.3, p(3)=.4)       \\ \hline
@@ -183,7 +212,7 @@ along a description and with their probabilistic distribution.
   \begin{center}
       \begin{tabular}{ | l | p{5cm} | c | p{5cm} |}
         \hline
-         Parameter          & Description                      & Unit      & Distribution                                         \\ \hline \hline
+         \textbf{Parameter}          & \textbf{Description}                      & \textbf{Unit}   & \textbf{Distribution}                                         \\ \hline \hline
          ACxTieUnit12       & Time to perform AC cross-tie     & hour      & Uniform (lower bound=.5, upper bound=1.)             \\ \hline
          batteryTime1       & Battery life for Unit 1          & hour      & Triangular (lower bound=6., upper bound=8., peak=7.) \\ \hline
          batteryTime3       & Battery life for Unit 3          & hour      & Triangular (lower bound=6., upper bound=8., peak=7.) \\ \hline

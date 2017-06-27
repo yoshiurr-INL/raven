@@ -52,11 +52,14 @@ that allows consistency and comparability from one study to another.''
 The basic equations for this method is as follows:
 
 \begin{equation}
-  \alpha_prior = N_i + 0.5  ,  \beta_prior = N_T - N_i + 0.5
-  mean = \frac{\alpha_prior}{\beta_prior}
+  \begin{array}{r@{}l}
+    \alpha_{prior} = N_i + 0.5                     \\
+    \beta_{prior} = N_T - N_i + 0.5                \\
+    mean = \frac{\alpha_{prior}}{\beta_{prior}}
   \label{eq:priorDef}
+  \end{array}
 \end{equation}
-
+  
 where $N_i$ is a specific outcome and $N_T$ is the total number of outcomes for the simulation. 
 The parameters of the beta-binominal distribution are then fed to a function that automatically 
 produces the $5^{th}$ and $95^{th}$ percentiles of the distribution.  This is reported rather than the 
