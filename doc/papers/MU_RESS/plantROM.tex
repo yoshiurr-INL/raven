@@ -19,7 +19,7 @@ The $k$-value that fits the data with the highest accuracy is considered the
 ``best'' parameter setting.
 %
 We repeat this process ten times for each model to ensure stability of the
-results using multiples of 5 up to 50 for values of $k$ ($\[5,10,15,20,25,30,35,40,45,50\]$).
+results using multiples of 5 up to 50 for values of $k$ ($5,10,15,20,25,30,35,40,45,50$).
 
 We evaluate the convergence of each rom by evaluating the mean and standard
 deviation of the prediction accuracy over various training sizes, where a subset
@@ -31,6 +31,7 @@ An example of this convergence is shown in Figure~\ref{fig:romConvergence}.
 \DPM{Expand...}
 %
 The resulting $k$ values used for each model are reported in Table~\ref{tab:romInfo}.
+\DPM{Figure~\ref{fig:neighborSelection}}
 
 \begin{table}[!htbp]
 	\centering
@@ -43,7 +44,7 @@ The resulting $k$ values used for each model are reported in Table~\ref{tab:romI
 	% \hline
 	PWR2 &  3 & 25 &  4951 &  439 & 99.32 \\
 	% \hline
-	PWR3 & 10 & 50 & 12000 & 3990 & \DPM{?} \\
+	PWR3 & 10 & 50 & 12000 & 3990 & 100.0\\
 	% \hline
 	SFP1 &  3 &  5 &  2883 & 2876 & 99.72 \\
 	% \hline
@@ -54,3 +55,18 @@ The resulting $k$ values used for each model are reported in Table~\ref{tab:romI
 	 \caption{Surrogate model settings and validation information.}
 	 \label{tab:romInfo}
 \end{table}
+
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=0.98\textwidth]{convergenceSFP3.png}
+	\caption{Convergence of the Prediction Accuracy with increasing sample sizes. Each data point is the average of ten trials
+	worth of data with error bars representing one standard deviation.}
+	\label{fig:romConvergence}
+\end{figure}
+
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=0.98\textwidth]{neighborCVPWR2.png}
+	\caption{Histogram of the ``best'' $k$ value for the PWR2 model when trained on 1000 variations of size 2475 drawn from a pool of 4951 training samples. \DPM{Use other figure here where k=25 was better than k=15.}}
+	\label{fig:neighborSelection}
+\end{figure}
