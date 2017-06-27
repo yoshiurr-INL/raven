@@ -27,10 +27,11 @@ of the training data is used to construct a surrogate which is then used to
 predict on the entire validation set.
 %
 An example of this convergence is shown in Figure~\ref{fig:romConvergence}.
-%
+
 \DPM{Expand...}
-%
+
 The resulting $k$ values used for each model are reported in Table~\ref{tab:romInfo}.
+
 \DPM{Figure~\ref{fig:neighborSelection}}
 
 \begin{table}[!htbp]
@@ -58,7 +59,7 @@ The resulting $k$ values used for each model are reported in Table~\ref{tab:romI
 
 \begin{figure}[!htbp]
 	\centering
-	\includegraphics[width=0.98\textwidth]{convergenceSFP3.png}
+	\includegraphics[width=0.98\textwidth]{convergenceSFP1.png}
 	\caption{Convergence of the Prediction Accuracy with increasing sample sizes. Each data point is the average of ten trials
 	worth of data with error bars representing one standard deviation.}
 	\label{fig:romConvergence}
@@ -67,6 +68,6 @@ The resulting $k$ values used for each model are reported in Table~\ref{tab:romI
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.98\textwidth]{neighborCVPWR2.png}
-	\caption{Histogram of the ``best'' $k$ value for the PWR2 model when trained on 1000 variations of size 2475 drawn from a pool of 4951 training samples. \DPM{Use other figure here where k=25 was better than k=15.}}
+	\caption{Histogram of the ``best'' $k$ value for the PWR2 model when trained on 100 variations of size 2475 drawn from a pool of 4951 training samples. \DPM{Use other figure here where k=25 was better than k=15.}}
 	\label{fig:neighborSelection}
 \end{figure}
