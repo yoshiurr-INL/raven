@@ -20,10 +20,57 @@ the SFPs and the PWRs while Section~\ref{sec:plantModel} describes the RAVEN pla
 \label{sec:systemModels}
 [CARLO]
 \subsubsection{PWR1 and PWR3}
+RELAP5-3D PWR models are based on the so-called INL Generic PWR (IGPWR) 
+model~\cite{parisiExternalHazard,ronaldoRISMC}. 
+The input deck is modeling a ~2.5 GWth Westinghouse 3-loops PWR, including the reactor 
+pressure vessel (RPV), the 3 loops and the primary and secondary sides of the steam 
+generators (SG) as shown in Figure????
+Four independent channels are used for representing the reactor core. Three channels model 
+the active core and one channel models the core bypass. Different power values are assigned 
+to the three core channels in order to take into account the radial power distribution. 
+Passive and active heat structures simulate the heat transfer between the coolant and fuel, 
+the structures and the secondary side of the IGPWR.
+The possible operator actions that can occur during a Station Blackout Event (SBO) with 
+the reactor at full power (Unit 1 and Unit 3) are implemented through the RELAP5-3D control 
+logic. These actions include SG cool-down, feed and bleed, AFW flow control, primary/secondary 
+side emergency injection, etc..
 
 \subsubsection{PWR2}
+Unit 2 is based on the same RELAP5-3D IGPWR model, consistently modified for simulating the 
+mid-loop conditions~\cite{NUREGCR6144}. The model is representing Unit 2 
+during the refueling outage phase, with SG 3 manway opened for maintenance and PRZ safety 
+valves removed. Decay heat is removed by the residual heat removal system (RHRS). Because the 
+openings on the primary system (in the PRZ and SG3), the use of SGs for reflux cooling in case 
+of loss of RHR is prevented. However cooling by gravity drain from the RWST is possible.
+
+The water level in the primary circuit is kept at the middle plane of the hot and cold legs 
+by a recirculation circuit modeling the RHRS (see fig. ????). 
+The parts of the primary and the secondary systems with no water contain air at atmospheric condition.  
+Main physical parameters values are reported in Table ????.
 
 \subsubsection{SFPs}
+The three Spent Fuel Pools were also modeled using RELAP5-3D code~\cite{parisiExternalAnalysis}. 
+A scheme of a typical 
+NPP SFP is given in Figure ??. 
+For the sake of simplicity, the two cooling loops were modeled just as boundary conditions 
+(assigned water inlet/outlet mass flow rates and temperatures). The opening of a valve on the pool bottom
+could simulate the fuel pool break by seismic effects. The RELAP5-3D model is reported in Figure YY.
+
+The RELAP5-3D model was kept as simple as possible in order to reduce calculation times, e.g. 120 s 
+of computer time was required for 86400 seconds transient. The thermal-hydraulic scheme is based on
+43 volumes and 49 junctions. 2 Heat Structures are used for modeling 15x15 Westinghouse FA. 
+The two independent cooling systems are modeled as boundary conditions (i.e., mass flow and temperature inlet are imposed). A couple of valves are used to model medium and large breaks of the pool bottom.
+
+The following control logic is also implemented. The cooling systems pumps trip if: 
+\begin{itemize}
+  \item SFP liquid level < 0.1 m or
+  \item SFP temperature > 349 K
+\end{itemize}
+
+Emergency crew action (emergency water injection) is assumed when both the recirculation pumps trip. 
+The average time of action of the emergency crew is derived from human reliability analysis is assumed 
+to be 30 minutes.
+
 
 \subsection{Plant Model}
 \label{sec:plantModel}
