@@ -1,5 +1,24 @@
 \section{Plant ROM Modeling}
 \label{sec:plantRomModeling}
+An issue related to the model shown in Fig.~\ref{fig:ensembleModel} is that the overall 
+computation time can be very high (about 10 hours) if the outcome of each of the six 
+models (i.e., PWRs and SFPs) is determined using RELAP5-3D.
+Since the scope of our PRA analysis is to generate a large number number of scenarios
+the computational time of the RISMC analysis would be too large even for modern high 
+performance computing systems.
+
+In order to decrease such computational time, we have employed ROMs instead of running 
+the RELAP5-3D model. The objective is to employ a ROM for each PWR and SFP shown in 
+Fig.~\ref{fig:ensembleModel} instead the actual code.
+
+The actual workflow that implement such objective is as follows:
+\begin{enumerate}
+  \item Sample the response of each PWR and SFP using the RELAP5-3D code
+  \item Choose an appropriate ROM and train it using the data generated in Step 1
+  \item Validate the response of the ROMs against the response of the actual code
+  \item Insert the validated ROMs in the ensemble model in place of the RELAP5-3D 
+        code for each PWR and SFP
+\end{enumerate}
 
 \newcommand{\DPM}[1]{\textcolor{magenta}{#1}}
 

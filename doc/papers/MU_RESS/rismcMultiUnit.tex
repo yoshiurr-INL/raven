@@ -6,8 +6,18 @@ The RELAP5-3D models the temporal response of all PWRs and SFPs while the plant
 connections and dependencies have been coded as an external model in RAVEN.
 The connections between the RELAP5-3D models and the RAVEN plant model are 
 shown in Fig.~\ref{fig:ensembleModel}.
+Briefly, the multi-unit model is structured so that it receives in input the set of 
+sampled values (refer to Section~\ref{sec:plantStochasticModeling} for the complete list of 
+the chosen stochastic parameters) and provides as output the status of the six
+models (PWRs and SFPs).
+Internally, the multi-unit model consists of a plant model in series with the six 
+RELAP5-3D models (which are arranged in a parallel configuration).
+The plant model determines timing and sequencing of events of the accident scenario
+and it provide these vales to the RELAP5-3D models.
+
 Section~\ref{sec:systemModels} describes in detail the RELAP5-3D models for 
-the SFPs and the PWRs while Section~\ref{sec:plantModel} describes the RAVEN plant model.
+the SFPs and the PWRs while Section~\ref{sec:plantModel} describes the plant 
+model.
  
 \begin{figure}
     \centering
@@ -18,13 +28,13 @@ the SFPs and the PWRs while Section~\ref{sec:plantModel} describes the RAVEN pla
 
 \subsection{System Models}
 \label{sec:systemModels}
-[CARLO]
+
 \subsubsection{PWR1 and PWR3}
 RELAP5-3D PWR models are based on the so-called INL Generic PWR (IGPWR) 
 model~\cite{parisiExternalHazard,ronaldoRISMC}. 
 The input deck is modeling a ~2.5 GWth Westinghouse 3-loops PWR, including the RPV,
 the 3 loops and the primary and secondary sides of the steam 
-generators as shown in Fig.~\ref{fig:PWRnodalization}.
+generators (SGs) as shown in Fig.~\ref{fig:PWRnodalization}.
 Four independent channels are used for representing the reactor core. Three channels model 
 the active core and one channel models the core bypass. Different power values are assigned 
 to the three core channels in order to take into account the radial power distribution. 
@@ -99,7 +109,6 @@ to be 30 minutes.
     \caption{SFPs nodalization}
     \label{fig:SFPnodalization}
 \end{figure}
-
 
 \subsection{Plant Model}
 \label{sec:plantModel}
@@ -199,6 +208,8 @@ along a description and with their probabilistic distribution.
          EPETime3           & Time to connect EPE to Unit 3    & hour   & Truncated normal (mean=2., sigma=.3, lower bound=1., upper bound=3.)   \\ \hline
          EDGSinvolAlign     & Probability of occurrence for EDGS involuntary alignment & -      & Bernoulli (p=??)                               \\ \hline
          EDGSinvolAlignTime & Time of occurrence for EDGS involuntary alignment        & -      & Uniform (lower bound=.0, upper bound=1.)       \\ \hline
+         batteryTime1       & Battery life for Unit 1          & hour      & Triangular (lower bound=6., upper bound=8., peak=7.) \\ \hline
+         batteryTime3       & Battery life for Unit 3          & hour      & Triangular (lower bound=6., upper bound=8., peak=7.) \\ \hline
          EDGSswitchTime     & Time required to change EDGS alignment       & hour  & Uniform (lower bound=.25, upper bound=.75)                  \\ 
         \hline
       \end{tabular}
@@ -214,8 +225,6 @@ along a description and with their probabilistic distribution.
         \hline
          \textbf{Parameter}          & \textbf{Description}                      & \textbf{Unit}   & \textbf{Distribution}                                         \\ \hline \hline
          ACxTieUnit12       & Time to perform AC cross-tie     & hour      & Uniform (lower bound=.5, upper bound=1.)             \\ \hline
-         batteryTime1       & Battery life for Unit 1          & hour      & Triangular (lower bound=6., upper bound=8., peak=7.) \\ \hline
-         batteryTime3       & Battery life for Unit 3          & hour      & Triangular (lower bound=6., upper bound=8., peak=7.) \\ \hline
          locaTimePWR1       & Time of occurrence for PWR1 seal LOCA & hour & Uniform (lower bound=.1667, upper bound=.25)         \\ \hline
          locaTimePWR3       & Time of occurrence for PWR3 seal LOCA & hour & Uniform (lower bound=.1667, upper bound=.25)         \\ \hline
          locaSizeSFP1       & LOCA size for SFP1               & gpm       & Categorical(0.0004,0.0035,0.056) (p(0.0004)=.85, p(0.0035)=.1, p(0.056)=.05)   \\ \hline
@@ -229,7 +238,7 @@ along a description and with their probabilistic distribution.
         \hline
       \end{tabular}
   \end{center}
-  \caption{Summary of the stochastic parameters chosen for the multi-unit analysis and their associated distribution (cont.)}
+  \caption{Summary of the stochastic parameters chosen for the multi-unit analysis and their associated distribution (cont.ed)}
   \label{tab:stochasticParameters2}
 \end{table}
 

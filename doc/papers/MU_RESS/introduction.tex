@@ -25,12 +25,11 @@ classical Probabilistic Risk Assessment (PRA) methods based on Event-Tree (ET) a
 Fault-Trees (FT) tools.
 Canada studies have been recently published about CANDU multi-unit 
 stations~\cite{CANDU_MU_PRA,Darlington_MU_PRA}.
-
 Furthermore, the analysis of the safety aspects of multi-unit plants has been performed 
-for a few selected cases ~\cite{MultiUnitKumara,MultiUnitModarres,MultiUnitZhang}. 
+for few selected cases ~\cite{MultiUnitKumara,MultiUnitModarres,MultiUnitZhang}. 
 
 The objective of this paper is to propose an analysis of a multi-unit power 
-plant without using classical ET/FT tools~\cite{Nureg1150} but employing a fully 
+plant not by using classical ET/FT tools~\cite{Nureg1150} but employing a fully 
 coupled simulation-based (i.e., Dynamic PRA~\cite{DynamicReliabilityMonteCarlo}) approach: 
 the Risk Informed Safety Margin Characterization (RISMC) approach~\cite{RISMC,mandelliNewAlgo}. 
 
@@ -47,6 +46,21 @@ systems and structures among the units can add degree of freedom in accident pro
 temporal evolution.
 In addition, note that in a multi-unit site, multiple radiological sources are in fact present, 
 either nuclear reactors and spent fuel pools (SFPs). 
+
+The paper presents in Section~\ref{sec:rismc} an overview of the RISMC approach and it describes
+the PRA elements of the analysis. Section~\ref{sec:raven} presents the RAVEN~\cite{RAVEN_PSAM_2014} 
+software and its element that actually enables the construction of the multi-unit modeling. 
+Section~\ref{sec:multiUnitModeling} introduces the multi-unit modeling from a mathematical 
+point of view while Section~\ref{sec:testCase} describes the multi-unit site considered in the
+analysis.
+Section~\ref{sec:RISMC_MU_modeling} describes in detail of the modeling of all elements multi-unit
+site have been modeled.
+An important feature of our analysis is that it employs Reduce Order Models (ROMs) in order to
+reduce both the statistical error of the analysis and the computational time. In this respect,
+Section~\ref{sec:plantRomModeling} shows how ROMs have been built and validated.
+Sections~\ref{sec:multiUnitPRA} and~\ref{sec:plantAnalysisResults} describes how the data have been 
+generated and analyzed.
+Finally, Section~\ref{sec:results} presents the results obtained by the described RISMC analysis.
  
 
 
