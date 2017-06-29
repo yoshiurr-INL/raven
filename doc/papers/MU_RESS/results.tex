@@ -21,7 +21,7 @@ PWR1 can be put in safe condition through several ways (see Section~\ref{sec:tes
 
 PWR2 and the SFPs appear to reach both CD and OK condition. The objective of the analysis is now 
 to understand what are the driving factors behind each PDS instead of focusing only on PDS 
-probabilities. Due to the complexity of PDS8, we will leave it at the end of the analysis.
+probabilities. 
 
 \begin{table}
   \centering
@@ -31,7 +31,7 @@ probabilities. Due to the complexity of PDS8, we will leave it at the end of the
     \cline{2-10}
          & PWR1 & PWR2 & PWR3 & SFP1 & SFP2 & SFP3 & mean & $5^{th}$ & $95^{th}$     \\
     \hline \hline
-     8    & OK   & OK   & \cellcolor[gray]{0.95}CD   & OK   & OK   & OK   & 0.890199555 & 0.889684864 & 0.890713359 \\
+      8    & OK   & OK   & \cellcolor[gray]{0.95}CD   & OK   & OK   & OK   & 0.890199555 & 0.889684864 & 0.890713359 \\
       12   & OK   & OK   & \cellcolor[gray]{0.95}CD   & \cellcolor[gray]{0.95}CD   & OK   & OK   & 0.058915971 & 0.058529164 & 0.059303781 \\
       10   & OK   & OK   & \cellcolor[gray]{0.95}CD   & OK   & \cellcolor[gray]{0.95}CD   & OK   & 0.033966983 & 0.033669558 & 0.034265467 \\
       9    & OK   & OK   & \cellcolor[gray]{0.95}CD   & OK   & OK   & \cellcolor[gray]{0.95}CD   & 0.012604994 & 0.012422046 & 0.012789049 \\
@@ -51,6 +51,109 @@ probabilities. Due to the complexity of PDS8, we will leave it at the end of the
   \label{tab:resultsMain}
 \end{table}
 
+In the next sections, each of the 24 data subsets (i.e, 24 PDs) is analyzed in order to 
+discover the input drivers for each PDS. For the majority of them we report the histogram 
+of the input variables for that particular 
+PDS and compare with the full data set. The comparison is made visually by presenting:
+\begin{itemize}
+  \item the histogram of a specific variable for the full data set in gray, and, 
+  \item the histogram of the same variable for the PDS subset in a brighter color (i.e., not gray)
+\end{itemize}
+
+A summary of the relationships among PDSs pictured in a hierarchical fashion is shown in 
+Fig.~\ref{fig:RISMCoverview}; this figures also summarizes the most important drivers and the
+consequences related to the drivers.
+
+\begin{figure}
+    \centering
+    \centerline{\includegraphics[scale=0.5]{PDSscheme.pdf}}
+    \caption{Summary of the relationships among PDSs}
+    \label{fig:RISMCoverview}
+\end{figure}
+
+\subsection{PDS8}
+This PDS contains the majority of the data generated (about 890K samples fall in this category).
+A first observation is about the SFPs: by looking at the histograms of the variable locaTime for each SFP
+we see a drift of the histogram toward the higher bin (see Fig.~\ref{fig:histPDS8_8_locaTimeSFP}). 
+The variable locaTimeSFP indicates when the actual LOCA
+occurs: recall that locaTimeSFP=86400 implies LOCA does not occur.
+Figure~\ref{fig:histPDS8_8_locaTimeSFP} implies that despite the presence of a 
+loss of fluid in a SFP, it is possible to put the SFP in safe condition if certain conditions are met.
+
+\begin{figure}
+  \begin{subfigure}{.5\linewidth}
+    \centering
+    \includegraphics[scale=0.3]{8_locaTimeSFP1.pdf}
+  \end{subfigure}%
+  \begin{subfigure}{.5\linewidth}
+    \centering
+    \includegraphics[scale=0.3]{8_locaTimeSFP2.pdf}
+  \end{subfigure}\\[1ex]
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[scale=0.3]{8_locaTimeSFP3.pdf}
+  \end{subfigure}
+  \caption{PDS8: histograms of the variables locaTimeSFP1 (top left), locaTimeSFP2 (top right) and locaTimeSFP3 (bottom)}
+  \label{fig:histPDS8_8_locaTimeSFP}
+\end{figure}
+
+The next step is to discover which are these conditions: this can be accomplished by considering the data samples
+in PDS8 that actually have a SFP LOCA (i.e., samples characterized by locaTimeSFP2 different than 86400) 
+and creating a scatter plot
+in a 2-dimensional space where one dimension is the size of the SFP LOCA and the the second one is
+the absolute time (i.e., the exact time) when the SFP is put in a safe state. 
+Depending on the unit, this safe state can be reached in different ways:
+\begin{itemize}
+  \item Unit 1: when EDGS is aligned to Unit 1 or when EPE1 is connected to Unit 1
+  \item Unit 2: when EPE2 is connected to Unit 2; note that the involuntary alignment of EDGS plays a role here since
+                its occurrence brings it in an critical condition (no cooling in SFP)
+  \item Unit 3: when EPE3 is connected to Unit 3
+\end{itemize}
+
+Figure~\ref{fig:scatterPDS8} shows 4 images; each image contain a scatter plot and the histogram for each 
+dimension. Recall that all points in this scatter plots are characterized by SFP in an OK state.
+From Fig.~\ref{fig:scatterPDS8} we can see the following:
+\begin{itemize}
+  \item Unit 1 (top left image): this scatter plot shows locaSizeSFP1 vs. SFP1 recovery time which is represented 
+        as the minimum value among EDGS is aligned to Unit 1 and EPE1 connected to Unit 1. Note that a SFP1 recovery 
+        time less than 25K s can recover a small SFP LOCA, i.e, 5.E-4 (points on the left of the scatter plot). 
+        Note that a few points are clustered at around 12K s for SSP1 recovery time and a medium SFP LOCA (i.e., 3.5E-3). 
+        This small group of points are characterized by the following distinctive features: recovery strategy 3, no EDGS involuntary 
+        alignment and very early AC12 cross-tie (i.e., AC power from Unit 2 is provided to Unit 1 through a AC 
+        cross-tie). This feature implies that even a medium SFP LOCA can be recovered only if recovery strategy 3 is
+        chosen (see Fig.~\ref{fig:strategy3Scheme}) and, the AC cross-tie between Unit 2 and Unit 1 is completed 
+        before 12,700 s. From this plot can be noticed that a large SFP LOCA can not be recovered.
+  \item Unit 2 (top right and bottom left images): these two scatter plots shows similar thresholds for Unit 2. 
+        Note two features: a large SFP LOCA can be recovered and the EDGS involuntary alignment impact the threshold value 
+        small and medium SFP LOCA.
+  \item Unit 3 (bottom right image): Since SFP3 as a higher heat load it is expected that the thresholds decrease. This
+        is confirmed by comparing the bottom right scatter plot of Fig.~\ref{fig:scatterPDS8}.
+\end{itemize}
+
+
+\begin{figure}
+  \begin{subfigure}{.5\linewidth}
+    \centering
+    \includegraphics[scale=0.3]{8_sfp1_only_locaSizeSFP1_v_min_FlexTime1_EDGSswitchTime_act_scatter.pdf}
+  \end{subfigure}%
+  \begin{subfigure}{.5\linewidth}
+    \centering
+    \includegraphics[scale=0.3]{8_sfp2_only_EDGSinvolAlign=0_locaSizeSFP2_v_flexTime2_act_scatter.pdf}
+  \end{subfigure}\\[1ex]
+  \begin{subfigure}{.5\linewidth}
+    \centering
+    \includegraphics[scale=0.3]{8_sfp2_only_EDGSinvolAlign=1_locaSizeSFP2_v_flexTime2_act_scatter.pdf}
+  \end{subfigure}
+  \begin{subfigure}{.5\linewidth}
+    \centering
+    \includegraphics[scale=0.3]{8_sfp3_only_locaSizeSFP3_v_flexTime3_act_scatter.pdf}
+  \end{subfigure}
+  \caption{PDS8: scatter plot for SFP1 (top left), SFP2 with EDGS involuntary alignment (top right), 
+           SFP2 without EDGS involuntary alignment (bottom right) and SFP3 (bottom right)}
+  \label{fig:scatterPDS8}
+\end{figure}  
+
+\subsection{PDSs 12, 10, 9}
 PDSs number 12, 10 and 9 are characterized by a single SFP in CD condition (on top of PWR3): SFP1, 
 SFP2 and SFP3 respectively. The main driver is the loss of water inventory due to the seismic induced
 SFP LOCA.
@@ -80,6 +183,7 @@ EPE timings to occur.
   \label{fig:histPDS_12_10_9_recoveryStrategy}
 \end{figure}
 
+\subsection{PDS24}
 PDS24 is the first PDS that characterize an additional PWR to reach CD (on top of PWR3): PWR2. By looking at the
 histogram of the input parameters (see Fig.~\ref{fig:histPDS_24}) that belong to this PDS we have identified 
 that PWR2 reaches CD only if recovery strategy 3 is chosen. 
@@ -112,10 +216,12 @@ started.
   \label{fig:histPDS_24}
 \end{figure}
 
+\subsection{PDSs 13, 14, 11}
 PDSs 13, 14 and 11 is a blend of PDS 12, 10 and 9: they contains 2 SFPs in CD condition. These PDS can be simply characterized
 by the occurrence of 2 SFP LOCAs which are not correlated events; i.e., SFP LOCA have been modeled as independent events.
 Thus, same conclusions derived from PDSs 9, 10 and 12, can be transposed for PDSs 13, 14 and 11.
 
+\subsection{PDSs 26, 28, 25}
 PDSs 26, 28 and 25 are characterized by 1 SFP and PWR2 in CD condition; thus it represents a mix of PDS 24 and PDS 12, 10 and 9.
 These PDS are in fact characterized by recovery strategy 3 and EDGS involuntary align along with a SFP LOCA.
 Similarly to what has been presented for PDS 24, the interesting histogram is the one characterized EDGS involuntary time for 
@@ -139,3 +245,9 @@ of~\label{fig:histPDS_24} (bottom plot).
   \label{fig:histPDS_26_28_25_EDGSinvolAlignTime}
 \end{figure}
 
+\subsection{PDS15}
+PDS15 is characterized by having all SFPs in a CD state. Similar to the considerations presented for PDSs 12, 10 and 9 (and also
+similar to PDSs PDSs 13, 14, 11), the main driver is a medium/large LOCA for all SFPs coupled with long EPE time.
+
+\subsection{PDS 30, 29}
+PDS15 is characterized by having PWR2, SFP1 and SFP2 in CD state.
