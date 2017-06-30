@@ -17,8 +17,7 @@ set we include:
 \end{figure}
 
 Note that deterministic modeling of plant or external events can be performed by employing 
-specific simulator codes but also surrogate models, known as Reduced Order Models 
-(ROMs)~\cite{ROM_Khalik}. 
+specific simulator codes but also surrogate models, i.e., ROMs~\cite{ROM_Khalik}. 
 ROMs would be employed in order to decrease the high computational costs of employed codes.
 In addition, multi-fidelity codes can be employed to model the same system; the idea is to 
 switch from low-fidelity to high-fidelity code when higher accuracy is needed (e.g., use 
@@ -33,7 +32,6 @@ Example of RISMC analysis performed using the RISMC approach can be
 found in~\cite{BWR_SBO_Mandelli,BWRanalysis,PRA_comparison_PSA2015}.
 
 \subsection{Human Modeling}
-
 Human performance has been found to be a significance contributor to overall system 
 risk~\cite{NUREG/CR-6753}. 
 For this reason, human performance modeling is considered in parallel with system modeling so 
@@ -49,16 +47,15 @@ auto-calculating the effects of performance shaping factors~\cite{DynamicizingSP
  calculation of the effects of human error probabilities~\cite{boringTaskProcedures} and task 
  duration~\cite{boringOperatorTiming} on overall event outcomes.
 
-
 \subsection{External Event Modeling}
 Modeling of external events (e.g., seismic or flooding) follows the same philosophy behind the RISMC
 approach: model the phenomena from both a deterministic (i.e., by employing codes) and stochastic 
 point of view (i.e., by introducing stochastic elements into the simulation). This approach have the 
 relevant advantage that the external event can interact directly with the plant simulation. 
-This interaction can occur not only at the beginning at the beginning of the accident scenario but also
-during the accident scenario itself. Thus, the external event is not only considered as initial condition
-imposed at the beginning of the analysis but is a boundary condition that evolve in time along with the
-actual plant simulation.
+This interaction can occur not only at the beginning of the accident scenario but also
+during the accident scenario itself. Thus, the external event is not only considered as an initial 
+condition imposed at the beginning of the analysis but is a boundary condition that evolve in time 
+along with the actual plant simulation.
 
 \subsection{ROM Modeling}
 Each RISMC analysis often requires a large amount of samples; this is due to the fact that the 
@@ -66,7 +63,7 @@ number of stochastic parameters is very large and the uncertainties may be signi
 The scope of the analysis is not only to determine outcome variables such as core damage probability 
 but, more in general, evaluate the system response for different combinations of the stochastic
 parameters in order to determine specific observable outcomes (e.g., plant damage). In addition, 
-a single evaluation of the system response in Step 2 is often computationally expensive. 
+a single evaluation of the system response is often computationally expensive. 
 This is often the case when multi-physics simulator codes and/or multiple codes are employed in an 
 integrated simulation run.
 
@@ -83,6 +80,10 @@ adaptive sampling. On the other hand, Solution 2 aims to build a ROM as a substi
 code itself (i.e., a surrogate for a complex calculation).  ROMs are in fact much quicker to run 
 (a single ROM evaluation is on the order of $ms$) but, ROMs only approximate the simulation code and 
 thus an intrinsic uncertainty is always present.
+
+Note that in this paper we extensively employ Solution 2: few RELAP5-3D runs (i.e., training set) are 
+employed to train a ROM for each thermo-hydraulic model. Once trained, ROMs emulate the response of the 
+RELAP5-3D model in a much faster way. 
 
 \subsection{System Stochastic Modeling}
 In the RISMC stochastic modeling we include all steps required to include in the analysis the 

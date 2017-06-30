@@ -97,13 +97,15 @@ Prior the seismic event, the three units initial conditions are summarized in Ta
 \begin{table}
   \begin{tabular}{ | l | p{10cm} | }
     \hline      
-      Unit 1 &  The PWR of Unit 1 (i.e., PWR1) is at full power (100\% power level) and it own SFP \\ \hline
-      Unit 2 &  The PWR of Unit 2 (i.e., PWR2) is in mid-loop operation (i.e., shut-down mode) and it own SFP. 
+      \textbf{Unit} & \textbf{Initial Condition} \\
+      \hline \hline
+      1 &       The PWR of Unit 1 (i.e., PWR1) is at full power (100\% power level) and it own SFP \\ \hline
+      2 &       The PWR of Unit 2 (i.e., PWR2) is in mid-loop operation (i.e., shut-down mode) and it own SFP. 
                 The mid-loop status is characterized by a primary coolant system drained to the 
                 hot leg centerline and the existence of openings which a further reduction of 
                 the mass inventory poses a serious risk, due to boil off and possible entrainment 
                 or spill over of liquid\\ \hline
-      Unit 3 &  The PWR of Unit 3 (i.e., PWR3) is at full power (108\%) that restarted a few weeks 
+      3 &       The PWR of Unit 3 (i.e., PWR3) is at full power (108\% of nominal power) that restarted a few weeks 
                 earlier and its own SFP with a higher heat load since it contains used fuel recently 
                 moved from the reactor. \\
     \hline  
@@ -125,7 +127,8 @@ within the NPP. It is assumed that the EPE team can assist only one unit at a ti
 own EPE, then the EPE team must first prioritize the units that require an immediate assistance.
   
 In our case, even tough Unit 2 it is the one with AC power available it is in the most vulnerable situation since it 
-is in mid-loop condition: low water inventory in the primary system and RPV head removed. Hence, in case of
+is in mid-loop condition: low water inventory in the primary system and Reactor Pressure Vessel (RPV) head removed. 
+Hence, in case of
 CD condition, radioactive material will be directly released in the containment.
 
 Unit 3 is the unit in the most critical condition since it is in SBO condition and heat removal from the RPV is limited
@@ -141,7 +144,7 @@ Fig.~\ref{fig:strategy2Scheme} and Fig.~\ref{fig:strategy3Scheme}). These scheme
 for all units. The initiating event (i.e., SBO condition) occurs at the top of each figure and accident progression 
 occurs moving downward.
 
-Section~\ref{sec:EDGSinvolAlign} introduce a disruptive element in the simulation: the involuntary alignment of the EDGs
+Section~\ref{sec:EDGSinvolAlign} introduce a disruptive element in the simulation: the involuntary alignment of the EDGS
 from Unit 2 to Unit 1.
 
 
@@ -159,8 +162,8 @@ condition two parallel directions are followed:
         cooling to the SFP
 \end{itemize}
 
-Finally, once Unit 3 EPE has been connected the EPE team move Unit 1. At this point Unit 1 should be already in a 
-safe condition since EGSS has been aligned to Unit 1, this step has been added since the simulation run (for 
+Finally, once Unit 3 EPE has been connected, the EPE team move Unit 1. At this point Unit 1 should be already in a 
+safe condition since EDGS has been aligned to Unit 1, this step has been added since the simulation run (for 
 both PWR and SFP) stops when the EPE connected to the unit.
 
 A temporal scheme of the temporal evolution of this accident scenario is shown in Fig.~\ref{fig:strategy1Scheme}.   
@@ -187,7 +190,7 @@ condition two parallel directions are followed:
         to the SFP
 \end{itemize}
 
-Finally, once Unit 3 EPE has been connected the EPE team move Unit 1 as indicated also for Strategy 1.
+Finally, once Unit 3 EPE has been connected, the EPE team move Unit 1 as indicated also for Strategy 1.
 
 A temporal scheme of the temporal evolution of this accident scenario is shown in Fig.~\ref{fig:strategy2Scheme}.  
 
@@ -212,8 +215,8 @@ condition two parallel directions are followed:
         over-load of the EDGS.
 \end{itemize}
 
-Finally, once Unit 1 EPE has been connected the EPE team move Unit 2. At this point Unit 2 should be already in a 
-safe condition since EGSS is still aligned to Unit 2, again, this step has been added since the simulation run (for 
+Finally, once Unit 1 EPE has been connected, the EPE team move Unit 2. At this point Unit 2 should be already in a 
+safe condition since EDGS is still aligned to Unit 2, again, this step has been added since the simulation run (for 
 both PWR and SFP) stops when the EPE connected to the unit.
 
 A temporal scheme of the temporal evolution of this accident scenario is shown in Fig.~\ref{fig:strategy3Scheme}
@@ -228,13 +231,10 @@ A temporal scheme of the temporal evolution of this accident scenario is shown i
 \subsubsection{EDGS involuntary alignment}
 \label{sec:EDGSinvolAlign}
 
-As part of the simulation we have introduced a stochastic event: the involuntary alignment of the EDGs.
+As part of the simulation we have introduced a stochastic event: the involuntary alignment of the EDGS.
 This event can occur anytime during the simulation and it represents the involuntary alignment of the EDGS 
 (initially aligned to Unit 2) to Unit 1. 
-
-\hl{CHECK THIS WITH RON}
-
-While this event can be considered an error or commission from an HRA perspective, from an operational point of view 
+While this event can be considered an error of commission from an HRA perspective, from an operational point of view 
 it does leave Unit 2 in an unsafe situation but it provide a safe condition to Unit 1. 
 
 Note that now this stochastic element add an additional degree of freedom in the accident progression since the 
@@ -257,17 +257,18 @@ by comparing Fig.~\ref{fig:strategy3Scheme} with Fig.~\ref{fig:strategy3SchemeIn
 \label{sec:EPEactions}
 
 Depending on the unit status different actions can be employed when connecting EPEs to their respective unit.
-\hl{CHECK THIS WITH CARLO}
+A summary of the EPE actions for each unit is summarized in Table~\ref{tab:EPEactions}. Note that we have given 
 
 \begin{table}
-  \begin{tabular}{|l|l|l|p{5cm}|}
+  \begin{tabular}{|c|l|l|p{5cm}|}
      \hline
-                 & PWR1       & PWR2         & PWR3                                                                   \\ \hline \hline
-     Strategy 1  & Refill CST & PS injection & Provide AC power and employ 1 LPIS and 1 HPIS or perform PS injection  \\ \hline
-     Strategy 2  & Refill CST & PS injection & Perform PS injection or refill CST                                     \\ \hline
-     Strategy 3  & Refill CST & PS injection & Provide AC power and employ 1 LPIS and 1 HPIS or perform PS injection  \\ \hline
+       \textbf{Strategy} &  \textbf{PWR1}       &  \textbf{PWR2}         &  \textbf{PWR3}    \\ 
+       \hline \hline                                                              
+       1        & Refill CST & PS injection & Provide AC power and employ 1 LPIS and 1 HPIS or perform PS injection  \\ \hline
+       2        & Refill CST & PS injection & Perform PS injection or refill CST                                     \\ \hline
+       3        & Refill CST & PS injection & Provide AC power and employ 1 LPIS and 1 HPIS or perform PS injection  \\ \hline
   \end{tabular}
   \caption{EPE actions for each unit and for each recovery strategy}
-  \label{fig:EPEactions}
+  \label{tab:EPEactions}
 \end{table} 
 
