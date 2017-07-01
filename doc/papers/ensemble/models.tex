@@ -142,20 +142,26 @@ their execution and, consequentially, the links among the different entities.
 %%%%%%%%%%%%%%
 %    1-D figure of merits    %
 %%%%%%%%%%%%%%
-
+\subsection{EnsembleModel data infrastructure}
+\label{subsec:ensemblemodelDataInfrastructure}
+As already mentioned, the \textit{EnsembleModel} capability is primary aimed
+to link different models in order to perform of combined analysis of different, for example,
+physics. 
 The initial infrastructure of the \textit{EnsembleModel}  was able to 
 transfer information
 among different models just in case of scalar quantities (e.g. peak clad temperature, 
 constant thermal
-conductivities, etc.). This limitation was connected to the fact that in RAVEN the 
+conductivity, etc.). This limitation was connected to the fact that in RAVEN the 
 concept of ``input realization''
 was limited to scalar uncertainties (i.e. the RAVEN code was able to perturb the input 
 space in terms of scalar
 quantities). Since the increasing interest in using RAVEN also oriented to 
 interconnection among heterogeneous
-Models’ entities, the concept of treatable “input realizations” has been revised, including 
-the possibility to
-process 1-D realizations.
+Models’ entities, the concept of treatable ``input realizations'' has been revised, including 
+the possibility to process 1-D realizations. This addition determined the possibility to transfer
+array-like FOMs among different models. 
+
 Figure ~\ref{fig:ensembleModelComunication} schematically shows the communication 
 piping established by the 
-\textit{EnsembleModel} entity. It can be noticed how the sub-mo
+\textit{EnsembleModel} entity. It can be noticed how the sub-models share information (inputs/outputs data) using 
+the \textit{DataObjects} entity as communication network.
