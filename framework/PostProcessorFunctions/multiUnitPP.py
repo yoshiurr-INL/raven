@@ -61,6 +61,9 @@ class multiUnitPP(PostProcessorInterfaceBase):
     if 'metadata' in inputDic.keys():
       if 'ProbabilityWeight' in inputDic['metadata'].keys():
         pbWeights = copy.deepcopy(inputDic['metadata']['ProbabilityWeight'])/np.sum(inputDic['metadata']['ProbabilityWeight'])
+      else:
+        pointCount = len(inputDic['data']['input'].values()[0])
+        pbWeights  = np.ones(pointCount)/float(pointCount) 
 
     dataRestructured = np.zeros((numberSamples,numberVariables))
     

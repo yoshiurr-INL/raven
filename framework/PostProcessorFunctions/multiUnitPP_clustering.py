@@ -70,7 +70,7 @@ class multiUnitPP_clustering(PostProcessorInterfaceBase):
     for index,PC in enumerate(plantConfiguration):
       if list(PC) in dataRestructuredToList:
         indexes = np.where(np.all(dataRestructured == np.asarray(PC),axis=1))[0]
-        label[indexes] = index
+        label[indexes] = int(index)
       print(str(list(PC)) + ' -- ' + str(index))       
       
     outputDict['data']['output']['label'] = label

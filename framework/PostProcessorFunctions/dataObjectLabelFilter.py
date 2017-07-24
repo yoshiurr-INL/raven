@@ -96,17 +96,20 @@ class dataObjectLabelFilter(PostProcessorInterfaceBase):
 
       else:
         # self.outFormat == 'PointSet'
+        index = np.where(inputDic['data']['output'][self.label]==np.float64(self.clusterIDs[0])) 
+        #index = inputDic['data']['output'][self.label].searchsorted(np.asarray(self.clusterIDs))      
         for key in inputDic['data']['input']:
-          outputDic['data']['input'][key] = np.zeros(0)
+          outputDic['data']['input'][key] = copy.deepcopy(inputDic['data']['input'][key][index])
         for key in inputDic['data']['output']:
-          outputDic['data']['output'][key] = np.zeros(0)
-
+          outputDic['data']['output'][key] = copy.deepcopy(inputDic['data']['output'][key][index])
+    return outputDic
+'''
         for pos,val in np.ndenumerate(inputDic['data']['output'][self.label]):
           if val in self.clusterIDs:
             for key in inputDic['data']['input']:
               outputDic['data']['input'][key]  = np.append(outputDic['data']['input'][key],copy.deepcopy(inputDic['data']['input'][key][pos[0]]))
             for key in inputDic['data']['output']:
               outputDic['data']['output'][key] = np.append(outputDic['data']['output'][key],copy.deepcopy(inputDic['data']['output'][key][pos[0]]))
+'''
 
-
-      return outputDic
+    
