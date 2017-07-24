@@ -7,17 +7,17 @@ Since the scope of our PRA analysis is to generate a large number number of scen
 the computational time of the RISMC analysis would be too large even for modern high 
 performance computing systems.
 
-In order to decrease such computational time, we have employed ROMs instead of running 
+In order to decrease the computational time of the analysis, we have employed ROMs instead of running 
 the RELAP5-3D model. The objective is to employ a ROM for each PWR and SFP shown in 
 Fig.~\ref{fig:ensembleModel} instead the actual code.
 
-The actual workflow that implement such objective is as follows:
+The actual workflow that implements such approach is as follows:
 \begin{enumerate}
   \item Sample the response of each PWR and SFP using the RELAP5-3D code
   \item Choose an appropriate ROM and train it using the data generated in Step 1
   \item Validate the response of the ROMs against the response of the actual code
-  \item Insert the validated ROMs in the ensemble model in place of the RELAP5-3D 
-        code for each PWR and SFP
+  \item Insert the validated ROMs in the ensemble model shown in Fig.~\ref{fig:ensembleModel} in place of the RELAP5-3D 
+        code 
 \end{enumerate}
 
 \newcommand{\DPM}[1]{\textcolor{magenta}{#1}}
@@ -44,11 +44,12 @@ The $k$-value that fits the data with the highest accuracy is considered the ``b
 %
 In order to achieve a stable optimum, we randomly select half of the training data and perform 3-fold validation over multiple iterations.
 %
-The results are collected into a histogram similar to Figure~\ref{fig:neighborSelection} and the most frequent ``best'' parameter is selected for $k$.
+The results are collected into a histogram similar to Fig.~\ref{fig:neighborSelection} and the most frequent ``best'' parameter is selected for $k$.
 %
 The values of $k$ considered are the multiple of 5 up to and including 50 (i.e., $5,10,15,20,25,30,35,40,45,50$).
 %
-As we can see in Figure~\ref{fig:neighborSelection}, $k=25$ most frequently reports the highest prediction classification for the held-out data for the PWR2 model and is thus reported as the optimal value in Table~\ref{tab:romInfo}.
+As we can see in Fig.~\ref{fig:neighborSelection}, $k=25$ most frequently reports the highest prediction classification for the held-out data for the PWR2 model and is thus reported as the optimal
+value in Table~\ref{tab:romInfo}.
 
 \begin{figure}[!htbp]
 	\centering
@@ -75,7 +76,7 @@ Note, in the case where the full training set is used, the standard deviation wi
 %
 This final accuracy value is the prediction accuracy reported in Table~\ref{tab:romInfo}.
 %
-An example of this convergence is shown in Figure~\ref{fig:romConvergence}.
+An example of this convergence is shown in Fig.~\ref{fig:romConvergence}.
 
 \begin{figure}[!htbp]
 	\centering

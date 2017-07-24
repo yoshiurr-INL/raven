@@ -12,22 +12,19 @@ set we include:
 \begin{figure}
     \centering
     \centerline{\includegraphics[scale=0.4]{RISMCoverview.pdf}}
-    \caption{Overview of the RISMC approach}
+    \caption{Overview of the RISMC approach.}
     \label{fig:RISMCoverview}
 \end{figure}
 
 Note that deterministic modeling of plant or external events can be performed by employing 
 specific simulator codes but also surrogate models, i.e., ROMs~\cite{ROM_Khalik}. 
-ROMs would be employed in order to decrease the high computational costs of employed codes.
-In addition, multi-fidelity codes can be employed to model the same system; the idea is to 
-switch from low-fidelity to high-fidelity code when higher accuracy is needed (e.g., use 
-low-fidelity codes for steady-state conditions and high-fidelity code for transient conditions).
+ROMs would be employed as substitute of the actual code in order to decrease the high computational 
+costs of employed codes.
 
 \subsection{System Modeling}
-
-Modeling of the actual plant is performed using system analysis codes which simulate the temporal 
-evolution of the plant given the sampled timing/sequencing of events. Example of codes employed 
-in the nuclear industry are RELAP5-3D~\cite{relap5} and MELCOR~\cite{Melcor}. 
+The modeling of the actual plant is performed by using system analysis codes which simulate the temporal 
+evolution of the plant given the sampled values of timing/sequencing of events. Example of codes 
+that can be employed are RELAP5-3D~\cite{relap5} and MELCOR~\cite{Melcor}. 
 Example of RISMC analysis performed using the RISMC approach can be 
 found in~\cite{BWR_SBO_Mandelli,BWRanalysis,PRA_comparison_PSA2015}.
 
@@ -40,26 +37,28 @@ A dynamic human reliability analysis (HRA) framework called the Human Unimodel f
 Nuclear Technology to Enhance
 Reliability (HUNTER)~\cite{boringHUNTER} is being developed. In HUNTER, a virtual operator is modeled to 
 complement the virtual plant model enabled by using RAVEN as a task sequencer for thermo-hydraulic 
-code. The HUNTER framework is agnostic relative to HRA methods. To date, it has focused 
+code~\cite{RasmussenAHFE2017}. The HUNTER framework is agnostic relative to HRA methods. To date, it has focused 
 extensively on mapping operating procedures to human behavior primitives~\cite{GOMSHRA} and to
-auto-calculating the effects of performance shaping factors~\cite{DynamicizingSPAR}. Development work is
- ongoing, but these elements have been successfully incorporated into RAVEN to allow dynamic 
- calculation of the effects of human error probabilities~\cite{boringTaskProcedures} and task 
- duration~\cite{boringOperatorTiming} on overall event outcomes.
+auto-calculating the effects of performance shaping factors~\cite{DynamicizingSPAR,RasmussenESREL2016}. 
+Development work is
+ongoing, but these elements have been successfully incorporated into RAVEN to allow dynamic 
+calculation of the effects of human error probabilities~\cite{boringTaskProcedures} and task 
+duration~\cite{boringOperatorTiming} on overall event outcomes.
 
 \subsection{External Event Modeling}
-Modeling of external events (e.g., seismic or flooding) follows the same philosophy behind the RISMC
+Modeling of external events (e.g., seismic or flooding)~\cite{mandelliPSA2015} follows the same 
+philosophy behind the RISMC
 approach: model the phenomena from both a deterministic (i.e., by employing codes) and stochastic 
 point of view (i.e., by introducing stochastic elements into the simulation). This approach have the 
 relevant advantage that the external event can interact directly with the plant simulation. 
 This interaction can occur not only at the beginning of the accident scenario but also
 during the accident scenario itself. Thus, the external event is not only considered as an initial 
-condition imposed at the beginning of the analysis but is a boundary condition that evolve in time 
+condition imposed at the beginning of the analysis but it is also a boundary condition that evolves in time 
 along with the actual plant simulation.
 
 \subsection{ROM Modeling}
-Each RISMC analysis often requires a large amount of samples; this is due to the fact that the 
-number of stochastic parameters is very large and the uncertainties may be significant. 
+Each RISMC analysis often requires a large amount of samples (i.e., simulation runs); this is due to the fact that the 
+number of stochastic parameters is very large and the uncertainties may be significantly high. 
 The scope of the analysis is not only to determine outcome variables such as core damage probability 
 but, more in general, evaluate the system response for different combinations of the stochastic
 parameters in order to determine specific observable outcomes (e.g., plant damage). In addition, 
@@ -67,27 +66,28 @@ a single evaluation of the system response is often computationally expensive.
 This is often the case when multi-physics simulator codes and/or multiple codes are employed in an 
 integrated simulation run.
 
-These two issues, large number of samples required and computational cost of each simulation run, 
+These two issues, the large number of samples required and the computational cost of each simulation run, 
 make it challenging to perform a full PRA analysis of complex systems such as nuclear power plants.  
-In order to overcome this challenge, two possible solutions are available: reduce the required 
-number of samples or reduce the computational cost of each simulation run.
+In order to overcome this challenge, two possible solutions are available: 1) reduce the required 
+number of samples, or, 2) reduce the computational cost of each simulation run.
 
-Both solutions rely on the development of ROMs~\cite{ROM_Khalik}, also known as surrogate models. 
+Both solutions rely on the development of ROMs~\cite{ROM_Khalik}. 
 ROMs are mathematical models that infer the structure of a given set of data points using a
 blend of regression and interpolation techniques. In Solution 1, ROMs are built in order to generate 
 the minimum set of samples that allows to determine the outcome variables: this is called smart or 
-adaptive sampling. On the other hand, Solution 2 aims to build a ROM as a substitute of the simulation 
+adaptive sampling. 
+Solution 2 aims to build a ROM as a substitute of the simulation 
 code itself (i.e., a surrogate for a complex calculation).  ROMs are in fact much quicker to run 
-(a single ROM evaluation is on the order of $ms$) but, ROMs only approximate the simulation code and 
-thus an intrinsic uncertainty is always present.
+(a single ROM evaluation is on the order of milliseconds) but, they actually provide an approximated response 
+of the simulation code; thus a validation of the ROM is required. 
 
 Note that in this paper we extensively employ Solution 2: few RELAP5-3D runs (i.e., training set) are 
-employed to train a ROM for each thermo-hydraulic model. Once trained, ROMs emulate the response of the 
-RELAP5-3D model in a much faster way. 
+generated to train a ROM for each thermo-hydraulic model. Once trained and validated, 
+ROMs emulate the response of the RELAP5-3D model in a much faster way. 
 
 \subsection{System Stochastic Modeling}
-In the RISMC stochastic modeling we include all steps required to include in the analysis the 
-stochastic parameters that are of interest in the analysis such as: uncertain parameters and stochastic 
+In the RISMC stochastic modeling we include all steps required to model the 
+stochastic phenomena that are of interest in the analysis such as: uncertain parameters and stochastic 
 failure of system/components.
 This is performed by employing stochastic analysis tools (e.g., RAVEN~\cite{RAVEN_PSAM_2014}) that are 
 interfaced with the chosen system analysis codes. This interface is responsible to:
@@ -97,6 +97,6 @@ interfaced with the chosen system analysis codes. This interface is responsible 
         stochastic analysis tools
   \item execute the simulation run given the input file generated in Step 1
   \item collect the output of the simulation run so that a link between sampled input values and simulation 
-        outcome is created      
+        outcome is created.      
 \end{enumerate}
 

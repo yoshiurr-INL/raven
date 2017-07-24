@@ -2,13 +2,14 @@
 \label{sec:RISMC_MU_modeling}
 
 The actual multi-unit model has been modeled using both RELAP5-3D and RAVEN.
-The RELAP5-3D models the temporal response of all PWRs and SFPs while the plant 
+The RELAP5-3D models are employed to determine the temporal response of all PWRs and SFPs while the plant 
 connections and dependencies have been coded as an external model in RAVEN.
 The connections between the RELAP5-3D models and the RAVEN plant model are 
 shown in Fig.~\ref{fig:ensembleModel}.
-Briefly, the multi-unit model is structured so that it receives in input the set of 
+
+The multi-unit model is structured so that it receives in input the set of 
 sampled values (refer to Section~\ref{sec:plantStochasticModeling} for the complete list of 
-the chosen stochastic parameters) and provides as output the status of the six
+the chosen stochastic parameters) and it provides in output the status of the six
 models (PWRs and SFPs).
 Internally, the multi-unit model consists of a plant model in series with the six 
 RELAP5-3D models (which are arranged in a parallel configuration).
@@ -22,7 +23,7 @@ model.
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{ensembleModel.pdf}
-    \caption{RAVEN ensemble model for the considered test case}
+    \caption{RAVEN ensemble model for the considered test case.}
     \label{fig:ensembleModel}
 \end{figure}
 
@@ -32,7 +33,7 @@ model.
 \subsubsection{PWR1 and PWR3}
 RELAP5-3D PWR models are based on the so-called INL Generic PWR (IGPWR) 
 model~\cite{parisiExternalHazard,ronaldoRISMC}. 
-The input deck is modeling a ~2.5 GWth Westinghouse 3-loops PWR, including the RPV,
+The input deck is modeling a ~2.5 GWth Westinghouse 3-loop PWR, including the RPV,
 the 3 loops and the primary and secondary sides of the steam 
 generators (SGs) as shown in Fig.~\ref{fig:PWRnodalization}.
 Four independent channels are used for representing the reactor core. Three channels model 
@@ -48,15 +49,15 @@ side emergency injection, etc.
 \begin{figure}
     \centering
     \includegraphics[scale=0.7]{nodalizationTMI.pdf}
-    \caption{PWRs nodalization}
+    \caption{PWRs nodalization.}
     \label{fig:PWRnodalization}
 \end{figure}
 
 \subsubsection{PWR2}
 Unit 2 is based on the same RELAP5-3D IGPWR model, consistently modified for simulating the 
-mid-loop conditions~\cite{NUREGCR6144}. The model is representing Unit 2 
+mid-loop conditions~\cite{NUREGCR6144}. The model represents Unit 2 
 during the refueling outage phase, with steam generator 3 manway opened for maintenance and pressurizer safety 
-valves removed. Decay heat is removed by the residual heat removal system (RHRS). Because the 
+valves removed. Decay heat is removed by the Residual Heat Removal System (RHRS). Because the 
 openings on the primary system (in the pressurizer and steam generator 3), the use of steam generators 
 for reflux cooling in case 
 of loss of RHR is prevented. However cooling by gravity drain from the RWST is possible.
@@ -68,7 +69,7 @@ Main physical parameters values are reported in Table~\ref{tab:midLoopParamteres
 
 \begin{table}
    \centering
-  \begin{tabular}{|c|c|}
+   \begin{tabular}{|c|c|}
      \hline
      \textbf{Parameter}           & \textbf{Value}   \\ \hline \hline
      Core Power (MW)              & 13.0    \\ \hline
@@ -77,18 +78,18 @@ Main physical parameters values are reported in Table~\ref{tab:midLoopParamteres
      RHR outlet temperature (K)   & 327     \\ \hline
      Core average temperature (K) & 330     \\ \hline
   \end{tabular}
-  \caption{Plant operating parameters at mid loop operation}
+  \caption{Plant operating parameters at mid loop operation.}
   \label{tab:midLoopParamteres}
 \end{table} 
 
 \subsubsection{SFPs}
-The three Spent Fuel Pools were also modeled using RELAP5-3D code~\cite{parisiExternalAnalysis}. 
+The three SFPs were also modeledcode~\cite{parisiExternalAnalysis} using RELAP5-3D. 
 A scheme of a typical SFP is given in Fig.~\ref{fig:SFPnodalization}. 
 For the sake of simplicity, the two cooling loops were modeled just as boundary conditions 
 (assigned water inlet/outlet mass flow rates and temperatures). The opening of a valve on the pool bottom
-could simulate the fuel pool break by seismic effects. The RELAP5-3D model is reported in Figure YY.
+could simulate the fuel pool break by seismic effects. The RELAP5-3D model is reported in Fig.~\ref{fig:SFPnodalization}.
 
-The RELAP5-3D model was kept as simple as possible in order to reduce calculation times, e.g. 120 s 
+The RELAP5-3D model was kept as simple as possible in order to reduce calculation times, e.g., 120 seconds 
 of computer time was required for 86400 seconds transient. The thermal-hydraulic scheme is based on
 43 volumes and 49 junctions. 2 Heat Structures are used for modeling 15x15 Westinghouse FA. 
 The two independent cooling systems are modeled as boundary conditions (i.e., mass flow and 
@@ -107,25 +108,25 @@ to be 30 minutes.
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{nodalizationSFP.pdf}
-    \caption{SFPs nodalization}
+    \caption{SFPs nodalization.}
     \label{fig:SFPnodalization}
 \end{figure}
 
 \subsection{Plant Model}
 \label{sec:plantModel}
-The plant model has been coded as a Python script and interfaced with RAVEN as an 
+The plant model has been coded in Python script and interfaced with RAVEN as an 
 external model. Its main purpose is to determine timing and sequencing of events 
 for all six system models (i.e., PWRs and SFPs) given the sampled values of the 
 stochastic parameters.
 
-\subsection{Human models}
+\subsection{Human Models}
 To consider the performance of field workers, a simple human reliability analysis was 
 performed and incorporated into the event simulation. Although many human actions are 
 required, the analysis considers two human events: time to start recovery procedures 
-after initiating event and EDGS involuntary alignment
+after initiating event and EDGS involuntary alignment.
 
-Regarding the first, we employed a detailed subtask modeling using the HUNTER (Human Unimodel 
-for Nuclear Technology to Enhance Reliability)~\cite{boringHUNTER} framework. The details about 
+Regarding the first, we employed a detailed subtask modeling using the HUNTER~\cite{boringHUNTER} 
+framework. The details about 
 the model can be found in~\cite{hunterReport2016}; for the scope of this report, this event 
 is modeled as a stochastic variable with a pdf derived from~\cite{hunterReport2016}. 
 
@@ -151,17 +152,17 @@ distribution with value of $p=1.0 \cdot 10^{-2}$.
 \subsection{Plant Stochastic Modeling}
 \label{sec:plantStochasticModeling}
 For the scope of this analysis, we have identified 23 stochastic parameters. We have 
-partition this list of parameters based on their area of interest.
+grouped these parameters based on their area of interest.
 
-Regarding the SFPs, we have have identified seismic induced rupture, i.e. a SFP Loss Of
+Regarding the SFPs, we have have identified seismic induced rupture, i.e., a SFP Loss Of
 Coolant Accident (LOCA), as 
-element to include into the analysis. It has been modeled by choosing two stochastic 
-parameters: time of  occurrence and size of the SFP LOCA. In this work we have identified 
+element to include into the analysis. SFP LOCA has been represented by two stochastic 
+parameters: time of occurrence and size of the SFP LOCA. In this work we have identified 
 with locaTimeSFP1, locaTimeSFP2 and locaTimeSFP3 as the time of occurrence of the SFP 
 LOCAs while locaSizeSFP1, locaSizeSFP2 and locaSizeSFP3 represents the actual size of 
 the SFP LOCAs.
 
-Regarding the PWRs, we focused on two elements: lifetime of the batteries and the LOCA 
+Regarding the PWRs, we selected two elements: lifetime of the batteries and the LOCA 
 associated to the seal of the Reactor Coolant Pumps (RCPs). Battery systems provides 
 DC power to I\&C systems 
 of the PWRs such as the control of the Pilot Operated Relief Valves (PORVs).
@@ -174,7 +175,7 @@ involuntary align the EDGS from Unit 2 to Unit 1, the time of occurrence of EDGS
 involuntary alignment and time required to perform EDGS voluntary alignment.  
 
 Each cross-tie, CST (between Unit 2 and Unit 3), AFW (between Unit 1 and Unit 3) 
-and AC (between Unit 1 and Unit 1), has been considered in the analysis and, in 
+and AC (between Unit 1 and Unit 2), has been considered in the analysis and, in 
 particular, they have been modeled by assigning to each of them the time required 
 to perform such cross-tie.
 
@@ -183,7 +184,7 @@ representing them with a single stochastic parameter which represents the
 time to connect the EPE to its own unit.
 
 Lastly, the recovery plan followed by the plant crew has been modeled using a single
-parameter: recovery strategy (see Section~\ref{sec:accidentProgression}).
+parameter: recoveryStrategy (see Section~\ref{sec:accidentProgression}).
 
 In addition to recovery strategy, we have given an additional degree of freedom on 
 the actual procedure associated to the EPE for Unit 3. 
@@ -192,7 +193,7 @@ then the EPE connection on Unit 3 can be performed in different modes.
 
 A summary of the chosen stochastic parameters are listed in Tables~\ref{tab:stochasticParameters1} 
 and~\ref{tab:stochasticParameters2}
-along a description and with their probabilistic distribution.
+along with their description and probabilistic distribution function.
 
 \begin{table}
   \centering
@@ -207,7 +208,7 @@ along a description and with their probabilistic distribution.
          EPETime1           & Time to connect EPE to Unit 1    & hour   & Truncated normal (mean=2., sigma=.3, lower bound=1., upper bound=3.)   \\ \hline
          EPETime2           & Time to connect EPE to Unit 2    & hour   & Truncated normal (mean=2., sigma=.3, lower bound=1., upper bound=3.)   \\ \hline
          EPETime3           & Time to connect EPE to Unit 3    & hour   & Truncated normal (mean=2., sigma=.3, lower bound=1., upper bound=3.)   \\ \hline
-         EDGSinvolAlign     & Probability of occurrence for EDGS involuntary alignment & -      & Bernoulli (p=??)                               \\ \hline
+         EDGSinvolAlign     & Probability of occurrence for EDGS involuntary alignment & -      & Bernoulli (p=0.01)                               \\ \hline
          EDGSinvolAlignTime & Time of occurrence for EDGS involuntary alignment        & -      & Uniform (lower bound=.0, upper bound=1.)       \\ \hline
          batteryTime1       & Battery life for Unit 1          & hour      & Triangular (lower bound=6., upper bound=8., peak=7.) \\ \hline
          batteryTime3       & Battery life for Unit 3          & hour      & Triangular (lower bound=6., upper bound=8., peak=7.) \\ \hline
@@ -215,7 +216,7 @@ along a description and with their probabilistic distribution.
         \hline
       \end{tabular}
   \end{center}
-  \caption{Summary of the stochastic parameters chosen for the multi-unit analysis and their associated distribution}
+  \caption{Summary of the stochastic parameters chosen for the multi-unit analysis and their associated distribution.}
   \label{tab:stochasticParameters1}
 \end{table}
 
@@ -239,7 +240,7 @@ along a description and with their probabilistic distribution.
         \hline
       \end{tabular}
   \end{center}
-  \caption{Summary of the stochastic parameters chosen for the multi-unit analysis and their associated distribution (cont.ed)}
+  \caption{Summary of the stochastic parameters chosen for the multi-unit analysis and their associated distribution (cont.ed).}
   \label{tab:stochasticParameters2}
 \end{table}
 

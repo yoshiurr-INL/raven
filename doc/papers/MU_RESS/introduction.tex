@@ -1,21 +1,23 @@
 \section{Introduction}
 \label{sec:introduction}
 
-Multi-unit Nuclear Power Plant (NPPs) sites are defined as sites that are composed by 
-more than one reactor. In the U.S. the situation is the following:
+Multi-unit Nuclear Power Plant (NPP) sites are defined as sites that are composed by 
+more than one reactor. As of 2017, the U.S. fleet is composed by 99 operating reactors
+which are distributed as follows:
 \begin{itemize}
-  \item 25 power plant sites have 1 reactor
-  \item 33 power plant sites have 2 reactors
+  \item 26 power plant sites have 1 reactor
+  \item 31 power plant sites have 2 reactors
   \item 3 power plant sites have 3 reactors
   \item 1 power plant site has 2 reactors and 2 additional reactors under construction
 \end{itemize}
-The situation is similar for other countries such as Canada and Japan were 
+The situation is similar for other countries such as Canada, South Korea and Japan were 
 several NPP sites include a large number of reactors (6, 7 or even 8 reactors). 
 Worldwide about 80 plants have more than 2 reactors and 32 power plants have more 
 than 3 reactors. 
 
-Following the accident event occurred in 2011 at the Fukushima Daiichi~\cite{Fukushima} special 
-attention has been given to multi-unit plants. This attention has focused on the 
+Following the accident event that occurred in 2011 at the Fukushima Daiichi nuclear 
+power plant~\cite{Fukushima} special 
+attention has been given to multi-unit plant sites. This attention has focused on the 
 safety aspects of nuclear reactors that cannot be considered as entities isolated 
 from each other. 
 
@@ -28,37 +30,37 @@ stations~\cite{CANDU_MU_PRA,Darlington_MU_PRA}.
 Furthermore, the analysis of the safety aspects of multi-unit plants has been performed 
 for few selected cases ~\cite{MultiUnitKumara,MultiUnitModarres,MultiUnitZhang}. 
 
-The objective of this paper is to propose an analysis of a multi-unit power 
-plant not by using classical ET/FT tools~\cite{Nureg1150} but employing a simulation-based 
+The objective of this paper is to propose the first analysis of a multi-unit power 
+plant not by using classical ET/FT tools~\cite{Nureg1150} but by employing a simulation-based 
 (i.e., Dynamic PRA~\cite{DynamicReliabilityMonteCarlo}) approach: 
 the Risk Informed Safety Margin Characterization (RISMC) approach~\cite{RISMC,mandelliNewAlgo}. 
 
 The rationale behind this choice is that great modeling improvements can be achieved by 
 employing system simulators instead of static Boolean structures like ETs/FTs. 
-Accident dynamics is in fact not set a-priori by the analyst (i.e., in an ET/FT 
+Accident dynamic is in fact not set a-priori by the analyst (like in an ET/FT 
 structure) but it is entirely simulated given a set of initial and boundary conditions. 
 Note that timing and sequencing of events are implicitly modeled in the analysis along 
 with interactions between accident evolution and system dynamics.
 
-Modeling limitations of ETs/FT based methods are even more limiting when dealing with 
+Modeling limitations of ETs/FTs based methods are even more limiting when dealing with 
 multiple complex systems that are coupled to each other. In fact, the presence of shared 
-systems and structures among the units can add degree of freedom in accident progression 
-temporal evolution.
-In addition, note that in a multi-unit site, multiple radiological sources are in fact present, 
-either nuclear reactors and Spent Fuel Pools (SFPs). 
+systems and structures among the units provides additional degrees of freedom in the 
+accident progression temporal evolution.
+Furthermore, note that in a multi-unit site, multiple radiological sources are in fact present, 
+both nuclear reactors and Spent Fuel Pools (SFPs). 
 
 The paper presents in Section~\ref{sec:rismc} an overview of the RISMC approach and it describes
 the PRA elements of the analysis. Section~\ref{sec:raven} presents the RAVEN~\cite{RAVEN_PSAM_2014} 
-software and its element that actually enables the construction of the multi-unit modeling. 
+software and the element that actually enables the construction of the multi-unit modeling. 
 Section~\ref{sec:multiUnitModeling} introduces the multi-unit modeling from a mathematical 
 point of view while Section~\ref{sec:testCase} describes the multi-unit site considered in the
 analysis.
-Section~\ref{sec:RISMC_MU_modeling} describes in detail of the modeling of all elements multi-unit
-site have been modeled.
-An important feature of our analysis is that it employs Reduce Order Models (ROMs) in order to
+Section~\ref{sec:RISMC_MU_modeling} describes in detail of the RISMC modeling of all elements 
+of the chosen multi-unit site.
+An important feature of our analysis is that it employs Reduced Order Models (ROMs) in order to
 reduce both the statistical error of the analysis and the computational time. In this respect,
 Section~\ref{sec:plantRomModeling} shows how ROMs have been built and validated.
-Sections~\ref{sec:multiUnitPRA} and~\ref{sec:plantAnalysisResults} describes how the data have been 
+Sections~\ref{sec:multiUnitPRA} and~\ref{sec:plantAnalysisResults} describe how the data have been 
 generated and analyzed.
 Finally, Section~\ref{sec:results} presents the results obtained by the described RISMC analysis.
  

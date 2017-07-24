@@ -4,17 +4,15 @@
 From a mathematical point of view, a single simulator run can be represented 
 as a single trajectory in the phase space. The evolution of such a trajectory 
 in the phase space as function of time $t$ can be described as follows:
-
 \begin{equation}
     \frac{\partial \boldsymbol \theta }{\partial t}  = \boldsymbol \Xi (\boldsymbol \theta , \boldsymbol p, \boldsymbol s , t) 
     \label{eq:trajectory}
 \end{equation}
-
 where:
 \begin{itemize}
   \item $\boldsymbol \theta = \boldsymbol \theta(t)$ represents the temporal 
         evolution of a simulated accident scenario, i.e., $\boldsymbol \theta(t)$ can 
-        represent temperature inside the core of a PWR, the pressure level inside a containment
+        represent temperature inside the reactor core, the pressure level inside a containment
         building, the radionuclide concentration at a specific point outside the plant, etc.
   \item $\boldsymbol \Xi$ is the actual simulator code that describes how $\boldsymbol \theta$ 
         evolves in time
@@ -24,7 +22,7 @@ where:
 
 By using the RISMC approach, if Monte-Carlo sampling is chosen, the PRA analysis is performed 
 by~\cite{BWR_SBO_Mandelli}:
-\begin{itemize}
+\begin{enumerate}
   \item Associating a probabilistic distribution function (pdf) to the set of uncertain 
         parameters $\boldsymbol p$ (e.g., timing of events)
   \item Performing stochastic sampling of the pdfs defined in Step 1
@@ -36,14 +34,14 @@ by~\cite{BWR_SBO_Mandelli}:
             \label{eq:CDprobability}
         \end{equation}
         where $M_{CD}$ is the number of simulations that lead to CD. 
-\end{itemize}
+\end{enumerate}
 
-In a multi-unit type of scenario, the dynamic of each unit is not independent but it can actually 
+In a multi-unit type of scenario, the dynamic behaviour of each unit is not independent but it can actually 
 interact with the other units. Example of interactions are: electrical cross-ties and shared plant 
 resources such as portable AC generators
 
-Equation~\ref{eq:trajectory} refers to a single unit plant site; when multiple units are considered 
-then it is needed to track the temporal evolution of each unit: multiple $\theta$ needs to be evaluated 
+Since Equation~\ref{eq:trajectory} refers to a single unit plant site, if multiple units are considered 
+then it is needed to track the temporal evolution of each unit,i.e., multiple $\theta$ needs to be evaluated 
 (one for each unit). 
 Assuming that a three-unit plant is considered, Eq.~\ref{eq:trajectory} now becomes as follows:
 
@@ -60,7 +58,7 @@ Assuming that a three-unit plant is considered, Eq.~\ref{eq:trajectory} now beco
 
 Note that now the vector $s_i (i=1,\ldots,3)$ of each unit is shared among other units. This feature 
 captures shared resources and possible system cross-ties among units.
-In addition, intra-unit interactions such as a sub-set of human actions in a unit may be driven 
+In addition, intra-unit interactions (such as a sub-set of human actions in a unit) may be driven 
 by the actual status of other unit (e.g., thermo-hydraulic limit and operational boundaries). 
 Again, these actions may have cascade effects on the other units. This is particularly relevant 
 for severe accident scenarios. Thus, now Eq.~\ref{eq:MU_looseCoupled} becomes:
