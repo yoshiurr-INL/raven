@@ -17,7 +17,7 @@
 
   <!-- RUNINFO -->
   <RunInfo>
-    <WorkingDir>t0</WorkingDir>
+    <WorkingDir>t8</WorkingDir>
     <Sequence>sample,dump</Sequence>
     <batchSize>4</batchSize>
     <internalParallel>True</internalParallel>
@@ -77,7 +77,7 @@
     <MonteCarlo name="MC">
       <samplerInit>
         <limit>10000</limit>
-        <initialSeed>0</initialSeed>
+        <initialSeed>8</initialSeed>
       </samplerInit>
       <!-- Isolation Valve Leaks -->
       <variable name="AisolationValveLeak">
