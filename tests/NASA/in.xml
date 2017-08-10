@@ -20,6 +20,7 @@
     <WorkingDir>.</WorkingDir>
     <Sequence>sample,dump</Sequence>
     <batchSize>8</batchSize>
+    <internalParallel>True</internalParallel>
   </RunInfo>
 
   <!-- STEPS -->
@@ -75,7 +76,7 @@
   <Samplers>
     <MonteCarlo name="MC">
       <samplerInit>
-        <limit>1000000</limit>
+        <limit>100000</limit>
       </samplerInit>
       <!-- Isolation Valve Leaks -->
       <variable name="AisolationValveLeak">

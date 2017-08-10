@@ -16,6 +16,7 @@ import scipy.stats
 import operator as op
 import numpy as np
 import time
+import sys
 
 class MissionStage:
 	"""
@@ -197,12 +198,13 @@ class RCS(object):
 		if 0 in [sum0,sum1] or isolationLeak:
 			## Depending on when the failure occurs we may get either a loss of
 			## crew or a loss of vehicle
-			print(brokenRocket)
-			print('Mission has ended in irrecoverable loss.')
+			# print(brokenRocket)
 			if self.currentStage == MissionStage.Docked:
+				sys.stdout.write('LOV - Mission has ended in irrecoverable loss.')
 				self.LOV = self.elapsedMissionTime
 				return MissionStatus.LOV
 			else:
+				sys.stdout.write('LOC - Mission has ended in irrecoverable loss.')
 				self.LOC = self.elapsedMissionTime
 				return MissionStatus.LOC
 
@@ -210,8 +212,8 @@ class RCS(object):
 			## If we are already on our way home, then there is no mission left
 			## to abort, so this is not classified as a loss
 			if self.currentStage < MissionStage.PostUndock:
-				print(rocket)
-				print('Mission has been aborted. Returning home.')
+				# print(rocket)
+				sys.stdout.write('LOM - Mission has been aborted. Returning home.')
 				self.currentStage = MissionStage.PostUndock
 				self.LOM = self.elapsedMissionTime
 				## There is still a chance something worse could happen, so
@@ -657,7 +659,9 @@ def run(dataObject,Input):
 	simEnd = time.time()
 	############################################################################
 
-	dataObject.time = np.array(range(rcs.elapsedMissionTime))
+	missionTime = rcs.elapsedMissionTime+1
+
+	dataObject.time = np.array(range(missionTime))
 
 	# for hour,iStage,event in rcs.events:
 	# 	stage = None
@@ -670,9 +674,6 @@ def run(dataObject,Input):
 	# 	else:
 	# 		stage = 'Complete'
 	# 	print(hour, stage, event)
-
-	missionTime = rcs.elapsedMissionTime
-
 
 
 	## Setup the initial conditions:
@@ -749,53 +750,6 @@ def run(dataObject,Input):
 			## a component failure, so there is no need to do anything
 			## but set it to 1.
 			dataObject.__dict__[event][t:] = 1
-
-	# for t in range(missionTime):
-	# 	if len(events) > 0 and t == events[0][0]:
-	# 		## It could happen that multiple events occur at this timestep, so
-	# 		## be sure to catch 'em all
-	# 		while(len(events) > 0 and t == events[0][0]):
-	# 			_,stage,event = events.pop()
-	# 			dataObject.MissionStage[t] = stage
-
-	# 			if 'CCF2' in event:
-	# 				dataObject.CCF2[t] = 1
-	# 				event = event[:-5]
-	# 			elif 'CCF3' in event:
-	# 				dataObject.CCF3[t] = 1
-	# 				event = event[:-5]
-
-	# 			if 'Activated' in event:
-	# 				prefix = event[:2]
-	# 				dataObject.__dict__[prefix+'_Active'][t:] = 1
-	# 			elif 'Deactivated' in event:
-	# 				prefix = event[:2]
-	# 				dataObject.__dict__[prefix+'_Active'][t:] = 0
-	# 			elif 'Fail' in event:
-	# 				event = 'A0_ExciterFail'
-	# 				key = event.strip('Fail') + 'Operational'
-	# 				dataObject.__dict__[key][t:] = 0
-	# 			else:
-	# 				## Everything else should be parsed exactly and represent
-	# 				## a component failure, so there is no need to do anything
-	# 				## but set it to 1.
-	# 				dataObject.__dict__[event][t:] = 1
-
-	# 	elif t == 0:
-	# 		continue
-	# 	# It turns out that events are the only places where statuses change,
-	# 	# so if no event, then the values should already be populated.
-	# 	# When the event happens, we change the value for the remainder of the
-	# 	# history (except in a few places where we want to signal the instant
-	# 	# when an event took place).
-	# 	else:
-	# 		## No event means everything stays the same except the time
-	# 		dataObject.MissionStage[t] = dataObject.MissionStage[t-1]
-	# 		dataObject.CCF2[t] = 0
-	# 		dataObject.CCF3[t] = 0
-
-	# 		for key in keysToUpdate:
-	# 			dataObject.__dict__[key][t] = dataObject.__dict__[key][t-1]
 
 	end = time.time()
 	print('Model run time: {:4.2f} s'.format(end-start))
