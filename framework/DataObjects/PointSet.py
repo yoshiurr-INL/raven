@@ -435,10 +435,12 @@ class PointSet(Data):
         myFile.write(','.join([str(item[j]) for item in itertools.chain(inpValues,outValues)]))
         myFile.write('\n')
       myFile.close()
-      self._createXMLFile(filenameLocal,'Pointset',inpKeys,outKeys)
-      if len(unstructuredInpKeys) > 0:
-        # write unstructuredData
-        self._writeUnstructuredInputInXML(filenameLocal +'_unstructured_inputs',filteredUnstructuredInpKeys,filteredUnstructuredInpValues)
+      print(options)
+      if 'skipXML' not in options:
+        self._createXMLFile(filenameLocal,'Pointset',inpKeys,outKeys)
+        if len(unstructuredInpKeys) > 0:
+          # write unstructuredData
+          self._writeUnstructuredInputInXML(filenameLocal +'_unstructured_inputs',filteredUnstructuredInpKeys,filteredUnstructuredInpValues)
 
   def _specializedLoadXMLandCSV(self, filenameRoot, options):
     """

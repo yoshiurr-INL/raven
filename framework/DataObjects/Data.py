@@ -747,6 +747,9 @@ class Data(utils.metaclass_insert(abc.ABCMeta,BaseType)):
         optionsInt['what'] = variablesToPrint
     else:
       filenameLocal = self.name + '_dump'
+
+    if 'skipXML' in options:
+      optionsInt['skipXML'] = True
     # this not needed since the variables are taken from inside
     #if 'what' not in optionsInt.keys():
     #  inputKeys, outputKeys = sorted(self.getParaKeys('inputs')), sorted(self.getParaKeys('outputs'))

@@ -1,0 +1,87 @@
+<?xml version="1.0" ?>
+<Simulation>
+
+  <VariableGroups>
+    <Group name="thrusterAInputs">AisolationValveLeak,AisolationValveStuckOpen,A0fuelStuckClosed,A0oxidizerStuckClosed,A0fuelStuckOpen,A0oxidizerStuckOpen,A0fuelOperation,A0oxidizerOperation,A0fuelLeak,A0oxidizerLeak,A0ExciterFailure,A1fuelStuckClosed,A1oxidizerStuckClosed,A1fuelStuckOpen,A1oxidizerStuckOpen,A1fuelOperation,A1oxidizerOperation,A1fuelLeak,A1oxidizerLeak,A1ExciterFailure</Group>
+    <Group name="thrusterBInputs">BisolationValveLeak,BisolationValveStuckOpen,B0fuelStuckClosed,B0oxidizerStuckClosed,B0fuelStuckOpen,B0oxidizerStuckOpen,B0fuelOperation,B0oxidizerOperation,B0fuelLeak,B0oxidizerLeak,B0ExciterFailure,B1fuelStuckClosed,B1oxidizerStuckClosed,B1fuelStuckOpen,B1oxidizerStuckOpen,B1fuelOperation,B1oxidizerOperation,B1fuelLeak,B1oxidizerLeak,B1ExciterFailure</Group>
+    <Group name="thrusterCInputs">CisolationValveLeak,CisolationValveStuckOpen,C0fuelStuckClosed,C0oxidizerStuckClosed,C0fuelStuckOpen,C0oxidizerStuckOpen,C0fuelOperation,C0oxidizerOperation,C0fuelLeak,C0oxidizerLeak,C0ExciterFailure,C1fuelStuckClosed,C1oxidizerStuckClosed,C1fuelStuckOpen,C1oxidizerStuckOpen,C1fuelOperation,C1oxidizerOperation,C1fuelLeak,C1oxidizerLeak,C1ExciterFailure</Group>
+
+    <Group name="thrusterAOutputs">A_IsolationValveOpen,A_IsolationValveLeak,A0_Activated,A0_Deactivated,A0_FuelValveFail,A0_FuelValveStuckOpen,A0_FuelValveStuckClosed,A0_FuelValveLeak,A0_OxidizerValveFail,A0_OxidizerValveStuckOpen,A0_OxidizerValveStuckClosed,A0_OxidizerValveLeak,A0_ExciterFail,A1_Activated,A1_Deactivated,A1_FuelValveFail,A1_FuelValveStuckOpen,A1_FuelValveStuckClosed,A1_FuelValveLeak,A1_OxidizerValveFail,A1_OxidizerValveStuckOpen,A1_OxidizerValveStuckClosed,A1_OxidizerValveLeak,A1_ExciterFail</Group>
+    <Group name="thrusterBOutputs">B_IsolationValveOpen,B_IsolationValveLeak,B0_Activated,B0_Deactivated,B0_FuelValveFail,B0_FuelValveStuckOpen,B0_FuelValveStuckClosed,B0_FuelValveLeak,B0_OxidizerValveFail,B0_OxidizerValveStuckOpen,B0_OxidizerValveStuckClosed,B0_OxidizerValveLeak,B0_ExciterFail,B1_Activated,B1_Deactivated,B1_FuelValveFail,B1_FuelValveStuckOpen,B1_FuelValveStuckClosed,B1_FuelValveLeak,B1_OxidizerValveFail,B1_OxidizerValveStuckOpen,B1_OxidizerValveStuckClosed,B1_OxidizerValveLeak,B1_ExciterFail</Group>
+    <Group name="thrusterCOutputs">C_IsolationValveOpen,C_IsolationValveLeak,C0_Activated,C0_Deactivated,C0_FuelValveFail,C0_FuelValveStuckOpen,C0_FuelValveStuckClosed,C0_FuelValveLeak,C0_OxidizerValveFail,C0_OxidizerValveStuckOpen,C0_OxidizerValveStuckClosed,C0_OxidizerValveLeak,C0_ExciterFail,C1_Activated,C1_Deactivated,C1_FuelValveFail,C1_FuelValveStuckOpen,C1_FuelValveStuckClosed,C1_FuelValveLeak,C1_OxidizerValveFail,C1_OxidizerValveStuckOpen,C1_OxidizerValveStuckClosed,C1_OxidizerValveLeak,C1_ExciterFail</Group>
+    
+    <Group name="otherOutputs">UndockTime,EndTime,CCF2,CCF22,CCF3,LOM,LOC,LOV</Group>
+
+    <Group base="thrusterAInputs" dependencies="thrusterAInputs,thrusterBInputs,thrusterCInputs" name="allInputs">+thrusterBInputs, +thrusterCInputs</Group>
+    <Group base="thrusterAOutputs" dependencies="thrusterAOutputs,thrusterBOutputs,thrusterCOutputs,otherOutputs" name="allOutputs">+thrusterBOutputs, +thrusterCOutputs,+otherOutputs</Group>
+  </VariableGroups>
+
+  <Files>
+    <Input name="s0">s0/NASA_data</Input>
+    <Input name="s1">s1/NASA_data</Input>
+    <Input name="s2">s2/NASA_data</Input>
+    <Input name="s3">s3/NASA_data</Input>
+    <Input name="s4">s4/NASA_data</Input>
+    <Input name="s5">s5/NASA_data</Input>
+    <Input name="s6">s6/NASA_data</Input>
+    <Input name="s7">s7/NASA_data</Input>
+    <Input name="s8">s8/NASA_data</Input>
+    <Input name="s9">s9/NASA_data</Input>
+  </Files>
+
+  <!-- RUNINFO -->
+  <RunInfo>
+    <WorkingDir>.</WorkingDir>
+    <Sequence>combine,dump</Sequence>
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <!-- STEPS -->
+  <Steps>
+    <IOStep name="combine">
+      <Input class="Files" type="">s0</Input>
+      <Input class="Files" type="">s1</Input>
+      <Input class="Files" type="">s2</Input>
+      <Input class="Files" type="">s3</Input>
+      <Input class="Files" type="">s4</Input>
+      <Input class="Files" type="">s5</Input>
+      <Input class="Files" type="">s6</Input>
+      <Input class="Files" type="">s7</Input>
+      <Input class="Files" type="">s8</Input>
+      <Input class="Files" type="">s9</Input>
+      <Output class="DataObjects" type="PointSet">data</Output>
+      <Output class="DataObjects" type="PointSet">data</Output>
+      <Output class="DataObjects" type="PointSet">data</Output>
+      <Output class="DataObjects" type="PointSet">data</Output>
+      <Output class="DataObjects" type="PointSet">data</Output>
+      <Output class="DataObjects" type="PointSet">data</Output>
+      <Output class="DataObjects" type="PointSet">data</Output>
+      <Output class="DataObjects" type="PointSet">data</Output>
+      <Output class="DataObjects" type="PointSet">data</Output>
+      <Output class="DataObjects" type="PointSet">data</Output>
+    </IOStep>
+    <IOStep name="dump">
+      <Input class="DataObjects" type="PointSet">data</Input>
+      <Output class="OutStreams" type="Print">data</Output>
+    </IOStep>
+  </Steps>
+
+  <!-- OUTSTREAMS -->
+  <OutStreams>
+    <Print name="data">
+      <filename>NASA_data</filename>
+      <type>csv</type>
+      <source>data</source>
+      <skipMetadata/>
+    </Print>
+  </OutStreams>
+
+  <!-- DATA OBJECTS -->
+  <DataObjects>
+    <PointSet name="data">
+      <Input>DockTime</Input>
+      <Output>allOutputs</Output>
+    </PointSet>
+  </DataObjects>
+
+</Simulation>

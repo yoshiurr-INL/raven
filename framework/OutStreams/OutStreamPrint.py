@@ -63,6 +63,7 @@ class OutStreamPrint(OutStreamManager):
     self.sourceName = []
     self.sourceData = None
     self.what = None
+    self.skipMetadata = False
 
   def localGetInitParams(self):
     """
@@ -100,10 +101,14 @@ class OutStreamPrint(OutStreamManager):
     """
     self.type = 'OutStreamPrint'
     for subnode in xmlNode:
-      if subnode.tag not in ['type','source','what','filename','target']:
+
+      if subnode.tag not in ['type','source','what','filename','target','skipMetadata']:
         self.raiseAnError(IOError, ' Print Outstream object ' + str(self.name) + ' contains the following unknown node: ' + str(subnode.tag))
+
       if subnode.tag == 'source':
         self.sourceName = subnode.text.split(',')
+      elif subnode.tag.lower() == 'skipmetadata':
+        self.skipMetadata = True
       elif subnode.tag == 'filename':
         self.filename = subnode.text
       else:
@@ -127,6 +132,9 @@ class OutStreamPrint(OutStreamManager):
       dictOptions['filenameroot'] = self.filename
     else:
       dictOptions['filenameroot'] = self.name
+
+    if self.skipMetadata:
+      dictOptions['skipXML'] = True
 
     if self.what:
       dictOptions['what'] = self.what
