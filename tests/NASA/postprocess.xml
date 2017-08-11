@@ -1,28 +1,37 @@
-<?xml version="1.0" ?>
-<Simulation>
+<?xml version="1.0"?>
+<Simulation verbosity="debug">
 
   <VariableGroups>
     <Group name="thrusterAOutputs">A_IsolationValveOpen,A_IsolationValveLeak,A0_Activated,A0_Deactivated,A0_FuelValveFail,A0_FuelValveStuckOpen,A0_FuelValveStuckClosed,A0_FuelValveLeak,A0_OxidizerValveFail,A0_OxidizerValveStuckOpen,A0_OxidizerValveStuckClosed,A0_OxidizerValveLeak,A0_ExciterFail,A1_Activated,A1_Deactivated,A1_FuelValveFail,A1_FuelValveStuckOpen,A1_FuelValveStuckClosed,A1_FuelValveLeak,A1_OxidizerValveFail,A1_OxidizerValveStuckOpen,A1_OxidizerValveStuckClosed,A1_OxidizerValveLeak,A1_ExciterFail</Group>
     <Group name="thrusterBOutputs">B_IsolationValveOpen,B_IsolationValveLeak,B0_Activated,B0_Deactivated,B0_FuelValveFail,B0_FuelValveStuckOpen,B0_FuelValveStuckClosed,B0_FuelValveLeak,B0_OxidizerValveFail,B0_OxidizerValveStuckOpen,B0_OxidizerValveStuckClosed,B0_OxidizerValveLeak,B0_ExciterFail,B1_Activated,B1_Deactivated,B1_FuelValveFail,B1_FuelValveStuckOpen,B1_FuelValveStuckClosed,B1_FuelValveLeak,B1_OxidizerValveFail,B1_OxidizerValveStuckOpen,B1_OxidizerValveStuckClosed,B1_OxidizerValveLeak,B1_ExciterFail</Group>
     <Group name="thrusterCOutputs">C_IsolationValveOpen,C_IsolationValveLeak,C0_Activated,C0_Deactivated,C0_FuelValveFail,C0_FuelValveStuckOpen,C0_FuelValveStuckClosed,C0_FuelValveLeak,C0_OxidizerValveFail,C0_OxidizerValveStuckOpen,C0_OxidizerValveStuckClosed,C0_OxidizerValveLeak,C0_ExciterFail,C1_Activated,C1_Deactivated,C1_FuelValveFail,C1_FuelValveStuckOpen,C1_FuelValveStuckClosed,C1_FuelValveLeak,C1_OxidizerValveFail,C1_OxidizerValveStuckOpen,C1_OxidizerValveStuckClosed,C1_OxidizerValveLeak,C1_ExciterFail</Group>
-    <Group name="otherOutputs">DockTime,UndockTime,EndTime,CCF2,CCF22,CCF3,LOM,LOC,LOV, boolLOM, boolLOC, boolLOV</Group>
+    <Group name="otherOutputs">DockTime,UndockTime,CCF2,CCF22,CCF3,LOM,LOC,LOV, boolLOM, boolLOC, boolLOV</Group>
     <Group base="thrusterAOutputs" dependencies="thrusterAOutputs,thrusterBOutputs,thrusterCOutputs,otherOutputs" name="allOutputs">+thrusterBOutputs, +thrusterCOutputs,+otherOutputs</Group>
   </VariableGroups>
 
   <Files>
     <Input name="data">NASA_data</Input>
-    <Input name="stats">NASA_stats.xml</Input>
+    <Input name="stats">NASA_stats.csv</Input>
+    <Input name="lomStats">NASA_lom_stats.csv</Input>
+    <Input name="locStats">NASA_loc_stats.csv</Input>
   </Files>
 
   <Models>
-    <PostProcessor name="stats" subType="BasicStatistics" verbosity="debug">
+    <PostProcessor name="stats" subType="BasicStatistics">
       <expectedValue>boolLOM,boolLOC,boolLOV</expectedValue>
     </PostProcessor>
+    <PostProcessor name="statsAll" subType="BasicStatistics">
+      <expectedValue>allOutputs</expectedValue>
+    </PostProcessor>
     <PostProcessor name="filterLOM" subType="InterfacedPostProcessor">
+      <method>dataObjectLabelFilter</method>
+      <dataType>PointSet</dataType>
       <label>boolLOM</label>
       <clusterIDs>1</clusterIDs>
     </PostProcessor>
     <PostProcessor name="filterLOC" subType="InterfacedPostProcessor">
+      <method>dataObjectLabelFilter</method>
+      <dataType>PointSet</dataType>
       <label>boolLOC</label>
       <clusterIDs>1</clusterIDs>
     </PostProcessor>
@@ -30,8 +39,8 @@
 
   <!-- RUNINFO -->
   <RunInfo>
-    <WorkingDir>.</WorkingDir>
-    <Sequence>pullData,stats</Sequence>
+    <WorkingDir>s0</WorkingDir>
+    <Sequence>pullData,stats,filterLOM,statsLOM,filterLOC,statsLOC</Sequence>
     <batchSize>1</batchSize>
   </RunInfo>
 
@@ -45,6 +54,26 @@
       <Input class="DataObjects" type="PointSet">data</Input>
       <Model class="Models" type="PostProcessor">stats</Model>
       <Output class="Files" type="">stats</Output>
+    </PostProcess>
+    <PostProcess name="filterLOM">
+      <Input class="DataObjects" type="PointSet">data</Input>
+      <Model class="Models" type="PostProcessor">filterLOM</Model>
+      <Output class="DataObjects" type="PointSet">lom</Output>
+    </PostProcess>
+    <PostProcess name="statsLOM">
+      <Input class="DataObjects" type="PointSet">lom</Input>
+      <Model class="Models" type="PostProcessor">statsAll</Model>
+      <Output class="Files" type="">lomStats</Output>
+    </PostProcess>
+    <PostProcess name="filterLOC">
+      <Input class="DataObjects" type="PointSet">data</Input>
+      <Model class="Models" type="PostProcessor">filterLOM</Model>
+      <Output class="DataObjects" type="PointSet">lom</Output>
+    </PostProcess>
+    <PostProcess name="statsLOC">
+      <Input class="DataObjects" type="PointSet">lom</Input>
+      <Model class="Models" type="PostProcessor">statsAll</Model>
+      <Output class="Files" type="">locStats</Output>
     </PostProcess>
   </Steps>
 
@@ -61,12 +90,15 @@
   <!-- DATA OBJECTS -->
   <DataObjects>
     <PointSet name="data">
+      <Input>EndTime</Input>
       <Output>allOutputs</Output>
     </PointSet>
     <PointSet name="loc">
+      <Input>EndTime</Input>
       <Output>allOutputs</Output>
     </PointSet>
     <PointSet name="lom">
+      <Input>EndTime</Input>
       <Output>allOutputs</Output>
     </PointSet>
   </DataObjects>
