@@ -77,9 +77,6 @@ exciterExposures = {MissionStage.PreDock:      24,
 					MissionStage.Docked:        0,
 					MissionStage.PostUndock:    4}
 
-CCF2 = 0.04830
-CCF3 = 0.00517
-
 def testSystem(failureProbability, count):
 	"""
 		Function for testing if a failure has occurred given a set number of
@@ -245,7 +242,6 @@ class RCS(object):
 					self.activeThrusters[group] = self.thrusters[nextIdx][group]
 
 	def run(self):
-
 		self.updateThrusters()
 		loss = self.checkLoss()
 
@@ -255,8 +251,16 @@ class RCS(object):
 		if self.currentStage == MissionStage.Complete:
 			return None
 
+		## If we are docked we can coarsen the timestep resolution since we only
+		## need to check the leakage
+		if self.currentStage == MissionStage.Docked:
+			demandsPerHour = 1
+		else:
+			demandsPerHour = 1000
+		uses = 0
 		## Check if anything failed each hour of operation
-		for hour in range(self.times[self.currentStage]):
+		for step in range(demandsPerHour*self.times[self.currentStage]):
+			hour = float(step) / demandsPerHour
 			## First check for leaks as they have the largest downstream effect
 			## Leaks in the activated isolation valves? Instant failure
 			if hour < leakExposures[self.currentStage]:
@@ -298,13 +302,9 @@ class RCS(object):
 							return loss
 						self.checkIsolationValves[failedIdx] = True
 
-						## Check common cause failure
-						ccf2 = scipy.stats.bernoulli.rvs(CCF2)
-						if ccf2 or self.activeThrusters[group].checkLeakage(self.elapsedMissionTime):
+						if self.activeThrusters[group].checkLeakage(self.elapsedMissionTime):
 							failedIdx = self.activeThrusters[group].id
-							if ccf2:
-								self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + self.events[-1][2][1:] + '_CCF2'))
-							elif self.elapsedMissionTime >= self.activeThrusters[group].fuelValve.leakTime:
+							if self.elapsedMissionTime >= self.activeThrusters[group].fuelValve.leakTime:
 								self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_FuelValveLeak'))
 							else:
 								self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_OxidizerValveLeak'))
@@ -333,13 +333,9 @@ class RCS(object):
 
 							self.updateThrusters()
 
-							## Check common cause failure again
-							ccf3 = scipy.stats.bernoulli.rvs(CCF3)
-							if ccf3 or self.activeThrusters[group].checkLeakage(self.elapsedMissionTime):
+							if self.activeThrusters[group].checkLeakage(self.elapsedMissionTime):
 								failedIdx = self.activeThrusters[group].id
-								if ccf3:
-									self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + self.events[-1][2][1:] + '_CCF3'))
-								elif self.elapsedMissionTime >= self.activeThrusters[group].fuelValve.leakTime:
+								if self.elapsedMissionTime >= self.activeThrusters[group].fuelValve.leakTime:
 									self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_FuelValveLeak'))
 								else:
 									self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_OxidizerValveLeak'))
@@ -355,10 +351,26 @@ class RCS(object):
 
 			## Next, check for failures from demand as they can also have
 			## downstream effects
-			if hour < operationExposures[self.currentStage]:
-				demandsPerHour = demands[self.currentStage] / operationExposures[self.currentStage]
-				for usage in range(demandsPerHour):
-					for group in [0,1]:
+			if uses < demands[self.currentStage]:
+				for group in [0,1]:
+					if self.activeThrusters[group].checkFailedOpen():
+						failedIdx = self.activeThrusters[group].id
+						if self.activeThrusters[group].uses >= self.activeThrusters[group].fuelValve.failToOpenCount:
+							self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_FuelValveStuckClosed'))
+						else:
+							self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_OxidizerValveStuckClosed'))
+
+						## Failure to open
+						## Update this thruster's availability and attempt to
+						## set a new active
+						self.availability[failedIdx][group] = False
+						self.updateThrusters()
+
+						## Check for mission status
+						loss = self.checkLoss()
+						if loss is not None:
+							return loss
+
 						if self.activeThrusters[group].checkFailedOpen():
 							failedIdx = self.activeThrusters[group].id
 							if self.activeThrusters[group].uses >= self.activeThrusters[group].fuelValve.failToOpenCount:
@@ -366,24 +378,19 @@ class RCS(object):
 							else:
 								self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_OxidizerValveStuckClosed'))
 
-							## Failure to open
-							## Update this thruster's availability and attempt to
-							## set a new active
+							## Failure to open, remove this thruster's availability
 							self.availability[failedIdx][group] = False
-							self.updateThrusters()
 
 							## Check for mission status
 							loss = self.checkLoss()
 							if loss is not None:
 								return loss
 
-							## Check common cause failure
-							ccf2 = scipy.stats.bernoulli.rvs(CCF2)
-							if ccf2 or self.activeThrusters[group].checkFailedOpen():
+							self.updateThrusters()
+
+							if self.activeThrusters[group].checkFailedOpen():
 								failedIdx = self.activeThrusters[group].id
-								if ccf2:
-									self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + self.events[-1][2][1:] + '_CCF2'))
-								elif self.activeThrusters[group].uses >= self.activeThrusters[group].fuelValve.failToOpenCount:
+								if self.activeThrusters[group].uses >= self.activeThrusters[group].fuelValve.failToOpenCount:
 									self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_FuelValveStuckClosed'))
 								else:
 									self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_OxidizerValveStuckClosed'))
@@ -391,46 +398,56 @@ class RCS(object):
 								## Failure to open, remove this thruster's availability
 								self.availability[failedIdx][group] = False
 
-								## Check for mission status
-								loss = self.checkLoss()
-								if loss is not None:
-									return loss
+								## Mission has failed, this will always
+								## return LOC/V at this point
+								return self.checkLoss()
 
-								self.updateThrusters()
+					if self.activeThrusters[group].checkFailedClose():
+						## Failure to close
+						## Remove both downstream thrusters from
+						## availability and attempt to set the new active
+						## thrusters
+						failedIdx = self.activeThrusters[group].id
+						if self.activeThrusters[group].uses >= self.activeThrusters[group].fuelValve.failToCloseCount:
+							self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_FuelValveStuckOpen'))
+						else:
+							self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_OxidizerValveStuckOpen'))
 
-								## Check common cause failure again
-								ccf3 = scipy.stats.bernoulli.rvs(CCF3)
-								if ccf3 or self.activeThrusters[group].checkFailedOpen():
-									failedIdx = self.activeThrusters[group].id
-									if ccf3:
-										self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + self.events[-1][2][1:] + '_CCF3'))
-									elif self.activeThrusters[group].uses >= self.activeThrusters[group].fuelValve.failToOpenCount:
-										self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_FuelValveStuckClosed'))
-									else:
-										self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_OxidizerValveStuckClosed'))
+						other = int(not group)
+						self.availability[failedIdx][group] = False
+						self.availability[failedIdx][other] = False
+						self.updateThrusters()
 
-									## Failure to open, remove this thruster's availability
-									self.availability[failedIdx][group] = False
+						## Attempt to close the isolation valve and see if
+						## we still have enough resources to continue
+						isolationLeak = self.thrusters[failedIdx][group].isolationValveFailure
+						if isolationLeak:
+							self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + '_IsolationValveLeak'))
 
-									## Mission has failed, this will always
-									## return LOC/V at this point
-									return self.checkLoss()
+						loss = self.checkLoss(isolationLeak)
+						if loss is not None:
+							return loss
+						self.checkIsolationValves[failedIdx] = True
 
 						if self.activeThrusters[group].checkFailedClose():
-							## Failure to close
-							## Remove both downstream thrusters from
-							## availability and attempt to set the new active
-							## thrusters
 							failedIdx = self.activeThrusters[group].id
 							if self.activeThrusters[group].uses >= self.activeThrusters[group].fuelValve.failToCloseCount:
 								self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_FuelValveStuckOpen'))
 							else:
 								self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_OxidizerValveStuckOpen'))
 
-							other = int(not group)
+							## Failure to open, remove both thrusters from
+							## availability and attempt to set the new active
+							## thrusters
 							self.availability[failedIdx][group] = False
 							self.availability[failedIdx][other] = False
 							self.updateThrusters()
+
+							## Check for mission status
+							loss = self.checkLoss()
+							if loss is not None:
+								return loss
+							self.checkIsolationValves[failedIdx] = True
 
 							## Attempt to close the isolation valve and see if
 							## we still have enough resources to continue
@@ -441,66 +458,23 @@ class RCS(object):
 							loss = self.checkLoss(isolationLeak)
 							if loss is not None:
 								return loss
-							self.checkIsolationValves[failedIdx] = True
 
-							## Check common cause failure
-							ccf2 = scipy.stats.bernoulli.rvs(CCF2)
-							if ccf2 or self.activeThrusters[group].checkFailedClose():
+							self.updateThrusters()
+
+							if self.activeThrusters[group].checkFailedClose():
 								failedIdx = self.activeThrusters[group].id
-								if ccf2:
-									self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + self.events[-1][2][1:] + '_CCF2'))
-								elif self.activeThrusters[group].uses >= self.activeThrusters[group].fuelValve.failToCloseCount:
+								if self.activeThrusters[group].uses >= self.activeThrusters[group].fuelValve.failToCloseCount:
 									self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_FuelValveStuckOpen'))
 								else:
 									self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_OxidizerValveStuckOpen'))
-
 								## Failure to open, remove both thrusters from
-								## availability and attempt to set the new active
-								## thrusters
+								## availability and process the failure
 								self.availability[failedIdx][group] = False
 								self.availability[failedIdx][other] = False
-								self.updateThrusters()
 
-								## Check for mission status
-								loss = self.checkLoss()
-								if loss is not None:
-									return loss
-								self.checkIsolationValves[failedIdx] = True
-
-								## Attempt to close the isolation valve and see if
-								## we still have enough resources to continue
-								isolationLeak = self.thrusters[failedIdx][group].isolationValveFailure
-								if isolationLeak:
-									self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + '_IsolationValveLeak'))
-
-								loss = self.checkLoss(isolationLeak)
-								if loss is not None:
-									return loss
-
-								self.updateThrusters()
-
-								## Check common cause failure again
-								ccf3 = scipy.stats.bernoulli.rvs(CCF3)
-								if ccf3 or self.activeThrusters[group].checkFailedClose():
-									failedIdx = self.activeThrusters[group].id
-									if ccf3:
-										self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + self.events[-1][2][1:] + '_CCF3'))
-									elif self.activeThrusters[group].uses >= self.activeThrusters[group].fuelValve.failToCloseCount:
-										self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_FuelValveStuckOpen'))
-									else:
-										self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_OxidizerValveStuckOpen'))
-									## Failure to open, remove both thrusters from
-									## availability and process the failure
-									self.availability[failedIdx][group] = False
-									self.availability[failedIdx][other] = False
-
-									## Mission has failed, this will always
-									## return LOC/V at this point
-									return self.checkLoss()
-
-					## Increment our demand tracker
-					for group in [0,1]:
-						self.activeThrusters[group].uses += 1
+								## Mission has failed, this will always
+								## return LOC/V at this point
+								return self.checkLoss()
 
 				## Check for valve operational failure
 				for group in [0,1]:
@@ -521,13 +495,9 @@ class RCS(object):
 						if loss is not None:
 							return loss
 
-						## Check common cause failure
-						ccf2 = scipy.stats.bernoulli.rvs(CCF2)
-						if ccf2 or self.activeThrusters[group].checkValves():
+						if self.activeThrusters[group].checkValves():
 							failedIdx = self.activeThrusters[group].id
-							if ccf2:
-								self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + self.events[-1][2][1:] + '_CCF2'))
-							elif self.activeThrusters[group].checkFuelValve():
+							if self.activeThrusters[group].checkFuelValve():
 								self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_FuelValveFail'))
 							else:
 								self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_OxidizerValveFail'))
@@ -542,22 +512,26 @@ class RCS(object):
 
 							self.updateThrusters()
 
-							## Check common cause failure again
-							ccf3 = scipy.stats.bernoulli.rvs(CCF3)
-							if ccf3 or self.activeThrusters[group].checkValves():
+							if self.activeThrusters[group].checkValves():
 								failedIdx = self.activeThrusters[group].id
-								if ccf2:
-									self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + self.events[-1][2][1:] + '_CCF3'))
-								elif self.activeThrusters[group].checkFuelValve():
+
+								if self.activeThrusters[group].checkFuelValve():
 									self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_FuelValveFail'))
 								else:
 									self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_OxidizerValveFail'))
+
 								## Failure to open, remove this thruster's availability
 								self.availability[failedIdx][group] = False
 
 								## Mission has failed, this will always
 								## return LOC/V at this point
 								return self.checkLoss()
+
+				## Increment our demand tracker for whatever is currently the
+				## "active" thruster
+				for group in [0,1]:
+					self.activeThrusters[group].uses += 1
+				uses += 1
 
 			## Exciter failure?
 			if hour < exciterExposures[self.currentStage]:
@@ -577,14 +551,9 @@ class RCS(object):
 						if loss is not None:
 							return loss
 
-						## Check common cause failure
-						ccf2 = scipy.stats.bernoulli.rvs(CCF2)
-						if ccf2 or self.activeThrusters[group].checkExciter():
+						if self.activeThrusters[group].checkExciter():
 							failedIdx = self.activeThrusters[group].id
-							if ccf2:
-								self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + self.events[-1][2][1:] + '_CCF2'))
-							else:
-								self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_ExciterFail'))
+							self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_ExciterFail'))
 							## Failure to open, remove this thruster's availability
 							self.availability[failedIdx][group] = False
 
@@ -596,13 +565,9 @@ class RCS(object):
 							self.updateThrusters()
 
 							## Check common cause failure again
-							ccf3 = scipy.stats.bernoulli.rvs(CCF3)
-							if ccf3 or self.activeThrusters[group].checkExciter():
+							if self.activeThrusters[group].checkExciter():
 								failedIdx = self.activeThrusters[group].id
-								if ccf3:
-									self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + self.events[-1][2][1:] + '_CCF3'))
-								else:
-									self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_ExciterFail'))
+								self.events.append((self.elapsedMissionTime, self.currentStage, failedIdx + str(group) + '_ExciterFail'))
 								## Failure to open, remove this thruster's availability
 								self.availability[failedIdx][group] = False
 
@@ -612,9 +577,9 @@ class RCS(object):
 
 			## Increment our time keepers
 			for group in [0,1]:
-				self.activeThrusters[group].hours += 1
+				self.activeThrusters[group].hours += 1/demandsPerHour
 
-			self.elapsedMissionTime += 1
+			self.elapsedMissionTime += 1/demandsPerHour
 
 		self.currentStage += 1
 		self.run()
@@ -646,6 +611,24 @@ def run(dataObject,Input):
 			rcs.thrusters[letter][group].oxidizerValve.leakTime = Input[prefix+'oxidizerLeak']
 
 			rcs.thrusters[letter][group].exciter.failureTime = Input[prefix+'ExciterFailure']
+
+
+	CCF2 = 0.04830
+	CCF3 = 0.00517
+
+	for letter in ['A','B','C']:
+		for group in [0,1]:
+			for valve in ['fuel','oxidizer']:
+				for action in ['Open','Close']:
+					ccf = np.random.uniform(0,1)
+					if ccf <= CCF3:
+						for other in set(['A','B','C']) - set(letter):
+							minValue = min(rcs.thrusters[other][group].__dict__[valve+'Valve'].__dict__['failTo'+action+'Count'],rcs.thrusters[letter][group].__dict__[valve+'Valve'].__dict__['failTo'+action+'Count'])
+							rcs.thrusters[other][group].__dict__[valve+'Valve'].__dict__['failTo'+action+'Count'] = minValue
+					elif ccf <= CCF2:
+						other = list(set(['A','B','C']) - set(letter))[np.random.randint(2)]
+						minValue = min(rcs.thrusters[other][group].__dict__[valve+'Valve'].__dict__['failTo'+action+'Count'],rcs.thrusters[letter][group].__dict__[valve+'Valve'].__dict__['failTo'+action+'Count'])
+						rcs.thrusters[other][group].__dict__[valve+'Valve'].__dict__['failTo'+action+'Count'] = minValue
 
 	############################################################################
 	## PROFILING
@@ -714,21 +697,21 @@ def run(dataObject,Input):
 	dataObject.LOC = didNotOccur
 	dataObject.LOV = didNotOccur
 
-	dataObject.boolLOM = False
-	dataObject.boolLOC = False
-	dataObject.boolLOV = False
+	dataObject.boolLOM = 0
+	dataObject.boolLOC = 0
+	dataObject.boolLOV = 0
 
 	## NOW process all of the events as they occurred, first check our failure
 	## flags
 	if rcs.LOM is not None:
 		dataObject.LOM = rcs.LOM
-		dataObject.boolLOM = True
+		dataObject.boolLOM = 1
 	if rcs.LOC is not None:
 		dataObject.LOC = rcs.LOC
-		dataObject.boolLOC = True
+		dataObject.boolLOC = 1
 	if rcs.LOV is not None:
 		dataObject.LOV = rcs.LOV
-		dataObject.boolLOV = True
+		dataObject.boolLOV = 1
 
 	events = list(reversed(rcs.events))
 
