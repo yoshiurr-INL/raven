@@ -10,7 +10,7 @@
   </VariableGroups>
 
   <Files>
-    <Input name="data">NASA_data</Input>
+    <Input name="data">NASA_data_local</Input>
     <Input name="stats">NASA_stats.csv</Input>
     <Input name="lomStats">NASA_lom_stats.csv</Input>
     <Input name="locStats">NASA_loc_stats.csv</Input>
@@ -22,6 +22,9 @@
     </PostProcessor>
     <PostProcessor name="statsAll" subType="BasicStatistics">
       <expectedValue>allOutputs</expectedValue>
+      <minimum>allOutputs</minimum>
+      <maximum>allOutputs</maximum>
+      <variance>allOutputs</variance>
     </PostProcessor>
     <PostProcessor name="filterLOM" subType="InterfacedPostProcessor">
       <method>dataObjectLabelFilter</method>
@@ -39,7 +42,7 @@
 
   <!-- RUNINFO -->
   <RunInfo>
-    <WorkingDir>s0</WorkingDir>
+    <WorkingDir>.</WorkingDir>
     <Sequence>pullData,stats,filterLOM,statsLOM,filterLOC,statsLOC</Sequence>
     <batchSize>1</batchSize>
   </RunInfo>

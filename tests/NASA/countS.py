@@ -20,17 +20,15 @@ for t in range(10):
 	for line in fin:
 		if line.startswith('Model run time:'):
 			counts['OK'] += 1
-		elif line.startswith('LOV'):
+		if 'LOV' in line:
 			counts['LOV'] += 1
-		elif line.startswith('LOC'):
+		if 'LOC' in line:
 			counts['LOC'] += 1
-		elif line.startswith('LOM'):
+		if 'LOM' in line:
 			counts['LOM'] += 1
-		elif 'sec) SIMULATION               : Message         -> Run complete!' in line:
-			endTime = float(line.split('s',1)[0].replace('( ', '').strip())
-		else:
-			pass
-			# print(line)
+		if 'sec) SIMULATION               : Message         -> Run complete!' in line:
+			token = line.split('s',1)[0].replace('(', '').strip()
+			endTime = float(token)
 
 	total = 0
 	for key,value in counts.items():
@@ -51,7 +49,7 @@ for t in range(10):
 		for key,expProb in truth.items():
 			value = counts[key]
 			actProb = float(value)/total
-			print('\t{}   | {:6.2e} ( {:5.1f}% )'.format(key, actProb, value, 100*abs(actProb - expProb) / expProb))
+			print('\t{}   | {:6.2e} ( {:5.1f}% )'.format(key, actProb, 100*abs(actProb - expProb) / expProb))
 			print('\t      | {}'.format(value))
 		print('')
 
@@ -90,15 +88,12 @@ if os.path.isfile(filename):
 	for line in fin:
 		if line.startswith('Model run time:'):
 			counts['OK'] += 1
-		elif line.startswith('LOV'):
+		if 'LOV' in line:
 			counts['LOV'] += 1
-		elif line.startswith('LOC'):
+		if 'LOC' in line:
 			counts['LOC'] += 1
-		elif line.startswith('LOM'):
+		if 'LOM' in line:
 			counts['LOM'] += 1
-		else:
-			pass
-			# print(line)
 
 	total = 0
 	for key,value in counts.items():

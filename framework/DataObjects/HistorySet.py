@@ -260,6 +260,22 @@ class HistorySet(Data):
     if not isinstance(value,c1darray):
       self.raiseAnError(NotConsistentData,'HistorySet Data accepts only cached_ndarray as type for method <_updateSpecializedOutputValue>. Got ' + str(type(value)))
 
+    # inParam = copy.deepcopy(self._dataParameters['inParam'])
+    # outParam = copy.deepcopy(self._dataParameters['outParam'])
+    # inputRow = copy.deepcopy(self._dataParameters.get('inputRow',None))
+
+    # sampledVars = self._dataParameters.get('SampledVars',None)
+    # inputPivotVal = self._dataParameters.get('inputPivotValue',None)
+
+    pivotParameter = self._dataParameters.get('pivotParameter',None)
+    outputPivotVal = self._dataParameters.get('outputPivotValue',None)
+
+    outputPivotValAll = True
+    if outputPivotVal is not None:
+      outputPivotValAll = 'all' in outputPivotVal
+      if not outputPivotValAll:
+        outputPivotVal = [float(x) for x in outputPivotVal.split()]
+
     if options and self._dataParameters['hierarchical']:
       parentID = None
       if type(name) == list:
@@ -469,7 +485,8 @@ class HistorySet(Data):
         if n == 0:
           myFile.write(','.join([item for item in itertools.chain(inpKeys_h,['filename'])]))
           myFile.write('\n')
-          self._createXMLFile(filenameLocal,'HistorySet',inpKeys_h,outKeys_h)
+          if 'skipXML' not in options:
+            self._createXMLFile(filenameLocal,'HistorySet',inpKeys_h,outKeys_h)
         myFile.write(','.join([str(item[0]) for item in
                                 itertools.chain(inpValues_h,[[dataFilename]])]))
         myFile.write('\n')
@@ -484,9 +501,10 @@ class HistorySet(Data):
             myDataFile.write('\n')
         myDataFile.close()
       myFile.close()
-      if unstructuredInpKeysFiltered is not None and len(unstructuredInpKeysFiltered) > 0:
-        # write unstructuredData
-        self._writeUnstructuredInputInXML(filenameLocal +'_unstructured_inputs',unstructuredInpKeysFiltered,unstructuredInpValuesFiltered)
+      if 'skipXML' not in options:
+        if unstructuredInpKeysFiltered is not None and len(unstructuredInpKeysFiltered) > 0:
+          # write unstructuredData
+          self._writeUnstructuredInputInXML(filenameLocal +'_unstructured_inputs',unstructuredInpKeysFiltered,unstructuredInpValuesFiltered)
 
   def _specializedLoadXMLandCSV(self, filenameRoot, options):
     """

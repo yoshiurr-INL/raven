@@ -200,11 +200,11 @@ class RCS(object):
 			## crew or a loss of vehicle
 			# print(brokenRocket)
 			if self.currentStage == MissionStage.Docked:
-				sys.stdout.write('LOV - Mission has ended in irrecoverable loss.')
+				sys.stdout.write('LOV - Mission has ended in irrecoverable loss. ')
 				self.LOV = self.elapsedMissionTime
 				return MissionStatus.LOV
 			else:
-				sys.stdout.write('LOC - Mission has ended in irrecoverable loss.')
+				sys.stdout.write('LOC - Mission has ended in irrecoverable loss. ')
 				self.LOC = self.elapsedMissionTime
 				return MissionStatus.LOC
 
@@ -213,7 +213,7 @@ class RCS(object):
 			## to abort, so this is not classified as a loss
 			if self.currentStage < MissionStage.PostUndock:
 				# print(rocket)
-				sys.stdout.write('LOM - Mission has been aborted. Returning home.')
+				sys.stdout.write('LOM - Mission has been aborted. Returning home. ')
 				self.currentStage = MissionStage.PostUndock
 				self.LOM = self.elapsedMissionTime
 				## There is still a chance something worse could happen, so
@@ -742,7 +742,6 @@ def run(dataObject,Input):
 			prefix = event[:2]
 			dataObject.__dict__[prefix+'_Active'][t:] = 0
 		elif 'Fail' in event:
-			event = 'A0_ExciterFail'
 			key = event.strip('Fail') + 'Operational'
 			dataObject.__dict__[key][t:] = 0
 		else:

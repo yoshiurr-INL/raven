@@ -495,9 +495,12 @@ class PointSet(Data):
     # self._dataContainer['outputs'] = {}
     inoutDict = {}
     for key,value in zip(inoutKeys,inoutValues):
-      inoutDict[key] = value
+      if key not in ['InputPlaceHolder','OutputPlaceHolder']:
+        inoutDict[key] = value
 
     for key in self.getParaKeys('inputs'):
+      if key in ['InputPlaceHolder','OutputPlaceHolder']:
+        continue
       ## Again, in order to be non-destructive we should only initialize on the
       ## first go-around, subsequent loads should append to the existing list.
       ## -- DPM 6/26/17
@@ -507,6 +510,8 @@ class PointSet(Data):
         self._dataContainer["inputs"][key].append(c1darray(values=np.array(inoutDict[key])))
 
     for key in self.getParaKeys('outputs'):
+      if key in ['InputPlaceHolder','OutputPlaceHolder']:
+        continue
       ## Again, in order to be non-destructive we should only initialize on the
       ## first go-around, subsequent loads should append to the existing list.
       ## -- DPM 6/26/17
