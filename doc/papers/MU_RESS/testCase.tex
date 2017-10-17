@@ -85,9 +85,10 @@ The considered initiating event is a seismic event which causes the following ev
 \begin{itemize}
   \item Both switch-yards are disabled
   \item All EDGs are disabled except EDGS which is operating and it is initially aligned to Unit 2
-  \item CST of Unit 2 has lost 80\% of its capacity 
-  \item CST of Unit 3 is completely lost
-  \item The seismic event might also rupture the SFPs. Thus a leak might be present during the accident scenario
+  \item CST of Unit 2 has lost 80\% of the water inventory due to CST structural failure
+  \item Water inventory of CST of Unit 3 is completely lost due to CST structural failure
+  \item The seismic event might also rupture the SFPs. Thus a leak might be present during the accident scenario.
+        Note that this could come from an aftershock or from a progressive structural degradation of the SFP
 \end{itemize}
 
 The proposed accident scenario resembles a Station Black Out (SBO) event at the plant level except for the 
@@ -100,13 +101,14 @@ Prior to the seismic event, the initial conditions of three units are summarized
     \hline      
       \textbf{Unit} & \textbf{Initial Conditions} \\
       \hline \hline
-      1 &       The PWR of Unit 1 (i.e., PWR1) is at full power (100\% power level) and it own SFP \\ \hline
+      1 &       The PWR of Unit 1 (i.e., PWR1) is at full power and it own SFP \\ \hline
       2 &       The PWR of Unit 2 (i.e., PWR2) is in mid-loop operation (i.e., shut-down mode) and it own SFP. 
                 The mid-loop status is characterized by a primary coolant system drained to the 
                 hot leg centerline and the existence of openings which a further reduction of 
                 the mass inventory poses a serious risk, due to boil off and possible entrainment 
                 or spill over of liquid\\ \hline
-      3 &       The PWR of Unit 3 (i.e., PWR3) is at full power (108\% of nominal power) that restarted a few weeks 
+      3 &       The PWR of Unit 3 (i.e., PWR3) is at full power (nominal power level of PWR3 is 8\% higher than 
+                PWR1 and PWR2) that restarted a few weeks 
                 earlier and its own SFP with a higher heat load since it contains used fuel recently 
                 moved from the reactor. \\
     \hline  
@@ -138,14 +140,14 @@ due to the fact that only 20\% of the CST inventory is available.
 Unit 1 is in SBO condition like Unit 3 but it has more time margin before reaching CD due to the fact that core injection 
 can be employed for several hours.
 
-Given this assessment, three different strategies have been hypothesised as possible courses of action; these strategies
+Given this assessment, three different strategies have been hypothesized as possible courses of action; these strategies
 are described in detail in Sections \ref{sec:strategy1}, \ref{sec:strategy2} and \ref{sec:strategy3}.
 For all these three strategies a temporal scheme is provided (see Fig.~\ref{fig:strategy1Scheme}, 
 Fig.~\ref{fig:strategy2Scheme} and Fig.~\ref{fig:strategy3Scheme}). These schemes indicate the sequencing of events 
 for all units. The initiating event (i.e., SBO condition) occurs at the top of each figure and accident progresses 
 by moving downward.
 
-Section~\ref{sec:EDGSinvolAlign} introduce a disruptive element in the simulation: the involuntary alignment of the EDGS
+Section~\ref{sec:EDGSinvolAlign} introduce a disruptive element in the simulation: the erroneous alignment of the EDGS
 from Unit 2 to Unit 1.
 
 
@@ -231,10 +233,10 @@ A temporal scheme of the temporal evolution of this accident scenario is shown i
     \label{fig:strategy3Scheme}
 \end{figure}
 
-\subsubsection{EDGS Involuntary Alignment}
+\subsubsection{EDGS Erroneous Alignment}
 \label{sec:EDGSinvolAlign}
 
-As part of the simulation we have introduced a stochastic event: the involuntary alignment of the EDGS.
+As part of the simulation we have introduced a stochastic event: the erroneous alignment of the EDGS.
 This event can occur anytime during the simulation and it represents the erroneous alignment of the EDGS 
 (initially aligned to Unit 2) to Unit 1. 
 While this event can be considered an error of commission from an HRA perspective, from an operational point of view 
@@ -244,15 +246,15 @@ Note that now this stochastic element adds an additional degree of freedom in th
 occurrence of this event changes the prioritization of the next unit to have the EPE connected.
 
 As an example, Fig.~\ref{fig:strategy3SchemeInvolAlign} shows a possible sequence of events if Strategy 3 
-(refer to Section~\ref{sec:strategy3}) has been chosen but with the involuntary alignment of EDGS while the EPE team
+(refer to Section~\ref{sec:strategy3}) has been chosen but with the erroneous alignment of EDGS while the EPE team
 is working on Unit 3. Given the unexpected event, the EPE team moves to Unit 2 instead of Unit 1 since Unit 2
-has higher priority. The difference sequence of events caused by involuntary alignment of EDGS can be viewed
+has higher priority. The difference sequence of events caused by erroneous alignment of EDGS can be viewed
 by comparing Fig.~\ref{fig:strategy3Scheme} with Fig.~\ref{fig:strategy3SchemeInvolAlign}.
 
 \begin{figure}
   \centering
   \centerline{\includegraphics[scale=0.6]{strategy3InvolAlign.pdf}}
-  \caption{Sequence of events of recovery strategy 3 with involuntary alignment of EDGS.}
+  \caption{Sequence of events of recovery strategy 3 with erroneous alignment of EDGS.}
   \label{fig:strategy3SchemeInvolAlign}
 \end{figure}
 
@@ -261,6 +263,7 @@ by comparing Fig.~\ref{fig:strategy3Scheme} with Fig.~\ref{fig:strategy3SchemeIn
 
 Depending on the unit status, different actions can be employed when connecting EPEs to their respective unit.
 A summary of the EPE actions for each unit is summarized in Table~\ref{tab:EPEactions}. 
+Note that the EPE actions for PWRs involve injection of water into the Primary Side (PS) by employing mobile pumps or by providing AC power to the unit (with auxiliary generators) so that HPIS and LPIS can be employed.
 
 \begin{table}
   \begin{tabular}{|c|l|l|p{5cm}|}

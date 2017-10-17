@@ -83,7 +83,7 @@ Main physical parameters values are reported in Table~\ref{tab:midLoopParamteres
 \end{table} 
 
 \subsubsection{SFPs}
-The three SFPs were also modeledcode~\cite{parisiExternalAnalysis} using RELAP5-3D. 
+The three SFPs were also modeled~\cite{parisiExternalAnalysis} using RELAP5-3D. 
 A scheme of a typical SFP is given in Fig.~\ref{fig:SFPnodalization}. 
 For the sake of simplicity, the two cooling loops were modeled just as boundary conditions 
 (assigned water inlet/outlet mass flow rates and temperatures). The opening of a valve on the pool bottom
@@ -91,7 +91,7 @@ could simulate the fuel pool break by seismic effects. The RELAP5-3D model is re
 
 The RELAP5-3D model was kept as simple as possible in order to reduce calculation times, e.g., 120 seconds 
 of computer time was required for 86400 seconds transient. The thermal-hydraulic scheme is based on
-43 volumes and 49 junctions. 2 Heat Structures are used for modeling 15x15 Westinghouse FA. 
+43 volumes and 49 junctions. 2 Heat Structures are used for modeling $15 \times 15$ Westinghouse FA. 
 The two independent cooling systems are modeled as boundary conditions (i.e., mass flow and 
 temperature inlet are imposed). A couple of valves are used to model medium and large breaks of the pool bottom.
 
@@ -123,7 +123,7 @@ stochastic parameters.
 To consider the performance of field workers, a simple human reliability analysis was 
 performed and incorporated into the event simulation. Although many human actions are 
 required, the analysis considers two human events: time to start recovery procedures 
-after initiating event and EDGS involuntary alignment.
+after initiating event and EDGS erroneous alignment.
 
 Regarding the first, we employed a detailed subtask modeling using the HUNTER~\cite{boringHUNTER} 
 framework. The details about 
@@ -134,7 +134,7 @@ Regarding the second human related event, in order to screen the impact of the p
 the human error probability 
 (HEP) was obtained from the Technique for Human Error Rate Prediction (THERP) 
 method~\cite{NUREGCR1278}. 
-EDGS involuntary alignment corresponds well to THERP Table 20-13, Item 5: ``Making an error 
+EDGS erroneous alignment corresponds well to THERP Table 20-13, Item 5: ``Making an error 
 of selection in changing or restoring locally operated valve when the valve to be manipulated 
 is unclearly or ambiguously labeled, part of a group of two or more valves that are similar in 
 all of the following, size and shape, state, and presence of tags.'' This THERP item captures 
@@ -146,7 +146,7 @@ error factor of 3. THERP includes provision for considering additional degradati
 due to lack of experience and situational stress. These factors were not deemed likely contributors 
 to the event outcome. Event recovery was not modeled.
 
-Thus in the analysis, we have modeled involuntary alignment of EDGS with a Bernoulli 
+Thus in the analysis, we have modeled erroneous alignment of EDGS with a Bernoulli 
 distribution with value of $p=1.0 \cdot 10^{-2}$.
 
 \subsection{Plant Stochastic Modeling}
@@ -171,8 +171,8 @@ Unit 1 and Unit 3; since Unit 2 is in mid-loop operation mode, its DC systems ar
 considered.
 
 For the EDGS, we have identified the following parameters: the probability to 
-involuntary align the EDGS from Unit 2 to Unit 1, the time of occurrence of EDGS
-involuntary alignment and time required to perform EDGS voluntary alignment.  
+erroneous align the EDGS from Unit 2 to Unit 1, the time of occurrence of EDGS
+erroneous alignment and time required to perform EDGS voluntary alignment.  
 
 Each cross-tie, CST (between Unit 2 and Unit 3), AFW (between Unit 1 and Unit 3) 
 and AC (between Unit 1 and Unit 2), has been considered in the analysis and, in 
@@ -191,8 +191,7 @@ the actual procedure associated to the EPE for Unit 3.
 As indicated in Section~\ref{sec:EPEactions}, depending on the  recovery strategy, 
 then the EPE connection on Unit 3 can be performed in different modes. 
 
-A summary of the chosen stochastic parameters are listed in Tables~\ref{tab:stochasticParameters1} 
-and~\ref{tab:stochasticParameters2}
+A summary of the chosen stochastic parameters are listed in Table~\ref{tab:stochasticParameters1} 
 along with their description and probabilistic distribution function.
 
 \begin{table}
@@ -208,8 +207,8 @@ along with their description and probabilistic distribution function.
          EPETime1           & Time to connect EPE to Unit 1    & hour   & Truncated normal (mean=2., sigma=.3, lower bound=1., upper bound=3.)   \\ \hline
          EPETime2           & Time to connect EPE to Unit 2    & hour   & Truncated normal (mean=2., sigma=.3, lower bound=1., upper bound=3.)   \\ \hline
          EPETime3           & Time to connect EPE to Unit 3    & hour   & Truncated normal (mean=2., sigma=.3, lower bound=1., upper bound=3.)   \\ \hline
-         EDGSinvolAlign     & Probability of occurrence for EDGS involuntary alignment & -      & Bernoulli (p=0.01)                               \\ \hline
-         EDGSinvolAlignTime & Time of occurrence for EDGS involuntary alignment        & -      & Uniform (lower bound=.0, upper bound=1.)       \\ \hline
+         EDGSerrAlign     & Probability of occurrence for EDGS erroneous alignment & -      & Bernoulli (p=0.01)                               \\ \hline
+         EDGSerrAlignTime & Time of occurrence for EDGS erroneous alignment        & -      & Uniform (lower bound=.0, upper bound=1.)       \\ \hline
          batteryTime1       & Battery life for Unit 1          & hour      & Triangular (lower bound=6., upper bound=8., peak=7.) \\ \hline
          batteryTime3       & Battery life for Unit 3          & hour      & Triangular (lower bound=6., upper bound=8., peak=7.) \\ \hline
          EDGSswitchTime     & Time required to change EDGS alignment       & hour  & Uniform (lower bound=.25, upper bound=.75)                  \\ 
@@ -219,7 +218,7 @@ along with their description and probabilistic distribution function.
   \caption{Summary of the stochastic parameters chosen for the multi-unit analysis and their associated distribution.}
   \label{tab:stochasticParameters1}
 \end{table}
-
+\addtocounter{table}{-1}
 \begin{table}
   \centering
   \begin{center}

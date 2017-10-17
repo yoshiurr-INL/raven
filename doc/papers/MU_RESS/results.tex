@@ -105,7 +105,7 @@ the absolute time (i.e., the exact time) when the SFP is put in a safe state.
 Depending on the unit, this safe state can be reached in different ways:
 \begin{itemize}
   \item Unit 1: when EDGS is aligned to Unit 1 or when EPE1 is connected to Unit 1
-  \item Unit 2: when EPE2 is connected to Unit 2; note that the involuntary alignment of EDGS plays a role here since
+  \item Unit 2: when EPE2 is connected to Unit 2; note that the erroneous alignment of EDGS plays a role here since
                 its occurrence brings it in an critical condition (no cooling in SFP)
   \item Unit 3: when EPE3 is connected to Unit 3
 \end{itemize}
@@ -118,13 +118,13 @@ From Fig.~\ref{fig:scatterPDS8} we can see the following:
         as the minimum value among EDGS is aligned to Unit 1) and EPE1 connected to Unit 1. Note that a SFP1 recovery 
         time less than 25,000 seconds (points on the left of the scatter plot) can recover a small SFP LOCA (i.e, 5.E-4). 
         Note also that a few points are clustered at around 12,000 seconds for SFP1 recovery time and a medium SFP LOCA (i.e., 3.5E-3). 
-        This small group of points are characterized by the following distinctive features: recovery strategy 3, no EDGS involuntary 
+        This small group of points are characterized by the following distinctive features: recovery strategy 3, no EDGS erroneous 
         alignment and very early AC12 cross-tie (i.e., AC power of Unit 2 is provided to Unit 1 through a AC 
         cross-tie). This feature implies that even a medium SFP LOCA can be recovered only if recovery strategy 3 is
         chosen (see Fig.~\ref{fig:strategy3Scheme}) and, the AC cross-tie between Unit 2 and Unit 1 is completed 
         before 12,700 s. From this plot it can be observed that a large SFP LOCA can not be recovered.
   \item Unit 2 (top right and bottom left images): these two scatter plots shows similar thresholds for Unit 2. 
-        Note two features: a large SFP LOCA can be recovered and the EDGS involuntary alignment impacts the threshold value 
+        Note two features: a large SFP LOCA can be recovered and the EDGS erroneous alignment impacts the threshold value 
         small and medium SFP LOCA.
   \item Unit 3 (bottom right image): since SFP3 as a higher heat load it is expected that the thresholds decrease. This
         is confirmed by comparing the bottom right scatter plot with the upper lefp plot of Fig.~\ref{fig:scatterPDS8}.
@@ -148,8 +148,8 @@ From Fig.~\ref{fig:scatterPDS8} we can see the following:
     \centering
     \includegraphics[scale=0.3]{8_sfp3_only_locaSizeSFP3_v_flexTime3_act_scatter.pdf}
   \end{subfigure}
-  \caption{PDS8: scatter plot for SFP1 (top left), SFP2 with EDGS involuntary alignment (top right), 
-           SFP2 without EDGS involuntary alignment (bottom right) and SFP3 (bottom right).}
+  \caption{PDS8: scatter plot for SFP1 (top left), SFP2 with EDGS erroneous alignment (top right), 
+           SFP2 without EDGS erroneous alignment (bottom right) and SFP3 (bottom right).}
   \label{fig:scatterPDS8}
 \end{figure}  
 
@@ -187,16 +187,16 @@ EPE timings to occur.
 PDS24 is the first PDS that characterize an additional PWR to reach CD (on top of PWR3): PWR2. By looking at the
 histogram of the input parameters (see Fig.~\ref{fig:histPDS_24}) that belong to this PDS we have identified 
 that PWR2 reaches CD only if recovery strategy 3 is chosen. 
-In addition, involuntary alignment of EDGS plays the major driver to reach PDS24. Interestingly, the time of such 
+In addition, erroneous alignment of EDGS plays the major driver to reach PDS24. Interestingly, the time of such 
 switch is also important: by looking at bottom histogram Fig.~\ref{fig:histPDS_24}, the distribution of the 
-variable EDGSinvolAlignTime is characterized by two modes, an early mode and a late mode.
-This feature is due to the fact that, in strategy 3, EDGS involuntary alignment 
+variable EDGSerrAlignTime is characterized by two modes, an early mode and a late mode.
+This feature is due to the fact that, in strategy 3, EDGS erroneous alignment 
 (see Fig.~\ref{fig:strategy3SchemeInvolAlign}) might run in parallel with EPE3 or EPE1.
-If this involuntary action occurs when EPE3 or EPE1 have just started, then PWR2 reaches CD almost certainly due to
-the PWR2 heat-up. If this involuntary action occurs when EPE3 or EPE1 are almost completed, then the EPE team
+If this erroneous action occurs when EPE3 or EPE1 have just started, then PWR2 reaches CD almost certainly due to
+the PWR2 heat-up. If this erroneous action occurs when EPE3 or EPE1 are almost completed, then the EPE team
 has time to prioritize Unit 2 and quickly recovery it.
 The two modes of the bottom histogram of Fig.~\ref{fig:histPDS_24} correspond to an EDGS 
-involuntary action that occurs right after EPE operation for Unit 3 (early mode) and for Unit 1 (late mode) has 
+erroneous action that occurs right after EPE operation for Unit 3 (early mode) and for Unit 1 (late mode) has 
 started.
 
 \begin{figure}
@@ -212,7 +212,7 @@ started.
     \centering
     \includegraphics[scale=0.3]{24_EDGSinvolAlignTime.pdf}
   \end{subfigure}
-  \caption{PDS24: histograms of the variables recovery (top left), EDGSinvolAlign (top right) and EDGSinvolAlignTime (bottom)}
+  \caption{PDS24: histograms of the variables recovery (top left), EDGSerrAlign (top right) and EDGSerrAlignTime (bottom)}
   \label{fig:histPDS_24}
 \end{figure}
 
@@ -225,8 +225,8 @@ Thus, the same conclusions derived from PDSs 9, 10 and 12, can be transposed for
 \subsection{PDSs 26, 28, 25}
 PDSs 26, 28 and 25 are characterized by 1 SFP along with PWR2 and PWR3 in CD condition; thus it 
 represents a mix of PDS 24 and PDS 12, 10 and 9.
-These PDS are in fact characterized by recovery strategy 3 and EDGS involuntary align along with a SFP LOCA.
-Similarly to what has been presented for PDS24, the interesting histogram of EDGS involuntary time for 
+These PDS are in fact characterized by recovery strategy 3 and EDGS erroneous align along with a SFP LOCA.
+Similarly to what has been presented for PDS24, the interesting histogram of EDGS erroneous time for 
 these three PDSs (see Fig.~\ref{fig:histPDS_26_28_25_EDGSinvolAlignTime}). Note these histograms follow the same pattern 
 of Fig.~\ref{fig:histPDS_24} (bottom plot).
 
@@ -243,7 +243,7 @@ of Fig.~\ref{fig:histPDS_24} (bottom plot).
     \centering
     \includegraphics[scale=0.3]{25_EDGSinvolAlignTime.pdf}
   \end{subfigure}
-  \caption{Histograms of the variable EDGSinvolAlignTime for PDS28 (top left), PDS26 (top right) and PDS25 (bottom)}
+  \caption{Histograms of the variable EDGSerrAlignTime for PDS28 (top left), PDS26 (top right) and PDS25 (bottom)}
   \label{fig:histPDS_26_28_25_EDGSinvolAlignTime}
 \end{figure}
 

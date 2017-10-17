@@ -20,7 +20,7 @@ approach:
   \item Group simulation runs based on their own PDS  
   \item Evaluate probability associated to each PDS and rank PDSs based on 
         their probability values.
-  \item Identify communalities that characterize each PDS
+  \item Identify commonalities that characterize each PDS
 \end{enumerate}
 
 In order to perform such analysis, two post-processors were developed in RAVEN in 
@@ -38,9 +38,9 @@ available, thus parameter estimates are updated as more information becomes avai
 
 The results for the PRA analysis are consistently provided as an occurrence of event 
 divided by the total number of events to produce a percentage. Instinctually it is 
-clear that this type of data corresponds to a beta-binominal distribution.  
+clear that this type of data corresponds to a beta-binomial distribution.  
 Since it is not desired to project the rate of occurrence or probability for each event,
- a non-informative prior is implemented on the beta-binominal distribution~\cite{stat}.
+ a non-informative prior is implemented on the beta-binomial distribution~\cite{stat}.
 ``Some priors are chosen to be non-informative,'' that is, diffuse enough that they correspond 
 to very little prior information. The Jeffreys non-informative prior is often used in this way. 
 If information is available, it is more realistic to build that information into the prior, 
@@ -64,8 +64,8 @@ The basic equations for this method is as follows:
   \end{array}
 \end{equation}
 where $N_i$ is a specific outcome and $N_T$ is the total number of outcomes for the simulation. 
-The parameters of the beta-binominal distribution are then fed to a function that automatically 
+The parameters of the beta-binomial distribution are then fed to a function that automatically 
 produces the $5^{th}$ and $95^{th}$ percentiles of the distribution.  This is reported rather than the 
-variance, as variance in a beta-binominal distribution does not adhere to the classic normal 
+variance, as variance in a beta-binomial distribution does not adhere to the classic normal 
 distribution format.
 
