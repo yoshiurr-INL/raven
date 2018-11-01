@@ -235,6 +235,8 @@ class RavenFramework(Tester):
       csv_diff = CSVDiffer(self.specs['test_dir'],self.csv_files)
     message = csv_diff.diff()
     if csv_diff.getNumErrors() > 0:
+      message += "\nCSVDIFF\t"+self.specs['test_dir']+"\t"+str(self.csv_files)+"\n"
+      #print("CSVDIFF",self.specs['test_dir'],self.csv_files)
       self.setStatus(message,self.bucket_diff)
       return output
 
@@ -255,7 +257,8 @@ class RavenFramework(Tester):
 
     ucsv_same,ucsv_messages = ucsv_diff.diff()
     if not ucsv_same:
-      self.setStatus(ucsv_messages, self.bucket_diff)
+      message = "\nCSVDIFF\t"+self.specs['test_dir']+"\t"+str(self.ucsv_files)+"\n"
+      self.setStatus(ucsv_messages+message, self.bucket_diff)
       return output
 
     #xml
