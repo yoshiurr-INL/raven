@@ -1,0 +1,13 @@
+<Models>
+  <HybridModel name="hybrid" subType="">
+      <!-- Should be able to handle Code, External Model, ROMs, Ensemble Models? -->
+      <Model class="Models" type="Code">codeI</Model>
+      <Model class="Models" type="Code">codeII</ROM>
+      <TargetEvaluation class="DataObjects" type="PointSet">samples</TargetEvaluation>
+      <!-- control functions will used to determine which code to execute -->
+      <controlFunctions class="Functions" type="External">control</controlFunctions>
+      <!-- <settings>
+
+      </settings> -->
+  </HybridModel>
+</Models>
