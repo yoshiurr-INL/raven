@@ -23,11 +23,12 @@ warnings.simplefilter('default',DeprecationWarning)
 import os
 import copy
 import numpy as np
+import sys
+from sys import platform
 from utils import utils
 from CodeInterfaceBaseClass import CodeInterfaceBase
 import DataObjects
 import csvUtilities
-
 from MessageHandler import MessageHandler
 
 class RAVEN(CodeInterfaceBase):
@@ -36,6 +37,7 @@ class RAVEN(CodeInterfaceBase):
   """
   def __init__(self):
     CodeInterfaceBase.__init__(self)
+    self.preCommand = "" # this is the precommand (bash.exe in case of win)
     self.printTag  = 'RAVEN INTERFACE'
     self.outputPrefix = 'out~'
     self.outStreamsNamesAndType = {} # Outstreams names and type {'outStreamName':[DataObjectName,DataObjectType]}
@@ -155,28 +157,27 @@ class RAVEN(CodeInterfaceBase):
       @ In, preExec, string, optional, a string the command that needs to be pre-executed before the actual command here defined
       @ Out, returnCommand, tuple, tuple containing the generated command. returnCommand[0] is the command to run the code (string), returnCommand[1] is the name of the output root
     """
+
     index = self.__findInputFile(inputFiles)
     outputfile = self.outputPrefix+inputFiles[index].getBase()
     # we set the command type to serial since the SLAVE RAVEN handles the parallel on its own
-    executeCommand = [('serial',executable+ ' '+inputFiles[index].getFilename())]
+    pre = ""
+    if "python" not in executable.lower() or executable.endswith(".py"):
+      pre = self.preCommand.strip() + " "
+    executeCommand = [('serial',pre + executable+ ' '+inputFiles[index].getFilename())]
     returnCommand = executeCommand, outputfile
     return returnCommand
 
-  def createNewInput(self,currentInputFiles,oriInputFiles,samplerType,**Kwargs):
+  def initialize(self, runInfo, oriInputFiles):
     """
-      this generates a new input file depending on which sampler has been chosen
-      @ In, currentInputFiles, list,  list of current input files (input files from last this method call)
+      Method to initialize the run of a new step
+      @ In, runInfo, dict,  dictionary of the info in the <RunInfo> XML block
       @ In, oriInputFiles, list, list of the original input files
-      @ In, samplerType, string, Sampler type (e.g. MonteCarlo, Adaptive, etc. see manual Samplers section)
-      @ In, Kwargs, dictionary, kwarded dictionary of parameters. In this dictionary there is another dictionary called "SampledVars"
-             where RAVEN stores the variables that got sampled (e.g. Kwargs['SampledVars'] => {'var1':10,'var2':40})
-      @ Out, newInputFiles, list, list of newer input files, list of the new input files (modified and not)
+      @ Out, None
     """
     import RAVENparser
-    if 'dynamiceventtree' in str(samplerType).strip().lower():
-      raise IOError(self.printTag+' ERROR: DynamicEventTree-based sampling not supported!')
-    index = self.__findInputFile(currentInputFiles)
-    parser = RAVENparser.RAVENparser(currentInputFiles[index].getAbsFile())
+    index = self.__findInputFile(oriInputFiles)
+    parser = RAVENparser.RAVENparser(oriInputFiles[index].getAbsFile())
     # get the OutStreams names
     self.outStreamsNamesAndType = parser.returnOutstreamsNamesAnType()
     # check if the linked DataObjects are among the Outstreams
@@ -199,6 +200,25 @@ class RAVEN(CodeInterfaceBase):
     self.variableGroups = varGroupNames
     # get inner working dir
     self.innerWorkingDir = parser.workingDir
+    # check operating system and define prefix if needed
+    if platform.startswith("win") and utils.which("bash.exe") is not None:
+      self.preCommand = 'bash.exe'
+
+  def createNewInput(self,currentInputFiles,oriInputFiles,samplerType,**Kwargs):
+    """
+      this generates a new input file depending on which sampler has been chosen
+      @ In, currentInputFiles, list,  list of current input files (input files from last this method call)
+      @ In, oriInputFiles, list, list of the original input files
+      @ In, samplerType, string, Sampler type (e.g. MonteCarlo, Adaptive, etc. see manual Samplers section)
+      @ In, Kwargs, dictionary, kwarded dictionary of parameters. In this dictionary there is another dictionary called "SampledVars"
+             where RAVEN stores the variables that got sampled (e.g. Kwargs['SampledVars'] => {'var1':10,'var2':40})
+      @ Out, newInputFiles, list, list of newer input files, list of the new input files (modified and not)
+    """
+    import RAVENparser
+    if 'dynamiceventtree' in str(samplerType).strip().lower():
+      raise IOError(self.printTag+' ERROR: DynamicEventTree-based sampling not supported!')
+    index = self.__findInputFile(currentInputFiles)
+    parser = RAVENparser.RAVENparser(currentInputFiles[index].getAbsFile())
     # get sampled variables
     modifDict = Kwargs['SampledVars']
 
@@ -267,7 +287,7 @@ class RAVEN(CodeInterfaceBase):
       return True
     # check for completed run
     readLines = outputToRead.readlines()
-    if not any("Run complete" in x for x in readLines[-20:]):
+    if not any("Run complete" in x for x in readLines[-min(200,len(readLines)):]):
       del readLines
       return True
     # check for output CSV (and data)

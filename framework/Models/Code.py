@@ -22,6 +22,7 @@ warnings.simplefilter('default',DeprecationWarning)
 
 #External Modules------------------------------------------------------------------------------------
 import os
+import sys
 import copy
 import shutil
 import importlib
@@ -65,7 +66,7 @@ class Code(Model):
     ## Begin command line arguments tag
     ClargsInput = InputData.parameterInputFactory("clargs")
 
-    ClargsTypeInput = InputData.makeEnumType("clargsType","clargsTypeType",["text","input","output","prepend","postpend"])
+    ClargsTypeInput = InputData.makeEnumType("clargsType","clargsTypeType",["text","input","output","prepend","postpend","python"])
     ClargsInput.addParam("type", ClargsTypeInput, True)
 
     ClargsInput.addParam("arg", InputData.StringType, False)
@@ -178,7 +179,16 @@ class Code(Model):
             self.raiseAWarning('"prepend" nodes only accept "type" and "arg" attributes! Ignoring "extension"...')
           if arg == None:
             self.raiseAnError(IOError,'"arg" for clarg '+argtype+' not specified! Enter text to be used.')
-          self.clargs['pre'] = arg
+          if 'pre' in self.clargs:
+            self.clargs['pre'] = arg+' '+self.clargs['pre']
+          else:
+            self.clargs['pre'] = arg
+        elif argtype == 'python':
+          pythonName = utils.getPythonCommand()
+          if 'pre' in self.clargs:
+            self.clargs['pre'] = self.clargs['pre']+' '+pythonName
+          else:
+            self.clargs['pre'] = pythonName
         elif argtype == 'postpend':
           if ext != None:
             self.raiseAWarning('"postpend" nodes only accept "type" and "arg" attributes! Ignoring "extension"...')
@@ -319,6 +329,10 @@ class Code(Model):
       else:
         self.raiseAMessage('not found pre-executable '+self.executable,'ExceptedError')
 
+    if 'initialize' in dir(self.code):
+      # the deepcopy is needed to avoid the code interface
+      # developer to modify the content of the runInfoDict
+      self.code.initialize(copy.deepcopy(runInfoDict), self.oriInputFiles)
 
   def createNewInput(self,currentInput,samplerType,**kwargs):
     """
@@ -601,6 +615,8 @@ class Code(Model):
 
         csvLoader = CsvLoader.CsvLoader(self.messageHandler)
         csvData = csvLoader.loadCsvFile(outFile)
+        if np.isnan(csvData).all():
+          self.raiseAnError(IOError, 'The data collected from', outputFile+'.csv', 'only contain "NAN"')
         headers = csvLoader.getAllFieldNames()
 
         ## Numpy by default iterates over rows, thus we transpose the data and
@@ -698,9 +714,9 @@ class Code(Model):
       outputEval[key] = np.atleast_1d(value)
 
     for key, value in sampledVars.items():
-      # FIXME this is a bad check.  The two should be different enough in value to matter before we print.
       if key in outputEval.keys():
-        self.raiseAWarning('The model '+self.type+' reported a different value (%f) for %s than raven\'s suggested sample (%f). Using the value reported by the raven (%f).' % (outputEval[key][0], key, value, value))
+        if not utils.compare(value,np.atleast_1d(outputEval[key])[-1],relTolerance = 1e-8):
+          self.raiseAWarning('The model '+self.type+' reported a different value (%f) for %s than raven\'s suggested sample (%f). Using the value reported by the raven (%f).' % (outputEval[key][0], key, value, value))
       outputEval[key] = np.atleast_1d(value)
 
     self._replaceVariablesNamesWithAliasSystem(outputEval, 'input',True)

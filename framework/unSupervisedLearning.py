@@ -129,6 +129,16 @@ class unSupervisedLearning(utils.metaclass_insert(abc.ABCMeta), MessageHandler.M
     ## The normalized training data
     self.normValues = None
 
+  def updateFeatures(self, features):
+    """
+      Change the Features that this classifier targets. If this ROM is trained already, raises an error.
+      @ In, features, list(str), list of new features
+      @ Out, None
+    """
+    if self.amITrained:
+      self.raiseAnError(RuntimeError,'Trying to change the <Features> of an already-trained ROM!')
+    self.features = features
+
   def train(self, tdict, metric = None):
     """
       Method to perform the training of the unSuperVisedLearning algorithm
@@ -140,7 +150,7 @@ class unSupervisedLearning(utils.metaclass_insert(abc.ABCMeta), MessageHandler.M
     """
 
     self.metric = metric
-    if type(tdict) != dict:
+    if not isinstance(tdict, dict):
       self.raiseAnError(IOError, ' method "train". The training set needs to be provided through a dictionary. Type of the in-object is ' + str(type(tdict)))
 
     featureCount = len(self.features)
@@ -255,6 +265,7 @@ class unSupervisedLearning(utils.metaclass_insert(abc.ABCMeta), MessageHandler.M
 
   ## I'd be willing to bet this never gets called, and if it did it would crash
   ## under specific settings, namely using a history set.
+  ## -> for the record, I call it to get the labels in the ROMCollection.Clusters - talbpaul
   def evaluate(self, edict):
     """
       Method to perform the evaluation of a point or a set of points through
@@ -265,7 +276,7 @@ class unSupervisedLearning(utils.metaclass_insert(abc.ABCMeta), MessageHandler.M
       @ In, edict, dict, evaluation dictionary
       @ Out, evaluation, numpy.array, array of evaluated points
     """
-    if type(edict) != dict:
+    if not isinstance(edict, dict):
       self.raiseAnError(IOError, ' Method "evaluate". The evaluate request/s need/s to be provided through a dictionary. Type of the in-object is ' + str(type(edict)))
 
     names = edict.keys()
@@ -380,12 +391,12 @@ class SciKitLearn(unSupervisedLearning):
   #  availImpl['bicluster']['SpectralCoclustering'] = (cluster.bicluster.SpectralCoclustering, 'float')  # Spectral Co-Clustering algorithm (Dhillon, 2001).
 
   availImpl['mixture'] = {}  # Generalized Gaussion Mixture Models (Classification)
-  availImpl['mixture']['GMM'  ] = (mixture.GMM  , 'float')  # Gaussian Mixture Model
+  availImpl['mixture']['GMM'  ] = (mixture.GaussianMixture  , 'float')  # Gaussian Mixture Model
   ## Comment is not even right on it, but the DPGMM is being deprecated by SKL who
   ## admits that it is not working correctly which also explains why it is buried in
   ## their documentation.
   # availImpl['mixture']['DPGMM'] = (mixture.DPGMM, 'float')  # Variational Inference for the Infinite Gaussian Mixture Model.
-  availImpl['mixture']['VBGMM'] = (mixture.VBGMM, 'float')  # Variational Inference for the Gaussian Mixture Model
+  availImpl['mixture']['VBGMM'] = (mixture.BayesianGaussianMixture, 'float')  # Variational Inference for the Gaussian Mixture Model
 
   availImpl['manifold'] = {}  # Manifold Learning (Embedding techniques)
   availImpl['manifold']['LocallyLinearEmbedding'  ] = (manifold.LocallyLinearEmbedding  , 'float')  # Locally Linear Embedding
@@ -398,7 +409,7 @@ class SciKitLearn(unSupervisedLearning):
   availImpl['decomposition'] = {}  # Matrix Decomposition
   availImpl['decomposition']['PCA'                 ] = (decomposition.PCA                 , 'float')  # Principal component analysis (PCA)
  # availImpl['decomposition']['ProbabilisticPCA'    ] = (decomposition.ProbabilisticPCA    , 'float')  # Additional layer on top of PCA that adds a probabilistic evaluationPrincipal component analysis (PCA)
-  availImpl['decomposition']['RandomizedPCA'       ] = (decomposition.RandomizedPCA       , 'float')  # Principal component analysis (PCA) using randomized SVD
+  availImpl['decomposition']['RandomizedPCA'       ] = (decomposition.PCA       , 'float')  # Principal component analysis (PCA) using randomized SVD
   availImpl['decomposition']['KernelPCA'           ] = (decomposition.KernelPCA           , 'float')  # Kernel Principal component analysis (KPCA)
   availImpl['decomposition']['FastICA'             ] = (decomposition.FastICA             , 'float')  # FastICA: a fast algorithm for Independent Component Analysis.
   availImpl['decomposition']['TruncatedSVD'        ] = (decomposition.TruncatedSVD        , 'float')  # Dimensionality reduction using truncated SVD (aka LSA).
@@ -621,17 +632,21 @@ class SciKitLearn(unSupervisedLearning):
             center[cnt] = center[cnt] * sigma + mu
         self.metaDict['means'] = means
 
-      if hasattr(self.Method, 'covars_') :
-        covariance = copy.deepcopy(self.Method.covars_)
+      if hasattr(self.Method, 'covariances_') :
+        covariance = copy.deepcopy(self.Method.covariances_)
 
         for row, rowFeature in enumerate(self.features):
           rowSigma = self.muAndSigmaFeatures[rowFeature][1]
           for col, colFeature in enumerate(self.features):
             colSigma = self.muAndSigmaFeatures[colFeature][1]
-            covariance[row,col] = covariance[row,col] * rowSigma * colSigma
+            #if covariance type == full, the shape is (n_components, n_features, n_features)
+            if len(covariance.shape) == 3:
+              covariance[:,row,col] = covariance[:,row,col] * rowSigma * colSigma
+            else:
+              #XXX if covariance type == diag, this will be wrong.
+              covariance[row,col] = covariance[row,col] * rowSigma * colSigma
         self.metaDict['covars'] = covariance
     elif 'decomposition' == self.SKLtype:
-
       if 'embeddingVectors' not in self.outputDict['outputs']:
         if hasattr(self.Method, 'transform'):
           embeddingVectors = self.Method.transform(self.normValues)
@@ -699,9 +714,10 @@ class SciKitLearn(unSupervisedLearning):
         self.outputDict['confidence']['adjustedRandIndex'        ] =        metrics.adjusted_rand_score(self.labelValues, labels)
         self.outputDict['confidence']['adjustedMutualInformation'] = metrics.adjusted_mutual_info_score(self.labelValues, labels)
     elif 'mixture' == self.SKLtype:
-      self.outputDict['confidence']['aic'  ] = self.Method.aic(self.normValues)   ## Akaike Information Criterion
-      self.outputDict['confidence']['bic'  ] = self.Method.bic(self.normValues)   ## Bayesian Information Criterion
-      self.outputDict['confidence']['score'] = self.Method.score(self.normValues) ## log probabilities of each data point
+      if hasattr(self.Method, 'aic'):
+        self.outputDict['confidence']['aic'  ] = self.Method.aic(self.normValues)   ## Akaike Information Criterion
+        self.outputDict['confidence']['bic'  ] = self.Method.bic(self.normValues)   ## Bayesian Information Criterion
+        self.outputDict['confidence']['score'] = self.Method.score(self.normValues) ## log probabilities of each data point
 
     return self.outputDict['confidence']
 
@@ -874,7 +890,7 @@ class temporalSciKitLearn(unSupervisedLearning):
 
     for t in range(self.numberOfHistoryStep):
       sklInput = {}
-      for feat in self.features.keys():
+      for feat in self.features:
         sklInput[feat] = self.inputDict[feat][:,t]
 
       self.SKLEngine.features = sklInput
