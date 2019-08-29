@@ -32,7 +32,7 @@ class TextDiff:
         - 'comment': indicates the character or string that should be used to denote a comment line
       @ Out, None
     """
-    assert len(out_files) == len(gold_files)
+    assert len(out_files) == len(gold_files), str(out_files)+"!="+str(gold_files)
     self.__out_files = out_files
     self.__gold_files = gold_files
     self.__messages = ""
