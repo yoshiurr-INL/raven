@@ -245,7 +245,7 @@ class SocketTransport(Transport):
            #l = len(msg)
            #open('/tmp/pp.debug', 'a+').write(repr(('_sr', l, self.socket, msg))+'\n')
             if msg == stub:
-                raise RuntimeError("Socket connection is broken")
+                raise RuntimeError("Socket connection is broken e_size: {} r_size: {} msg len: {} timeout: {} peername: {}".format(e_size, r_size, len(msg), self.socket.gettimeout(), self.socket.getpeername()))
             r_size += len(msg)
             data += msg
         e_size = struct.unpack("!Q", ppc.b_(data))[0] # get size of msg
@@ -257,7 +257,7 @@ class SocketTransport(Transport):
            #l = len(msg)
            #open('/tmp/pp.debug', 'a+').write(repr(('sr_', l, self.socket, msg))+'\n')
             if msg == stub:
-                raise RuntimeError("Socket connection is broken")
+                raise RuntimeError("Socket connection is broken e_size: {} r_size: {} msg len: {}".format(e_size, r_size, len(msg)))
             r_size += len(msg)
             data += msg
         data = ppc.b_(data)
