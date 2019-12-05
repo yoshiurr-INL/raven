@@ -84,10 +84,7 @@ try:
 except ImportError:
     import popen2
 
-_debug_file = '/scratch/cogljj/pp.{}.{}.debug'.format(os.uname().nodename,
-                                                      os.getpid())
-
-open(_debug_file, 'a+').write("cwd:"+ os.getcwd()+"\n"+
+open(ppc._debug_file, 'a+').write("cwd:"+ os.getcwd()+"\n"+
                               "nodename:"+os.uname().nodename+"\n"+
                               "pid:"+str(os.getpid())+"\n")
 
@@ -155,7 +152,7 @@ class _Worker(object):
     """
     command = [sys.executable, "-u", "-m", "ppworker"]
 
-    command.append("2>>"+_debug_file)
+    command.append("2>>"+ppc._debug_file)
 
     def __init__(self, restart_on_free, pickle_proto):
         """Initializes local worker"""
@@ -170,19 +167,19 @@ class _Worker(object):
             proc = subprocess.Popen(self.command, stdin=subprocess.PIPE,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             self.t = pptransport.CPipeTransport(proc.stdout, proc.stdin)
-            open(_debug_file, 'a+').write('Starting _Worker {}\n'.format(self.command))
+            open(ppc._debug_file, 'a+').write('Starting _Worker {}\n'.format(self.command))
         else:
             self.t = pptransport.CPipeTransport(
                     *popen2.popen3(self.command)[:2])
-            open(_debug_file, 'a+').write('Starting _Worker pptransport {}\n'.format(self.command))
+            open(ppc._debug_file, 'a+').write('Starting _Worker pptransport {}\n'.format(self.command))
 
 
-        open(_debug_file, 'a+').write('receiving... \n')
+        open(ppc._debug_file, 'a+').write('receiving... \n')
         self.pid = int(self.t.receive())
-        open(_debug_file, 'a+').write('received: %s\n' % self.pid)
-        open(_debug_file, 'a+').write('sending: %s\n' % self.pickle_proto)
+        open(ppc._debug_file, 'a+').write('received: %s\n' % self.pid)
+        open(ppc._debug_file, 'a+').write('sending: %s\n' % self.pickle_proto)
         self.t.send(str(self.pickle_proto))
-        open(_debug_file, 'a+').write('...sent \n')
+        open(ppc._debug_file, 'a+').write('...sent \n')
         self.is_free = True
 
     def stop(self):
@@ -229,20 +226,20 @@ class _RWorker(pptransport.CSocketTransport):
 
     def connect(self, message=None):
         """Connects to a remote server"""
-       #open(_debug_file, 'a+').write('connect: %s\n' % repr(message))
+       #open(ppc._debug_file, 'a+').write('connect: %s\n' % repr(message))
         while True and not self.server._exiting:
             try:
                 pptransport.SocketTransport.__init__(self, None, self.socket_timeout) 
                 self._connect(self.host, self.port)                
-               #open(_debug_file, 'a+').write('connected: %s\n' % self.port)
+               #open(ppc._debug_file, 'a+').write('connected: %s\n' % self.port)
                 if not self.authenticate(self.secret):
                     self.server.logger.error("Authentication failed for host=%s, port=%s"
                             % (self.host, self.port))
                     return False
-               #open(_debug_file, 'a+').write('authenticated \n')
+               #open(ppc._debug_file, 'a+').write('authenticated \n')
                 if message:
                     self.send(message)
-                   #open(_debug_file, 'a+').write('sent: %s\n' % repr(message))
+                   #open(ppc._debug_file, 'a+').write('sent: %s\n' % repr(message))
                 self.is_free = True
                 return True
             except:
@@ -633,27 +630,27 @@ class Server(object):
         try:
             if hostid in self.autopp_list:
                 return
-           #open(_debug_file, 'a+').write('_RWorker(STAT)\n')
+           #open(ppc._debug_file, 'a+').write('_RWorker(STAT)\n')
             rworker = _RWorker(host, port, self.secret, self, "STAT", persistent, self.socket_timeout)
             ncpus = int(rworker.receive())
-           #open(_debug_file, 'a+').write('_RWorker: %s\n' % ncpus)
+           #open(ppc._debug_file, 'a+').write('_RWorker: %s\n' % ncpus)
             self.__stats[hostid] = _Statistics(ncpus, rworker)
 
             for x in range(ncpus):
-               #open(_debug_file, 'a+').write('_RWorker(EXEC)\n')
+               #open(ppc._debug_file, 'a+').write('_RWorker(EXEC)\n')
                 rworker = _RWorker(host, port, self.secret, self, "EXEC", persistent, self.socket_timeout)
                 self.__update_active_rworkers(rworker.id, 1)
                 # append is atomic - no need to lock self.__rworkers
                 self.__rworkers.append(rworker)
             #creating reserved rworkers
             for x in range(ncpus):
-               #open(_debug_file, 'a+').write('_RWorker(EXEC)_\n')
+               #open(ppc._debug_file, 'a+').write('_RWorker(EXEC)_\n')
                 rworker = _RWorker(host, port, self.secret, self, "EXEC", persistent, self.socket_timeout)
                 self.__update_active_rworkers(rworker.id, 1)
                 self.__rworkers_reserved.append(rworker)
             self.logger.debug("Connected to ppserver (host=%s, port=%i) \
                     with %i workers" % (host, port, ncpus))
-           #open(_debug_file, 'a+').write('_RWorker(sched)\n')
+           #open(ppc._debug_file, 'a+').write('_RWorker(sched)\n')
             self.__scheduler()
         except:
             if SHOW_EXPECTED_EXCEPTIONS:
@@ -775,15 +772,15 @@ class Server(object):
         start_time = time.time()
 
         try:
-           #open(_debug_file, 'a+').write('_local: %s\n' % repr(sfunc))
+           #open(ppc._debug_file, 'a+').write('_local: %s\n' % repr(sfunc))
             worker.t.csend(sfunc)
-           #open(_debug_file, 'a+').write('_local: %s\n' % repr(sargs))
+           #open(ppc._debug_file, 'a+').write('_local: %s\n' % repr(sargs))
             worker.t.send(sargs)
-           #open(_debug_file, 'a+').write('_local: \n')
+           #open(ppc._debug_file, 'a+').write('_local: \n')
             sresult = worker.t.receive()
-           #open(_debug_file, 'a+').write('_local: %s\n' % repr(sresult))
+           #open(ppc._debug_file, 'a+').write('_local: %s\n' % repr(sresult))
             job.finalize(sresult)
-           #open(_debug_file, 'a+').write('_local: _\n')
+           #open(ppc._debug_file, 'a+').write('_local: _\n')
         except:
             if self._exiting:
                 return
@@ -809,16 +806,16 @@ class Server(object):
         self.logger.debug("Task (remote) %i started",  job.tid)
 
         try:
-           #open(_debug_file, 'a+').write('_remote: %s\n' % repr(sfunc))
+           #open(ppc._debug_file, 'a+').write('_remote: %s\n' % repr(sfunc))
             rworker.csend(sfunc)
-           #open(_debug_file, 'a+').write('_remote: %s\n' % repr(sargs))
+           #open(ppc._debug_file, 'a+').write('_remote: %s\n' % repr(sargs))
             rworker.send(sargs)
-           #open(_debug_file, 'a+').write('_remote: %s\n')
+           #open(ppc._debug_file, 'a+').write('_remote: %s\n')
             sresult = rworker.receive()
-           #open(_debug_file, 'a+').write('_remote: %s\n' % repr(sresult))
+           #open(ppc._debug_file, 'a+').write('_remote: %s\n' % repr(sresult))
             rworker.is_free = True
             job.finalize(sresult)
-           #open(_debug_file, 'a+').write('_remote: _%s\n')
+           #open(ppc._debug_file, 'a+').write('_remote: _%s\n')
         except:
             self.logger.debug("Task %i failed due to broken network " \
                     "connection - rescheduling",  job.tid)

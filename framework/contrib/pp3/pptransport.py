@@ -35,6 +35,7 @@ import os
 import socket
 import struct
 import six
+import time
 
 copyright = "Copyright (c) 2005-2012 Vitalii Vanovschi. All rights reserved"
 __version__ = version = "1.6.4.4"
@@ -96,10 +97,10 @@ class CTransport(Transport):
         return md5_new(ppc.b_(msg)).hexdigest()
 
     def csend(self, msg):
-       #if hasattr(self, 'w'):
-       #    open('/tmp/pp.debug', 'a+').write(repr(('cs', self.w, msg))+'\n')
-       #else:
-       #    open('/tmp/pp.debug', 'a+').write(repr(('cs', self.socket, msg))+'\n')
+        if hasattr(self, 'w'):
+          open(ppc._debug_file, 'a+').write(repr(('cs', self.w, msg))+'\n')
+        else:
+          open(ppc._debug_file, 'a+').write(repr(('cs', self.socket, msg))+'\n')
         msg = ppc.b_(msg)
         hash1 = self.hash(msg)
         if hash1 in self.scache:
@@ -110,10 +111,10 @@ class CTransport(Transport):
 
     def creceive(self, preprocess=None):
         msg = self.receive()
-       #if hasattr(self, 'r'):
-       #    open('/tmp/pp.debug', 'a+').write(repr(('cr',  self.r, msg))+'\n')
-       #else:
-       #    open('/tmp/pp.debug', 'a+').write(repr(('cr', self.socket, msg))+'\n')
+        if hasattr(self, 'r'):
+          open(ppc._debug_file, 'a+').write(repr(('cr',  self.r, msg))+'\n')
+        else:
+          open(ppc._debug_file, 'a+').write(repr(('cr', self.socket, msg))+'\n')
         msg = ppc.b_(msg)
         if msg[:1] == ppc.b_('H'):
             hash1 = ppc.str_(msg[1:])
@@ -128,7 +129,7 @@ class CTransport(Transport):
 class PipeTransport(Transport):
 
     def __init__(self, r, w):
-       #open('/tmp/pp.debug', 'a+').write(repr((r,w))+'\n')
+        open(ppc._debug_file, 'a+').write(repr((r,w))+'\n')
         self.scache = {}
         self.exiting = False
         if isinstance(r, ppc.file) and isinstance(w, ppc.file):
@@ -152,8 +153,8 @@ class PipeTransport(Transport):
         
 
     def send(self, msg):
-       #l = len(ppc.b_(msg)) if (self.has_wb or self.w.mode == 'wb') else len(ppc.str_(msg))
-       #open('/tmp/pp.debug', 'a+').write(repr(('s', l, self.w, msg))+'\n')
+        l = len(ppc.b_(msg)) if (self.has_wb or self.w.mode == 'wb') else len(ppc.str_(msg))
+        open(ppc._debug_file, 'a+').write(repr(('s', l, self.w, msg[:64]))+'\n')
         if self.has_wb or self.w.mode == 'wb':
             msg = ppc.b_(msg)
             self.wb.write(struct.pack("!Q", len(msg)))
@@ -173,8 +174,8 @@ class PipeTransport(Transport):
         data = stub
         while r_size < e_size:
             msg = self.rb.read(e_size-r_size)
-           #l = len(msg)
-           #open('/tmp/pp.debug', 'a+').write(repr(('_r', l, self.r, msg))+'\n')
+            l = len(msg)
+            open(ppc._debug_file, 'a+').write(repr(('_r', l, self.r, msg))+'\n')
             if msg == stub:
                 raise RuntimeError("Communication pipe read error")
             if stub == "" and msg.startswith('['): #HACK to get str_ length
@@ -188,8 +189,8 @@ class PipeTransport(Transport):
         data = stub
         while r_size < e_size:
             msg = self.rb.read(e_size-r_size)
-           #l = len(msg)
-           #open('/tmp/pp.debug', 'a+').write(repr(('r_', l, self.r, msg))+'\n')
+            l = len(msg)
+            open(ppc._debug_file, 'a+').write(repr(('r_', l, self.r, msg))+'\n')
             if msg == stub:
                 raise RuntimeError("Communication pipe read error")
             r_size += len(msg)
@@ -200,6 +201,7 @@ class PipeTransport(Transport):
         return tuple(map(preprocess, (data, )))[0]
 
     def close(self):
+        open(ppc._debug_file, 'a+').write("closing {} and {}\n".format(w,r))
         self.w.close()
         self.r.close()
 
@@ -215,8 +217,8 @@ class SocketTransport(Transport):
         self.scache = {}
 
     def send(self, data):
-       #l = len(ppc.b_(data))
-       #open('/tmp/pp.debug', 'a+').write(repr(('ss', l, self.socket, data))+'\n')
+        l = len(ppc.b_(data))
+        open(ppc._debug_file, 'a+').write(repr(('ss', time.time(), l, self.socket, data))+'\n')
         data = ppc.b_(data)
         size = struct.pack("!Q", len(data))
         t_size = struct.calcsize("!Q")
@@ -242,9 +244,10 @@ class SocketTransport(Transport):
         data = stub
         while r_size < e_size:
             msg = self.socket.recv(e_size-r_size)
-           #l = len(msg)
-           #open('/tmp/pp.debug', 'a+').write(repr(('_sr', l, self.socket, msg))+'\n')
+            l = len(msg)
+            open(ppc._debug_file, 'a+').write(repr(('_sr', time.time(), l, self.socket, msg))+'\n')
             if msg == stub:
+                open(ppc._debug_file, 'a+').write("Socket connection is broken e_size: {} r_size: {} msg len: {} timeout: {} peername: {}\n".format(e_size, r_size, len(msg), self.socket.gettimeout(), self.socket.getpeername()))
                 raise RuntimeError("Socket connection is broken e_size: {} r_size: {} msg len: {} timeout: {} peername: {}".format(e_size, r_size, len(msg), self.socket.gettimeout(), self.socket.getpeername()))
             r_size += len(msg)
             data += msg
@@ -254,9 +257,10 @@ class SocketTransport(Transport):
         data = stub
         while r_size < e_size:
             msg = self.socket.recv(e_size-r_size)
-           #l = len(msg)
-           #open('/tmp/pp.debug', 'a+').write(repr(('sr_', l, self.socket, msg))+'\n')
+            l = len(msg)
+            open(ppc._debug_file, 'a+').write(repr(('sr_', time.time(), l, self.socket, msg[:64]))+'\n')
             if msg == stub:
+                open(ppc._debug_file, 'a+').write("Socket connection is broken e_size: {} r_size: {} msg len: {} timeout: {} peername: {}\n".format(e_size, r_size, len(msg), self.socket.gettimeout(), self.socket.getpeername()))
                 raise RuntimeError("Socket connection is broken e_size: {} r_size: {} msg len: {}".format(e_size, r_size, len(msg)))
             r_size += len(msg)
             data += msg
@@ -264,6 +268,7 @@ class SocketTransport(Transport):
         return data
 
     def close(self):
+        open(ppc._debug_file, 'a+').write("closing socket {}\n".format(self.socket))
         self.socket.close()
 
     def _connect(self, host, port):
