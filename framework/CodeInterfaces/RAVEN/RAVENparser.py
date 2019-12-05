@@ -103,10 +103,10 @@ class RAVENparser():
       raise IOError(self.printTag+' ERROR: at least one <OutStreams> of type "Print" needs to be inputted in the active Steps!!')
     # Now we grep the paths of all the inputs the SLAVE RAVEN contains in the workind directory.
     self.workingDir = self.tree.find('.//RunInfo/WorkingDir').text.strip()
-    #if not os.path.isabs(self.workingDir):
-    #  #If the workingDir is not absolute, then it should be relative to the
-    #  # input file's directory, which is cwd
-    #  self.workingDir = os.path.join(cwd, self.workingDir)
+    if not os.path.isabs(self.workingDir):
+      #If the workingDir is not absolute, then it should be relative to the
+      # input file's directory, which is cwd
+      self.workingDir = os.path.join(cwd, self.workingDir)
     # Find the Files
     self.slaveInputFiles = self.findSlaveFiles(self.tree, self.workingDir)
 
@@ -193,13 +193,13 @@ class RAVENparser():
   def copySlaveFiles(self, currentDirName):
     """
       Method to copy the slave input files
-      @ In, currentDirName, str, the current directory (destination of the copy procedure)
+      @ In, currentDirName, str, the current directory (destination of the copy procedure) XXX Ignored
       @ Out, None
     """
     # the dirName is actually in workingDir/StepName/prefix => we need to go back 2 dirs
     # copy SLAVE raven files in case they are needed
     for slaveInput in self.slaveInputFiles:
-      slaveDir = os.path.join(currentDirName, self.workingDir)
+      slaveDir = self.workingDir #os.path.join(currentDirName, self.workingDir)
       # if not exist then make the directory
       try:
         os.makedirs(slaveDir)

@@ -201,6 +201,8 @@ class RAVEN(CodeInterfaceBase):
     self.variableGroups = varGroupNames
     # get inner working dir
     self.innerWorkingDir = parser.workingDir
+    if not os.path.isabs(self.innerWorkingDir):
+      raise IOError("working directory "+self.innerWorkingDir+" should be absolute")
     # check operating system and define prefix if needed
     if platform.startswith("win") and utils.which("bash.exe") is not None:
       self.preCommand = 'bash.exe'
@@ -294,7 +296,7 @@ class RAVEN(CodeInterfaceBase):
     # check for output CSV (and data)
     if not failure:
       for filename in self.linkedDataObjectOutStreamsNames:
-        outStreamFile = os.path.join(workingDir,self.innerWorkingDir,filename+".csv")
+        outStreamFile = os.path.join(self.innerWorkingDir,filename+".csv")
         try:
           fileObj = open(outStreamFile,"r")
         except IOError:
@@ -341,7 +343,7 @@ class RAVEN(CodeInterfaceBase):
       data.readXML(dataObjectInfo[2], messageHandler, variableGroups=self.variableGroups)
       # set the name, then load the data
       data.name = filename
-      data.load(os.path.join(workingDir,self.innerWorkingDir,filename),style='csv')
+      data.load(os.path.join(self.innerWorkingDir,filename),style='csv')
       # check consistency of data object number of realizations
       if numRlz is None:
         # set the standard if you're the first data object
