@@ -31,6 +31,7 @@ forums
 """
 
 import threading
+import os
 try: # workaround for install process
     import six
 except ImportError:
@@ -89,6 +90,8 @@ def is_not_imported(arg, modules):
             return False
     return True
 
+_debug_file = '/scratch/cogljj/pp.{}.{}.debug'.format(os.uname().nodename,
+                                                      os.getpid())
 
 class portnumber(object):
     '''port selector

@@ -103,6 +103,10 @@ class RAVENparser():
       raise IOError(self.printTag+' ERROR: at least one <OutStreams> of type "Print" needs to be inputted in the active Steps!!')
     # Now we grep the paths of all the inputs the SLAVE RAVEN contains in the workind directory.
     self.workingDir = self.tree.find('.//RunInfo/WorkingDir').text.strip()
+    #if not os.path.isabs(self.workingDir):
+    #  #If the workingDir is not absolute, then it should be relative to the
+    #  # input file's directory, which is cwd
+    #  self.workingDir = os.path.join(cwd, self.workingDir)
     # Find the Files
     self.slaveInputFiles = self.findSlaveFiles(self.tree, self.workingDir)
 
@@ -206,7 +210,7 @@ class RAVENparser():
       try:
         shutil.copy(slaveInput, slaveDir)
       except FileNotFoundError:
-        raise IOError('{} ERROR: File "{}" has not been found!'.format(self.printTag, slaveInput))
+        raise IOError('{} ERROR: File "{}" has not been found! CWD: {} WorkingDir {} inputFile: {}'.format(self.printTag, slaveInput, os.getcwd(), self.workingDir, self.inputFile))
 
   def printInput(self,rootToPrint,outfile=None):
     """
