@@ -16,7 +16,7 @@
     <WorkingDir>Code</WorkingDir>
     <Sequence>sample, print</Sequence>
     <batchSize>2</batchSize>
-    <NumMPI>4</NumMPI>
+    <NumMPI>50</NumMPI>
     <mode>mpi<runQSUB/></mode>
     <expectedTime>0:10:0</expectedTime>
     <clusterParameters>-P nst -j oe</clusterParameters>

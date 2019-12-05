@@ -4,7 +4,8 @@
   <RunInfo>
     <WorkingDir>Inner</WorkingDir>
     <Sequence>sample, aggregate, print</Sequence>
-    <batchSize>4</batchSize>
+    <batchSize>50</batchSize>
+    <internalParallel>True</internalParallel>
   </RunInfo>
 
   <Steps>
@@ -65,7 +66,7 @@
   <Samplers>
     <MonteCarlo name="mc_inner">
       <samplerInit>
-        <limit>8</limit>
+        <limit>200</limit>
       </samplerInit>
       <variable name="x">
         <distribution>dist</distribution>
