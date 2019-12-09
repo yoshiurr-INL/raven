@@ -31,6 +31,7 @@ forums
 """
 import sys
 import os
+import atexit
 try:
     import io
     ioStringIO = io.StringIO
@@ -84,10 +85,11 @@ class _WorkerProcess(object):
         try:
             #execution cycle
             while 1:
+                open(ppc._debug_file, 'a+').write('run_10\n')
                 __fname, __fobjs = self.t.creceive(preprocess)
-
+                open(ppc._debug_file, 'a+').write('run_20\n')
                 __sargs = self.t.receive()
-
+                open(ppc._debug_file, 'a+').write('run_30\n')
                 for __fobj in __fobjs:
                     try:
                         six.exec_(__fobj)
@@ -96,22 +98,25 @@ class _WorkerProcess(object):
                         print("An error has occured during the " + \
                               "function import")
                         sys.excepthook(*sys.exc_info())
-
+                open(ppc._debug_file, 'a+').write('run_40\n')
                 __args = pickle.loads(ppc.b_(__sargs))
-            
+                open(ppc._debug_file, 'a+').write('run_50\n')
                 __f = locals()[ppc.str_(__fname)]
+                open(ppc._debug_file, 'a+').write('run_60\n')
                 try:
                     __result = __f(*__args)
                 except:
                     print("An error has occured during the function execution")
                     sys.excepthook(*sys.exc_info())
                     __result = None
-
+                open(ppc._debug_file, 'a+').write('run_70\n')
                 __sresult = pickle.dumps((__result, self.sout.getvalue()),
                         self.pickle_proto)
-
+                open(ppc._debug_file, 'a+').write('run_80\n')
                 self.t.send(__sresult)
+                open(ppc._debug_file, 'a+').write('run_90\n')
                 self.sout.truncate(0)
+                open(ppc._debug_file, 'a+').write('run_100\n')
         except:
             print("A fatal error has occured during the function execution")
             sys.excepthook(*sys.exc_info())
@@ -120,11 +125,16 @@ class _WorkerProcess(object):
                     self.pickle_proto)
             self.t.send(__sresult)
 
+def exit_handler():
+    open(ppc._debug_file, 'a+').write("exit_handler ending ppworker\n")
 
 if __name__ == "__main__":
-        # add the directory with ppworker.py to the path
-        sys.path.append(os.path.dirname(__file__))
-        wp = _WorkerProcess()
-        wp.run()
+    open(ppc._debug_file, 'a+').write("starting ppworker\n")
+    atexit.register(exit_handler)
+    # add the directory with ppworker.py to the path
+    sys.path.append(os.path.dirname(__file__))
+    wp = _WorkerProcess()
+    wp.run()
+    open(ppc._debug_file, 'a+').write("ending ppworker\n")
 
 # Parallel Python Software: http://www.parallelpython.com

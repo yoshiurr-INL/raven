@@ -85,8 +85,9 @@ except ImportError:
     import popen2
 
 open(ppc._debug_file, 'a+').write("cwd:"+ os.getcwd()+"\n"+
-                              "nodename:"+os.uname().nodename+"\n"+
-                              "pid:"+str(os.getpid())+"\n")
+                                  "nodename:"+os.uname().nodename+"\n"+
+                                  "pid:"+str(os.getpid())+"\n"+
+                                  "argv:"+str(sys.argv)+"\n")
 
 
 class _Task(object):

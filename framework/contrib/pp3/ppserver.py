@@ -410,6 +410,7 @@ def signal_handler(signum, stack):
     server.print_stats()
 
 if __name__ == "__main__":
+    open(ppc._debug_file, 'a+').write("starting ppserver\n")
     server = create_network_server(sys.argv[1:])
     if hasattr(signal, "SIGUSR1"):
       signal.signal(signal.SIGUSR1, signal_handler)
@@ -417,6 +418,7 @@ if __name__ == "__main__":
     #have to destroy it here explicitly otherwise an exception
     #comes out in Python 2.4
     del server
+    open(ppc._debug_file, 'a+').write("ending ppserver\n")
 
 
 # Parallel Python Software: http://www.parallelpython.com

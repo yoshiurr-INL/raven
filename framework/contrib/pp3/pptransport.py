@@ -36,6 +36,7 @@ import socket
 import struct
 import six
 import time
+import traceback
 
 copyright = "Copyright (c) 2005-2012 Vitalii Vanovschi. All rights reserved"
 __version__ = version = "1.6.4.4"
@@ -98,9 +99,9 @@ class CTransport(Transport):
 
     def csend(self, msg):
         if hasattr(self, 'w'):
-          open(ppc._debug_file, 'a+').write(repr(('cs', self.w, msg))+'\n')
+          open(ppc._debug_file, 'a+').write(repr(('cs', self.w, msg[:64]))+'\n')
         else:
-          open(ppc._debug_file, 'a+').write(repr(('cs', self.socket, msg))+'\n')
+          open(ppc._debug_file, 'a+').write(repr(('cs', self.socket, msg[:64]))+'\n')
         msg = ppc.b_(msg)
         hash1 = self.hash(msg)
         if hash1 in self.scache:
@@ -112,9 +113,9 @@ class CTransport(Transport):
     def creceive(self, preprocess=None):
         msg = self.receive()
         if hasattr(self, 'r'):
-          open(ppc._debug_file, 'a+').write(repr(('cr',  self.r, msg))+'\n')
+          open(ppc._debug_file, 'a+').write(repr(('cr',  self.r, msg[:64]))+'\n')
         else:
-          open(ppc._debug_file, 'a+').write(repr(('cr', self.socket, msg))+'\n')
+          open(ppc._debug_file, 'a+').write(repr(('cr', self.socket, msg[:64]))+'\n')
         msg = ppc.b_(msg)
         if msg[:1] == ppc.b_('H'):
             hash1 = ppc.str_(msg[1:])
@@ -165,6 +166,8 @@ class PipeTransport(Transport):
             self.w.flush()
         self.wb.write(msg)
         self.w.flush()
+        open(ppc._debug_file, 'a+').write('s_fin\n')
+        open(ppc._debug_file, 'a+').write("".join(traceback.format_list(traceback.extract_stack())))
 
     def receive(self, preprocess=None):
         e_size = struct.calcsize("!Q") # 8
@@ -172,10 +175,11 @@ class PipeTransport(Transport):
         r_size = 0
         stub = ppc.b_("") if (self.has_rb or self.r.mode == 'rb') else ""
         data = stub
+        open(ppc._debug_file, 'a+').write("PT waiting to receive "+str(e_size)+"\n")
         while r_size < e_size:
             msg = self.rb.read(e_size-r_size)
             l = len(msg)
-            open(ppc._debug_file, 'a+').write(repr(('_r', l, self.r, msg))+'\n')
+            open(ppc._debug_file, 'a+').write(repr(('_r', l, self.r, msg[:64]))+'\n')
             if msg == stub:
                 raise RuntimeError("Communication pipe read error")
             if stub == "" and msg.startswith('['): #HACK to get str_ length
@@ -190,7 +194,7 @@ class PipeTransport(Transport):
         while r_size < e_size:
             msg = self.rb.read(e_size-r_size)
             l = len(msg)
-            open(ppc._debug_file, 'a+').write(repr(('r_', l, self.r, msg))+'\n')
+            open(ppc._debug_file, 'a+').write(repr(('r_', l, self.r, msg[:64]))+'\n')
             if msg == stub:
                 raise RuntimeError("Communication pipe read error")
             r_size += len(msg)
@@ -218,7 +222,7 @@ class SocketTransport(Transport):
 
     def send(self, data):
         l = len(ppc.b_(data))
-        open(ppc._debug_file, 'a+').write(repr(('ss', time.time(), l, self.socket, data))+'\n')
+        open(ppc._debug_file, 'a+').write(repr(('ss', time.time(), l, self.socket, data[:64]))+'\n')
         data = ppc.b_(data)
         size = struct.pack("!Q", len(data))
         t_size = struct.calcsize("!Q")
@@ -242,10 +246,11 @@ class SocketTransport(Transport):
         r_size = 0
         stub = ppc.b_("")
         data = stub
+        open(ppc._debug_file, 'a+').write("ST waiting to receive "+str(e_size)+"\n")
         while r_size < e_size:
             msg = self.socket.recv(e_size-r_size)
             l = len(msg)
-            open(ppc._debug_file, 'a+').write(repr(('_sr', time.time(), l, self.socket, msg))+'\n')
+            open(ppc._debug_file, 'a+').write(repr(('_sr', time.time(), l, self.socket, msg[:64]))+'\n')
             if msg == stub:
                 open(ppc._debug_file, 'a+').write("Socket connection is broken e_size: {} r_size: {} msg len: {} timeout: {} peername: {}\n".format(e_size, r_size, len(msg), self.socket.gettimeout(), self.socket.getpeername()))
                 raise RuntimeError("Socket connection is broken e_size: {} r_size: {} msg len: {} timeout: {} peername: {}".format(e_size, r_size, len(msg), self.socket.gettimeout(), self.socket.getpeername()))
