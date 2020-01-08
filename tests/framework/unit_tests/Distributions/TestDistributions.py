@@ -30,7 +30,7 @@ import numpy as np
 frameworkDir = os.path.abspath(os.path.join(*([os.path.dirname(__file__)]+[os.pardir]*4+['framework'])))
 sys.path.append(frameworkDir)
 
-from utils.utils import find_crow
+from utils.utils import find_crow, toString
 find_crow(frameworkDir)
 
 import MessageHandler
@@ -1106,6 +1106,11 @@ checkAnswer("Custom1D cdf(1.9)",Custom1D.cdf(1.9), 0.971283153684)
 
 checkAnswer("Custom1D ppf(0.0139034475135)",Custom1D.ppf(0.0139034475135),-2.19999191499)
 checkAnswer("Custom1D ppf(00.971283440184)",Custom1D.ppf(0.971283440184),1.90000436617)
+
+xsd = ET.Element("XSD")
+distributionSpec = Distributions.DistributionsCollection
+distributionSpec.generateXSD(xsd, {})
+open("/tmp/distribution.xsd", "w").write(toString(ET.tostring(xsd)))
 
 
 print(results)
