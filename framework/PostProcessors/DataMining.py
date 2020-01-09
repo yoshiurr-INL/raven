@@ -700,7 +700,10 @@ class DataMining(PostProcessor):
         # in order to access this data, currently, we just added to the metadata of solution export
         if 'explainedVarianceRatio' in solutionExportDict:
           self.solutionExport.addVariable('explainedVarianceRatio', np.atleast_1d(solutionExportDict['explainedVarianceRatio']))
-
+    
+    outputDict['metadata']={}
+    for key in Input['metadata']:
+      outputDict['metadata'][key]=Input['metadata'][key]
     return outputDict
 
   def __runTemporalSciKitLearn(self, Input):

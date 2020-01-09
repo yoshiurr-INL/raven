@@ -18,7 +18,7 @@
 
   <RunInfo>
     <WorkingDir>time_dep_clustering_filtered</WorkingDir>
-    <Sequence>FirstMRun,pp1,plotAllHists,filter0,filter1</Sequence>
+    <Sequence>FirstMRun,plotAllHists,pp1,filter0,filter1</Sequence>
     <batchSize>1</batchSize>
   </RunInfo>
 
@@ -30,8 +30,9 @@
       <Output class="DataObjects" type="HistorySet">outMCRaw</Output>
     </MultiRun>
     <IOStep name="plotAllHists" pauseAtEnd="false">
-      <Input class="DataObjects" type="HistorySet">outMC</Input>
+      <Input class="DataObjects" type="HistorySet">outMCRaw</Input>
       <Output class="OutStreams" type="Plot">plot1</Output>
+      <Output class="OutStreams" type="Print">print3</Output>
     </IOStep>
     <PostProcess name="pp1" pauseAtEnd="True">
       <Input class="DataObjects" type="HistorySet">outMCRaw</Input>
@@ -45,6 +46,7 @@
       <Output class="OutStreams" type="Plot">plot6</Output>
       <Output class="OutStreams" type="Plot">plot7</Output>
       <Output class="OutStreams" type="Print">print2</Output>
+      <Output class="OutStreams" type="Print">print4</Output>
     </PostProcess>
     <PostProcess name="filter0" pauseAtEnd="True">
       <Input class="DataObjects" type="HistorySet">outMC</Input>
@@ -185,6 +187,14 @@
       <type>csv</type>
       <source>clusterInfo</source>
     </Print>
+    <Print name="print3">
+      <type>csv</type>
+      <source>outMCRaw</source>
+    </Print>
+    <Print name="print4">
+      <type>csv</type>
+      <source>outMC</source>
+    </Print>
     <Print name="PrintHistorySet_dump">
       <type>csv</type>
       <source>outMC</source>
@@ -195,9 +205,9 @@
           <type>line</type>
           <interpolationType>cubic</interpolationType>
           <interpPointsX>100</interpPointsX>
-          <x>outMC|Output|time</x>
-          <y>outMC|Output|y</y>
-          <z>outMC|Output|z</z>
+          <x>outMCRaw|Output|time</x>
+          <y>outMCRaw|Output|y</y>
+          <z>outMCRaw|Output|z</z>
         </plot>
         <xlabel>time</xlabel>
         <ylabel>x</ylabel>

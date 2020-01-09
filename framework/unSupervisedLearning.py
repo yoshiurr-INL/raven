@@ -166,7 +166,7 @@ class unSupervisedLearning(utils.metaclass_insert(abc.ABCMeta), MessageHandler.M
     self.metric = metric
     if not isinstance(tdict, dict):
       self.raiseAnError(IOError, ' method "train". The training set needs to be provided through a dictionary. Type of the in-object is ' + str(type(tdict)))
-
+    
     featureCount = len(self.features)
     if not isinstance(tdict[utils.first(tdict.keys())],dict):
       realizationCount = utils.first(tdict.values()).size
@@ -868,7 +868,6 @@ class temporalSciKitLearn(unSupervisedLearning):
     ############################################################################
 
     self.normValues = {}
-
     for cnt,feature in enumerate(self.features):
       resp = self.checkArrayConsistency(tdict[feature], [self.numberOfSample, self.numberOfHistoryStep])
       if not resp[0]:

@@ -112,8 +112,8 @@ class HS2PS(PostProcessorInterfaceBase):
         outputDic['data'][str(key)] = matrix[:,key]
         outputDic['dims'][str(key)] = []
       # add meta variables back
-      for key in inputDict['metaKeys']:
-        outputDic['data'][key] = inputDict['data'][key]
+      #for key in inputDict['metaKeys']:
+        #self.transformationSettings[key] = inputDict['data'][key]
 
       self.transformationSettings['vars'] = copy.deepcopy(self.features)
       self.transformationSettings['timeLength'] = historyLength
