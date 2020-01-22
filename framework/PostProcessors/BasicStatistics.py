@@ -57,7 +57,8 @@ class BasicStatistics(PostProcessor):
                 'covariance',
                 'pearson',
                 'NormalizedSensitivity',
-                'VarianceDependentSensitivity']
+                'VarianceDependentSensitivity',
+                'PAWN']
   # quantities that the standard error can be computed
   steVals    = ['expectedValue_ste',
                 'median_ste',
@@ -929,6 +930,35 @@ class BasicStatistics(PostProcessor):
         da = self.sensitivityCalculation(features,targets,featSet,targSet,intersectionSet)
       calculations[metric] = da
     #
+    # PAWN matrix
+    #
+    metric = 'PAWN'
+    targets,features,skip = startVector(metric)
+    #NOTE sklearn expects the transpose of what we usually do in RAVEN, so #samples by #features
+    if not skip:
+      #for pawn matrix, we don't use numpy/scipy methods to calculate matrix operations,
+      #so we loop over targets and features
+      params = list(set(targets).union(set(features)))
+      dataSet = inputDataset[params]
+      relWeight = pbWeights[params] if self.pbPresent else None
+      if self.pivotParameter in dataSet.sizes.keys():
+        dataSet = dataSet.to_array().transpose(self.pivotParameter,self.sampleTag,'variable')
+        featSet = dataSet.sel(**{'variable':features}).values
+        targSet = dataSet.sel(**{'variable':targets}).values
+        pivotVals = dataSet.coords[self.pivotParameter].values
+        da = None
+        for i in range(len(pivotVals)):
+          ds = self.pawnCalculation(features,targets,featSet[i,:,:],targSet[i,:,:])
+          da = ds if da is None else xr.concat([da,ds], dim=self.pivotParameter)
+        da.coords[self.pivotParameter] = pivotVals
+      else:
+        # construct target and feature matrices
+        dataSet = dataSet.to_array().transpose(self.sampleTag,'variable')
+        featSet = dataSet.sel(**{'variable':features}).values
+        targSet = dataSet.sel(**{'variable':targets}).values
+        da = self.pawnCalculation(features,targets,featSet,targSet)
+      calculations[metric] = da
+    #
     # covariance matrix
     #
     metric = 'covariance'
@@ -1156,6 +1186,48 @@ class BasicStatistics(PostProcessor):
     da = xr.DataArray(senMatrix, dims=('targets','features'), coords={'targets':targVars,'features':featVars})
 
     return da
+
+  def pawnCalculation(self,featVars, targVars, featSamples, targSamples):
+    """
+      This method computes the pawn sensitivity coefficients based on paper (Distribution-based sensitivity analysis from a 
+      generic input-output sample, by Francesca Pianosi and Thorsten Wagener)
+      @ In, featVars, list, list of feature variables
+      @ In, targVars, list, list of target variables
+      @ In, featSamples, numpy.ndarray, [#samples, #features] array of features
+      @ In, targSamples, numpy.ndarray, [#samples, #targets] array of targets
+      @ Out, da, xarray.DataArray, contains the calculations of sensitivity coefficients
+    """
+    # perform partitioning
+    
+    
+    
+
+        ## Target variables are in feature variables list, multi-target linear regression can not be used
+        ## Since the 'multi-colinearity' exists, we need to loop over target variables
+        ## TODO: Some general methods need to be implemented in order to handle the 'multi-colinearity' -- wangc
+        #senMatrix = np.zeros((len(targVars), len(featVars)))
+        #for p, targ in enumerate(targVars):
+          #ind = list(featVars).index(targ) if targ in featVars else None
+          #if ind is not None:
+            #featMat = np.delete(featSamples,ind,axis=1)
+          #else:
+            #featMat = featSamples
+          #regCoeff = LinearRegression().fit(featMat, targSamples[:,p]).coef_
+          #condNumber = np.linalg.cond(featMat)
+          #if condNumber > 30.:
+            #self.raiseAWarning("Condition Number: {:10.4f} > 30.0. Detected SEVERE multicollinearity problem. Sensitivity might be incorrect!".format(condNumber))
+          #if ind is not None:
+            #regCoeff = np.insert(regCoeff,ind,1.0)
+          #senMatrix[p,:] = regCoeff
+    #else:
+      #senMatrix = np.zeros((len(targVars), len(featVars)))
+      #for p, feat in enumerate(featVars):
+        #regCoeff = LinearRegression().fit(featSamples[:,p].reshape(-1,1),targSamples).coef_
+        #senMatrix[:,p] = regCoeff[:,0]
+    #da = xr.DataArray(senMatrix, dims=('targets','features'), coords={'targets':targVars,'features':featVars})
+
+    return da
+
 
   def covarianceCalculation(self,paramSamples,fact,variance,targVars):
     """
