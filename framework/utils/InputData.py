@@ -272,8 +272,9 @@ class ParameterInput(object):
     if cls.subOrder is not None:
       cls.subOrder.append((sub, quantity))
     elif quantity != Quantity.zero_to_infinity:
-      print("ERROR only zero to infinity is supported if Order==False ",
-           sub.getName()," in ",cls.getName())
+      #TODO only zero to infinity is supported for checking if Order==False
+      # This is a limititation of XSD 1.0
+      pass
 
   @classmethod
   def addSubSimple(cls, name, contentType, quantity=Quantity.zero_to_infinity):
