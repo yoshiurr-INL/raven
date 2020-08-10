@@ -159,7 +159,7 @@ class LogicalModel(HybridModelBase):
         error = set(inputVars) - set(romInpVars) if romInpVars else set(inputVars) - set(extModelVars)
         modelName = romName if romInpVars else extModelName
         if len(error) > 0:
-          self.raiseAnError(IOError, 'Variable(s) listed under DataObject "{}" could not be find in model "{}"!'.format(','.join(error), modelName))
+          self.raiseAWarning('Variable(s) listed under DataObject "{}" could not be find in model "{}"!'.format(','.join(error), modelName))
 
   def createNewInput(self, myInput, samplerType, **kwargs):
     """
