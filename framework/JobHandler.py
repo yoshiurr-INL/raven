@@ -144,8 +144,8 @@ class JobHandler(MessageHandler.MessageUser):
 
     #initialize PBS
     with self.__queueLock:
-      self.__running       = [None]*self.runInfoDict['batchSize']
-      self.__clientRunning = [None]*self.runInfoDict['batchSize']
+      self.__running       = [None]*self.runInfoDict['batchSize']*5
+      self.__clientRunning = [None]*self.runInfoDict['batchSize']*5
     ## internal server is initialized only in case an internal calc is requested
     if not self.isRayInitialized:
       self.__initializeRay()

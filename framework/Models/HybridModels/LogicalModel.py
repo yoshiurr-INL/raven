@@ -202,7 +202,8 @@ class LogicalModel(HybridModelBase):
     modelToRun = inputKwargs.pop('modelToRun')
     inputKwargs['prefix'] = modelToRun + utils.returnIdSeparator() + identifier
     inputKwargs['uniqueHandler'] = self.name + identifier
-
+    self._replaceVariablesNamesWithAliasSystem(inputKwargs["SampledVars"  ],'input',False)
+    self._replaceVariablesNamesWithAliasSystem(inputKwargs["SampledVarsPb"],'input',False)
     moveOn = False
     while not moveOn:
       if jobHandler.availability() > 0:
