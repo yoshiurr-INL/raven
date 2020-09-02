@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+<Simulation>
+  <TestInfo>
+    <name>framework/CodeInterfaceTests/PrescientInterface</name>
+    <author>@cogljj</author>
+    <created>2020-09-02</created>
+    <revisions>
+    </revisions>
+    <classesTested>CodeInterfaces.PrescientCodeInterface</classesTested>
+    <description>
+      Test the Prescient Code Interface.
+    </description>
+  </TestInfo>
+
+  <RunInfo>
+    <WorkingDir>PrescientInterfaceTest</WorkingDir>
+    <Sequence>runPrescient</Sequence>
+    <batchSize>2</batchSize>
+  </RunInfo>
+
+  <Files>
+    <Input name="simulate" type="PrescientInput">simulate_with_network_deterministic_day.txt</Input>
+  </Files>
+
+  <Models>
+    <Code name="TestPrescient" subType="Prescient">
+      <executable>
+      </executable>
+    </Code>
+  </Models>
+
+  <Distributions>
+    <Uniform name="dist">
+      <lowerBound>1.0</lowerBound>
+      <upperBound>5.0</upperBound>
+    </Uniform>
+  </Distributions>
+
+  <Samplers>
+    <Grid name="grid">
+      <variable name="var">
+        <distribution>dist</distribution>
+        <grid construction="equal" steps="5" type="CDF">0.0 1.0</grid>
+      </variable>
+    </Grid>
+  </Samplers>
+
+  <Steps>
+    <MultiRun name="runPrescient">
+      <Input class="Files" type="PrescientInput">simulate</Input>
+      <Model class="Models" type="Code">TestPrescient</Model>
+      <Sampler class="Samplers" type="Grid">grid</Sampler>
+      <Output class="Databases" type="HDF5">DB_prescient</Output>
+    </MultiRun>
+  </Steps>
+
+  <Databases>
+    <HDF5 name="DB_prescient" readMode="overwrite"/>
+  </Databases>
+
+</Simulation>
