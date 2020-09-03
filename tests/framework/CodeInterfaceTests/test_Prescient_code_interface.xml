@@ -20,6 +20,11 @@
 
   <Files>
     <Input name="simulate" type="PrescientInput">simulate_with_network_deterministic_day.txt</Input>
+    <Input name="structure" type="PrescientInput" subDirectory="deterministic_with_network_scenarios_day/pyspdir_twostage/2020-07-10/">ScenarioStructure.dat</Input>
+    <Input name="scenario_1" type="PrescientInput" subDirectory="deterministic_with_network_scenarios_day/pyspdir_twostage/2020-07-10/">Scenario_1.dat</Input>
+    <Input name="actuals" type="PrescientInput" subDirectory="deterministic_with_network_scenarios_day/pyspdir_twostage/2020-07-10/">Scenario_actuals.dat</Input>
+    <Input name="forcasts" type="PrescientInput" subDirectory="deterministic_with_network_scenarios_day/pyspdir_twostage/2020-07-10/">Scenario_forecasts.dat</Input>
+    <Input name="scenarios" type="PrescientInput" subDirectory="deterministic_with_network_scenarios_day/pyspdir_twostage/2020-07-10/">scenarios.csv</Input>
   </Files>
 
   <Models>
@@ -40,7 +45,7 @@
     <Grid name="grid">
       <variable name="var">
         <distribution>dist</distribution>
-        <grid construction="equal" steps="5" type="CDF">0.0 1.0</grid>
+        <grid construction="equal" steps="1" type="CDF">0.0 1.0</grid>
       </variable>
     </Grid>
   </Samplers>
@@ -48,6 +53,11 @@
   <Steps>
     <MultiRun name="runPrescient">
       <Input class="Files" type="PrescientInput">simulate</Input>
+      <Input class="Files" type="PrescientInput">structure</Input>
+      <Input class="Files" type="PrescientInput">scenario_1</Input>
+      <Input class="Files" type="PrescientInput">actuals</Input>
+      <Input class="Files" type="PrescientInput">forcasts</Input>
+      <Input class="Files" type="PrescientInput">scenarios</Input>
       <Model class="Models" type="Code">TestPrescient</Model>
       <Sampler class="Samplers" type="Grid">grid</Sampler>
       <Output class="Databases" type="HDF5">DB_prescient</Output>

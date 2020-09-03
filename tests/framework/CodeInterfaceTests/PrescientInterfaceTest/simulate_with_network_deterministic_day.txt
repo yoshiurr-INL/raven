@@ -1,5 +1,5 @@
 command/exec simulator.py
---data-directory=../../deterministic_with_network_scenarios_day
+--data-directory=deterministic_with_network_scenarios_day
 --simulate-out-of-sample 
 --run-sced-with-persistent-forecast-errors 
 --model-directory=..|..|prescient|models|tight
