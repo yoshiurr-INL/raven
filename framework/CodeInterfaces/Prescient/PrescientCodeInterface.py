@@ -39,6 +39,11 @@ class Prescient(CodeInterfaceBase):
           newFile.write(line)
         newFile.close()
       else:
+        print("SampledVars", Kwargs["SampledVars"])
+        data = open(singleInput.getAbsFile(),"r").read()
+        for var in Kwargs["SampledVars"]:
+          data = data.replace("$"+var+"$", str(Kwargs["SampledVars"][var]))
+        open(singleInput.getAbsFile(),"w").write(data)
         print("Huh?", singleInput)
     return inputs
 
