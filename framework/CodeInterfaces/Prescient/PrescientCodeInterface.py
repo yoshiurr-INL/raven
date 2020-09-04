@@ -13,7 +13,7 @@ class Prescient(CodeInterfaceBase):
   def generateCommand(self, input, exe, clargs=None, fargs=None, preExec=None):
     print(input, exe, clargs, fargs, preExec)
     print("generateCommand")
-    return ([("parallel", "runner.py "+input[0].getAbsFile())], os.path.join(input[0].getPath(),"output.txt"))
+    return ([("parallel", "runner.py "+input[0].getAbsFile())], os.path.join(input[0].getPath(), "output"))
 
   def createNewInput(self, inputs, oinputs, samplerType, **Kwargs):
     print(inputs, oinputs, samplerType, Kwargs)
@@ -41,6 +41,10 @@ class Prescient(CodeInterfaceBase):
       else:
         print("Huh?", singleInput)
     return inputs
+
+  def finalizeCodeOutput(self, command, codeLogFile, subDirectory):
+    print("finalizeCodeOutput", command, codeLogFile, subDirectory)
+    return os.path.join(subDirectory, "deterministic_with_network_simulation_output_day", "Daily_summary")
 
   def addDefaultExtension(self):
     """
