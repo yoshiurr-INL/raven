@@ -18,6 +18,7 @@ class Prescient(CodeInterfaceBase):
   def createNewInput(self, inputs, oinputs, samplerType, **Kwargs):
     print(inputs, oinputs, samplerType, Kwargs)
     print("createNewInput")
+    self._output_directory = None
     for singleInput in inputs:
       if singleInput.getExt() == 'txt':
         print("Need to modify", singleInput, "to fix", prescientLocation)
@@ -33,6 +34,8 @@ class Prescient(CodeInterfaceBase):
               if started:
                 newPath = os.path.join(newPath, item)
             line = "--model-directory="+newPath
+          elif line.lstrip().startswith("--output-directory="):
+            self._output_directory = line.split("=",1)[1].rstrip()
           newLines.append(line)
         newFile = open(singleInput.getAbsFile(),"w")
         for line in newLines:
@@ -49,7 +52,11 @@ class Prescient(CodeInterfaceBase):
 
   def finalizeCodeOutput(self, command, codeLogFile, subDirectory):
     print("finalizeCodeOutput", command, codeLogFile, subDirectory)
-    return os.path.join(subDirectory, "deterministic_with_network_simulation_output_day", "Daily_summary")
+    if self._output_directory is not None:
+      directory = os.path.join(subDirectory, self._output_directory, "Daily_summary")
+    else:
+      directory = os.path.join(subDirectory, "Daily_summary")
+    return directory
 
   def addDefaultExtension(self):
     """
