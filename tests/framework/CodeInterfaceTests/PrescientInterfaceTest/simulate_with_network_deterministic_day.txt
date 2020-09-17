@@ -22,3 +22,6 @@ command/exec simulator.py
 --reserve-factor=0.0 
 --deterministic-ruc-solver=cbc
 --sced-solver=cbc
+--compute-market-settlements=True
+--day-ahead-pricing=LMP
+
