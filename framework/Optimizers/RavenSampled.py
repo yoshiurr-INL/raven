@@ -250,6 +250,9 @@ class RavenSampled(Optimizer):
         batchData.append(copy.deepcopy(self.inputInfo))
         # self._incrementCounter()
     if self.inputInfo['batchMode']:
+      for subBatch in batchData:
+        if 'batchInfo' in subBatch:
+          del subBatch['batchInfo']
       self.inputInfo['batchInfo'] = {'nRuns': self.batch, 'batchRealizations': batchData, 'batchId': str('gen_' + str(self.batchId))}
 
   # @profile
