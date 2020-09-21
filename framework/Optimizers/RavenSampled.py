@@ -247,7 +247,7 @@ class RavenSampled(Optimizer):
       if self.inputInfo['batchMode']:
         self.inputInfo['SampledVars'] = self.values
         self.inputInfo['batchId'] = self.batchId
-        batchData.append(copy.deepcopy(self.inputInfo))
+        batchData.append(copy.copy(self.inputInfo))
         # self._incrementCounter()
     if self.inputInfo['batchMode']:
       self.inputInfo['batchInfo'] = {'nRuns': self.batch, 'batchRealizations': batchData, 'batchId': str('gen_' + str(self.batchId))}
