@@ -52,10 +52,20 @@ class Prescient(CodeInterfaceBase):
 
   def finalizeCodeOutput(self, command, codeLogFile, subDirectory):
     print("finalizeCodeOutput", command, codeLogFile, subDirectory)
+    to_read = "hourly_summary" #"Daily_summary"
     if self._output_directory is not None:
-      directory = os.path.join(subDirectory, self._output_directory, "Daily_summary")
+      directory = os.path.join(subDirectory, self._output_directory, to_read)
     else:
-      directory = os.path.join(subDirectory, "Daily_summary")
+      directory = os.path.join(subDirectory, to_read)
+    if to_read.lower().startswith("hourly"):
+      #Need to merge the date and hour
+      directoryNew = directory + "_merged"
+      outFile = open(directoryNew+".csv","w")
+      inFile = open(directory+".csv","r")
+      for line in inFile.readlines():
+        splited = line.split(",", maxsplit=1)
+        outFile.write(splited[0].rstrip()+"_"+splited[1].lstrip())
+      directory = directoryNew
     return directory
 
   def addDefaultExtension(self):
