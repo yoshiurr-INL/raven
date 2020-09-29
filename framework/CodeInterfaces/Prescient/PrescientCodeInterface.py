@@ -51,6 +51,13 @@ class Prescient(CodeInterfaceBase):
     return inputs
 
   def finalizeCodeOutput(self, command, codeLogFile, subDirectory):
+    """
+      Convert csv information to RAVEN's prefered formats
+      @ In, command, ignored
+      @ In, codeLogFile, ignored
+      @ In, subDirectory, string, the subdirectory where the information is.
+      @ Out, directory, string, the base name of the csv file
+    """
     print("finalizeCodeOutput", command, codeLogFile, subDirectory)
     to_read = "hourly_summary" #"Daily_summary"
     if self._output_directory is not None:
