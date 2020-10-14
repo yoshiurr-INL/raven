@@ -19,6 +19,7 @@ This is a CodeInterface for the Presient code.
 """
 
 import os
+import re
 try:
   import pkg_resources
   prescient = pkg_resources.get_distribution("prescient")
@@ -66,9 +67,34 @@ class Prescient(CodeInterfaceBase):
         data = open(singleInput.getAbsFile(),"r").read()
         for var in Kwargs["SampledVars"]:
           data = data.replace("$"+var+"$", str(Kwargs["SampledVars"][var]))
+        data = self.__process_data(data, Kwargs["SampledVars"])
         open(singleInput.getAbsFile(),"w").write(data)
         print("Huh?", singleInput)
     return inputs
+
+  def __process_data(self, data, samples):
+    """
+      Processes the data and does some simple arithmetic
+      @ In, data, string, the string to process
+      @ In, samples, dict, the dictionary of variable values
+      @ Out, retval, string, the string with values replaced
+    """
+    #"this is a $(a)$ and $(a+2)$ and $(a-2)$ and $(b_var)$ and $(a*-2.0)$"
+    #"and $(a*2+1)$"
+    splited = re.split("\$\(([a-z0-9._*+-]*)\)\$", data)
+    retval = ""
+    for i, value in enumerate(splited):
+      if i % 2 == 1:
+        name, mult, add = re.match("([a-z_][a-z0-9_]*)(\*-?[0-9.]+)?([+-]?[0-9.]+)?", value).groups()
+        num = samples[name]
+        if mult is not None:
+          num *= float(mult[1:])
+        if add is not None:
+          num += float(add)
+        retval += str(num)
+      else:
+        retval += value
+    return retval
 
   def finalizeCodeOutput(self, command, codeLogFile, subDirectory):
     """
