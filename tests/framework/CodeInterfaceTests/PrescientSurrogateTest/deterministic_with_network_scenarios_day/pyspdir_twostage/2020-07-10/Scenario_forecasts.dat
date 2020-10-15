@@ -1731,7 +1731,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 1 0.0 0.0
  324_PV_3 1 0.0 0.0
  113_PV_1 1 0.0 0.0
- 319_PV_1 1 0.0 0.0
+ 319_PV_1 1 0.0 $(solar*0.0)$
  215_PV_1 1 0.0 0.0
  102_PV_1 1 0.0 0.0
  101_PV_1 1 0.0 0.0
@@ -1811,7 +1811,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 2 0.0 0.0
  324_PV_3 2 0.0 0.0
  113_PV_1 2 0.0 0.0
- 319_PV_1 2 0.0 0.0
+ 319_PV_1 2 0.0 $(solar*0.0)$
  215_PV_1 2 0.0 0.0
  102_PV_1 2 0.0 0.0
  101_PV_1 2 0.0 0.0
@@ -1891,7 +1891,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 3 0.0 0.0
  324_PV_3 3 0.0 0.0
  113_PV_1 3 0.0 0.0
- 319_PV_1 3 0.0 0.0
+ 319_PV_1 3 0.0 $(solar*0.0)$
  215_PV_1 3 0.0 0.0
  102_PV_1 3 0.0 0.0
  101_PV_1 3 0.0 0.0
@@ -1971,7 +1971,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 4 0.0 0.0
  324_PV_3 4 0.0 0.0
  113_PV_1 4 0.0 0.0
- 319_PV_1 4 0.0 0.0
+ 319_PV_1 4 0.0 $(solar*0.0)$
  215_PV_1 4 0.0 0.0
  102_PV_1 4 0.0 0.0
  101_PV_1 4 0.0 0.0
@@ -2051,7 +2051,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 5 0.0 0.0
  324_PV_3 5 0.0 0.0
  113_PV_1 5 0.0 0.0
- 319_PV_1 5 0.0 0.0
+ 319_PV_1 5 0.0 $(solar*0.0)$
  215_PV_1 5 0.0 0.0
  102_PV_1 5 0.0 0.0
  101_PV_1 5 0.0 0.0
@@ -2131,7 +2131,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 6 0.0 0.0
  324_PV_3 6 0.0 0.0
  113_PV_1 6 0.0 0.0
- 319_PV_1 6 0.0 0.0
+ 319_PV_1 6 0.0 $(solar*0.0)$
  215_PV_1 6 0.0 0.0
  102_PV_1 6 0.0 0.0
  101_PV_1 6 0.0 0.0
@@ -2211,7 +2211,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 7 0.0 17.2
  324_PV_3 7 0.0 17.2
  113_PV_1 7 0.0 29.4
- 319_PV_1 7 0.0 67.2
+ 319_PV_1 7 0.0 $(solar*67.2)$
  215_PV_1 7 0.0 44.4
  102_PV_1 7 0.0 8.5
  101_PV_1 7 0.0 9.4
@@ -2291,7 +2291,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 8 0.0 27.1
  324_PV_3 8 0.0 27.1
  113_PV_1 8 0.0 49.3
- 319_PV_1 8 0.0 108.1
+ 319_PV_1 8 0.0 $(solar*108.1)$
  215_PV_1 8 0.0 61.0
  102_PV_1 8 0.0 13.6
  101_PV_1 8 0.0 14.1
@@ -2371,7 +2371,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 9 0.0 33.0
  324_PV_3 9 0.0 33.0
  113_PV_1 9 0.0 58.5
- 319_PV_1 9 0.0 128.9
+ 319_PV_1 9 0.0 $(solar*128.9)$
  215_PV_1 9 0.0 86.8
  102_PV_1 9 0.0 16.8
  101_PV_1 9 0.0 17.2
@@ -2451,7 +2451,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 10 0.0 34.2
  324_PV_3 10 0.0 34.2
  113_PV_1 10 0.0 65.6
- 319_PV_1 10 0.0 137.2
+ 319_PV_1 10 0.0 $(solar*137.2)$
  215_PV_1 10 0.0 90.0
  102_PV_1 10 0.0 19.1
  101_PV_1 10 0.0 19.3
@@ -2531,7 +2531,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 11 0.0 35.6
  324_PV_3 11 0.0 35.6
  113_PV_1 11 0.0 67.7
- 319_PV_1 11 0.0 140.4
+ 319_PV_1 11 0.0 $(solar*140.4)$
  215_PV_1 11 0.0 75.2
  102_PV_1 11 0.0 20.3
  101_PV_1 11 0.0 19.5
@@ -2611,7 +2611,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 12 0.0 34.0
  324_PV_3 12 0.0 34.0
  113_PV_1 12 0.0 69.7
- 319_PV_1 12 0.0 141.7
+ 319_PV_1 12 0.0 $(solar*141.7)$
  215_PV_1 12 0.0 16.1
  102_PV_1 12 0.0 19.4
  101_PV_1 12 0.0 19.2
@@ -2691,7 +2691,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 13 0.0 33.6
  324_PV_3 13 0.0 33.6
  113_PV_1 13 0.0 68.0
- 319_PV_1 13 0.0 140.6
+ 319_PV_1 13 0.0 $(solar*140.6)$
  215_PV_1 13 0.0 17.7
  102_PV_1 13 0.0 12.6
  101_PV_1 13 0.0 14.9
@@ -2771,7 +2771,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 14 0.0 35.3
  324_PV_3 14 0.0 35.3
  113_PV_1 14 0.0 67.0
- 319_PV_1 14 0.0 140.1
+ 319_PV_1 14 0.0 $(solar*140.1)$
  215_PV_1 14 0.0 74.8
  102_PV_1 14 0.0 7.7
  101_PV_1 14 0.0 12.8
@@ -2851,7 +2851,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 15 0.0 36.0
  324_PV_3 15 0.0 36.0
  113_PV_1 15 0.0 65.3
- 319_PV_1 15 0.0 140.9
+ 319_PV_1 15 0.0 $(solar*140.9)$
  215_PV_1 15 0.0 79.4
  102_PV_1 15 0.0 3.4
  101_PV_1 15 0.0 6.1
@@ -2931,7 +2931,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 16 0.0 35.3
  324_PV_3 16 0.0 35.3
  113_PV_1 16 0.0 61.2
- 319_PV_1 16 0.0 133.1
+ 319_PV_1 16 0.0 $(solar*133.1)$
  215_PV_1 16 0.0 69.5
  102_PV_1 16 0.0 3.7
  101_PV_1 16 0.0 0.5
@@ -3011,7 +3011,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 17 0.0 33.1
  324_PV_3 17 0.0 33.1
  113_PV_1 17 0.0 0.2
- 319_PV_1 17 0.0 88.1
+ 319_PV_1 17 0.0 $(solar*88.1)$
  215_PV_1 17 0.0 0.3
  102_PV_1 17 0.0 0.0
  101_PV_1 17 0.0 0.1
@@ -3091,7 +3091,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 18 0.0 29.1
  324_PV_3 18 0.0 29.1
  113_PV_1 18 0.0 25.8
- 319_PV_1 18 0.0 42.9
+ 319_PV_1 18 0.0 $(solar*42.9)$
  215_PV_1 18 0.0 0.0
  102_PV_1 18 0.0 7.3
  101_PV_1 18 0.0 9.4
@@ -3171,7 +3171,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 19 0.0 19.6
  324_PV_3 19 0.0 19.6
  113_PV_1 19 0.0 17.5
- 319_PV_1 19 0.0 18.5
+ 319_PV_1 19 0.0 $(solar*18.5)$
  215_PV_1 19 0.0 0.0
  102_PV_1 19 0.0 0.8
  101_PV_1 19 0.0 4.0
@@ -3251,7 +3251,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 20 0.0 0.0
  324_PV_3 20 0.0 0.0
  113_PV_1 20 0.0 0.0
- 319_PV_1 20 0.0 0.0
+ 319_PV_1 20 0.0 $(solar*0.0)$
  215_PV_1 20 0.0 0.0
  102_PV_1 20 0.0 0.0
  101_PV_1 20 0.0 0.0
@@ -3331,7 +3331,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 21 0.0 0.0
  324_PV_3 21 0.0 0.0
  113_PV_1 21 0.0 0.0
- 319_PV_1 21 0.0 0.0
+ 319_PV_1 21 0.0 $(solar*0.0)$
  215_PV_1 21 0.0 0.0
  102_PV_1 21 0.0 0.0
  101_PV_1 21 0.0 0.0
@@ -3411,7 +3411,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 22 0.0 0.0
  324_PV_3 22 0.0 0.0
  113_PV_1 22 0.0 0.0
- 319_PV_1 22 0.0 0.0
+ 319_PV_1 22 0.0 $(solar*0.0)$
  215_PV_1 22 0.0 0.0
  102_PV_1 22 0.0 0.0
  101_PV_1 22 0.0 0.0
@@ -3491,7 +3491,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 23 0.0 0.0
  324_PV_3 23 0.0 0.0
  113_PV_1 23 0.0 0.0
- 319_PV_1 23 0.0 0.0
+ 319_PV_1 23 0.0 $(solar*0.0)$
  215_PV_1 23 0.0 0.0
  102_PV_1 23 0.0 0.0
  101_PV_1 23 0.0 0.0
@@ -3571,7 +3571,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 24 0.0 0.0
  324_PV_3 24 0.0 0.0
  113_PV_1 24 0.0 0.0
- 319_PV_1 24 0.0 0.0
+ 319_PV_1 24 0.0 $(solar*0.0)$
  215_PV_1 24 0.0 0.0
  102_PV_1 24 0.0 0.0
  101_PV_1 24 0.0 0.0
@@ -3651,7 +3651,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 25 0.0 0.0
  324_PV_3 25 0.0 0.0
  113_PV_1 25 0.0 0.0
- 319_PV_1 25 0.0 0.0
+ 319_PV_1 25 0.0 $(solar*0.0)$
  215_PV_1 25 0.0 0.0
  102_PV_1 25 0.0 0.0
  101_PV_1 25 0.0 0.0
@@ -3731,7 +3731,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 26 0.0 0.0
  324_PV_3 26 0.0 0.0
  113_PV_1 26 0.0 0.0
- 319_PV_1 26 0.0 0.0
+ 319_PV_1 26 0.0 $(solar*0.0)$
  215_PV_1 26 0.0 0.0
  102_PV_1 26 0.0 0.0
  101_PV_1 26 0.0 0.0
@@ -3811,7 +3811,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 27 0.0 0.0
  324_PV_3 27 0.0 0.0
  113_PV_1 27 0.0 0.0
- 319_PV_1 27 0.0 0.0
+ 319_PV_1 27 0.0 $(solar*0.0)$
  215_PV_1 27 0.0 0.0
  102_PV_1 27 0.0 0.0
  101_PV_1 27 0.0 0.0
@@ -3891,7 +3891,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 28 0.0 0.0
  324_PV_3 28 0.0 0.0
  113_PV_1 28 0.0 0.0
- 319_PV_1 28 0.0 0.0
+ 319_PV_1 28 0.0 $(solar*0.0)$
  215_PV_1 28 0.0 0.0
  102_PV_1 28 0.0 0.0
  101_PV_1 28 0.0 0.0
@@ -3971,7 +3971,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 29 0.0 0.0
  324_PV_3 29 0.0 0.0
  113_PV_1 29 0.0 0.0
- 319_PV_1 29 0.0 0.0
+ 319_PV_1 29 0.0 $(solar*0.0)$
  215_PV_1 29 0.0 0.0
  102_PV_1 29 0.0 0.0
  101_PV_1 29 0.0 0.0
@@ -4051,7 +4051,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 30 0.0 0.0
  324_PV_3 30 0.0 0.0
  113_PV_1 30 0.0 0.0
- 319_PV_1 30 0.0 0.0
+ 319_PV_1 30 0.0 $(solar*0.0)$
  215_PV_1 30 0.0 0.0
  102_PV_1 30 0.0 0.0
  101_PV_1 30 0.0 0.0
@@ -4131,7 +4131,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 31 0.0 17.2
  324_PV_3 31 0.0 17.2
  113_PV_1 31 0.0 29.4
- 319_PV_1 31 0.0 67.2
+ 319_PV_1 31 0.0 $(solar*67.2)$
  215_PV_1 31 0.0 44.4
  102_PV_1 31 0.0 8.5
  101_PV_1 31 0.0 9.4
@@ -4211,7 +4211,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 32 0.0 27.1
  324_PV_3 32 0.0 27.1
  113_PV_1 32 0.0 49.3
- 319_PV_1 32 0.0 108.1
+ 319_PV_1 32 0.0 $(solar*108.1)$
  215_PV_1 32 0.0 61.0
  102_PV_1 32 0.0 13.6
  101_PV_1 32 0.0 14.1
@@ -4291,7 +4291,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 33 0.0 33.0
  324_PV_3 33 0.0 33.0
  113_PV_1 33 0.0 58.5
- 319_PV_1 33 0.0 128.9
+ 319_PV_1 33 0.0 $(solar*128.9)$
  215_PV_1 33 0.0 86.8
  102_PV_1 33 0.0 16.8
  101_PV_1 33 0.0 17.2
@@ -4371,7 +4371,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 34 0.0 34.2
  324_PV_3 34 0.0 34.2
  113_PV_1 34 0.0 65.6
- 319_PV_1 34 0.0 137.2
+ 319_PV_1 34 0.0 $(solar*137.2)$
  215_PV_1 34 0.0 90.0
  102_PV_1 34 0.0 19.1
  101_PV_1 34 0.0 19.3
@@ -4451,7 +4451,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 35 0.0 35.6
  324_PV_3 35 0.0 35.6
  113_PV_1 35 0.0 67.7
- 319_PV_1 35 0.0 140.4
+ 319_PV_1 35 0.0 $(solar*140.4)$
  215_PV_1 35 0.0 75.2
  102_PV_1 35 0.0 20.3
  101_PV_1 35 0.0 19.5
@@ -4531,7 +4531,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 36 0.0 34.0
  324_PV_3 36 0.0 34.0
  113_PV_1 36 0.0 69.7
- 319_PV_1 36 0.0 141.7
+ 319_PV_1 36 0.0 $(solar*141.7)$
  215_PV_1 36 0.0 16.1
  102_PV_1 36 0.0 19.4
  101_PV_1 36 0.0 19.2
@@ -4611,7 +4611,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 37 0.0 33.6
  324_PV_3 37 0.0 33.6
  113_PV_1 37 0.0 68.0
- 319_PV_1 37 0.0 140.6
+ 319_PV_1 37 0.0 $(solar*140.6)$
  215_PV_1 37 0.0 17.7
  102_PV_1 37 0.0 12.6
  101_PV_1 37 0.0 14.9
@@ -4691,7 +4691,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 38 0.0 35.3
  324_PV_3 38 0.0 35.3
  113_PV_1 38 0.0 67.0
- 319_PV_1 38 0.0 140.1
+ 319_PV_1 38 0.0 $(solar*140.1)$
  215_PV_1 38 0.0 74.8
  102_PV_1 38 0.0 7.7
  101_PV_1 38 0.0 12.8
@@ -4771,7 +4771,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 39 0.0 36.0
  324_PV_3 39 0.0 36.0
  113_PV_1 39 0.0 65.3
- 319_PV_1 39 0.0 140.9
+ 319_PV_1 39 0.0 $(solar*140.9)$
  215_PV_1 39 0.0 79.4
  102_PV_1 39 0.0 3.4
  101_PV_1 39 0.0 6.1
@@ -4851,7 +4851,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 40 0.0 35.3
  324_PV_3 40 0.0 35.3
  113_PV_1 40 0.0 61.2
- 319_PV_1 40 0.0 133.1
+ 319_PV_1 40 0.0 $(solar*133.1)$
  215_PV_1 40 0.0 69.5
  102_PV_1 40 0.0 3.7
  101_PV_1 40 0.0 0.5
@@ -4931,7 +4931,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 41 0.0 33.1
  324_PV_3 41 0.0 33.1
  113_PV_1 41 0.0 0.2
- 319_PV_1 41 0.0 88.1
+ 319_PV_1 41 0.0 $(solar*88.1)$
  215_PV_1 41 0.0 0.3
  102_PV_1 41 0.0 0.0
  101_PV_1 41 0.0 0.1
@@ -5011,7 +5011,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 42 0.0 29.1
  324_PV_3 42 0.0 29.1
  113_PV_1 42 0.0 25.8
- 319_PV_1 42 0.0 42.9
+ 319_PV_1 42 0.0 $(solar*42.9)$
  215_PV_1 42 0.0 0.0
  102_PV_1 42 0.0 7.3
  101_PV_1 42 0.0 9.4
@@ -5091,7 +5091,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 43 0.0 19.6
  324_PV_3 43 0.0 19.6
  113_PV_1 43 0.0 17.5
- 319_PV_1 43 0.0 18.5
+ 319_PV_1 43 0.0 $(solar*18.5)$
  215_PV_1 43 0.0 0.0
  102_PV_1 43 0.0 0.8
  101_PV_1 43 0.0 4.0
@@ -5171,7 +5171,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 44 0.0 0.0
  324_PV_3 44 0.0 0.0
  113_PV_1 44 0.0 0.0
- 319_PV_1 44 0.0 0.0
+ 319_PV_1 44 0.0 $(solar*0.0)$
  215_PV_1 44 0.0 0.0
  102_PV_1 44 0.0 0.0
  101_PV_1 44 0.0 0.0
@@ -5251,7 +5251,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 45 0.0 0.0
  324_PV_3 45 0.0 0.0
  113_PV_1 45 0.0 0.0
- 319_PV_1 45 0.0 0.0
+ 319_PV_1 45 0.0 $(solar*0.0)$
  215_PV_1 45 0.0 0.0
  102_PV_1 45 0.0 0.0
  101_PV_1 45 0.0 0.0
@@ -5331,7 +5331,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 46 0.0 0.0
  324_PV_3 46 0.0 0.0
  113_PV_1 46 0.0 0.0
- 319_PV_1 46 0.0 0.0
+ 319_PV_1 46 0.0 $(solar*0.0)$
  215_PV_1 46 0.0 0.0
  102_PV_1 46 0.0 0.0
  101_PV_1 46 0.0 0.0
@@ -5411,7 +5411,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 47 0.0 0.0
  324_PV_3 47 0.0 0.0
  113_PV_1 47 0.0 0.0
- 319_PV_1 47 0.0 0.0
+ 319_PV_1 47 0.0 $(solar*0.0)$
  215_PV_1 47 0.0 0.0
  102_PV_1 47 0.0 0.0
  101_PV_1 47 0.0 0.0
@@ -5491,7 +5491,7 @@ param: MinNondispatchablePower MaxNondispatchablePower  :=
  324_PV_2 48 0.0 0.0
  324_PV_3 48 0.0 0.0
  113_PV_1 48 0.0 0.0
- 319_PV_1 48 0.0 0.0
+ 319_PV_1 48 0.0 $(solar*0.0)$
  215_PV_1 48 0.0 0.0
  102_PV_1 48 0.0 0.0
  101_PV_1 48 0.0 0.0

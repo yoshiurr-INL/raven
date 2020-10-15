@@ -35,17 +35,18 @@
   </Models>
 
   <Distributions>
-    <Uniform name="dist">
-      <lowerBound>1.0</lowerBound>
-      <upperBound>1000.0</upperBound>
+    <Uniform name="solar">
+      <lowerBound>0.25</lowerBound>
+      <upperBound>2.0</upperBound>
     </Uniform>
   </Distributions>
 
   <Samplers>
     <Grid name="grid">
-      <variable name="var">
-        <distribution>dist</distribution>
-        <grid construction="equal" steps="3" type="CDF">0.0 1.0</grid>
+      <variable name="solar">
+        <distribution>solar</distribution>
+        <grid construction="equal" steps="7" type="CDF">0.0 1.0</grid>
+        <!-- <grid construction="equal" steps="1" type="CDF">0.0 1.0</grid> -->
       </variable>
     </Grid>
   </Samplers>
@@ -72,7 +73,7 @@
 
   <DataObjects>
     <HistorySet name="samples">
-      <Input>var</Input>
+      <Input>solar</Input>
       <!-- <Output>Demand, Renewables available,Renewables used,Renewables penetration rate,Average price,Fixed costs,Generation costs,Load shedding,Over generation,Reserve shortfall,Renewables curtailment,Number on/offs,Sum on/off ramps,Sum nominal ramps</Output> -->
       <Output>Date_Hour, TotalCosts, FixedCosts, VariableCosts, LoadShedding, OverGeneration, ReserveShortfall, RenewablesUsed, RenewablesCurtailment, Demand, Price </Output>
       <options>
@@ -88,4 +89,10 @@
     </Print>
   </OutStreams>
 
+  <!-- scripts used to convert data files:
+awk '/ 319_PV_1/ {print " "$1,$2,$3,"\$(solar*"$4")\$"} !/ 319_PV_1/ {print $0}'  Scenario_actuals.dat > Scenario_actuals.dat.new
+mv Scenario_actuals.dat.new Scenario_actuals.dat
+awk '/ 319_PV_1/ {print " "$1,$2,$3,"\$(solar*"$4")\$"} !/ 319_PV_1/ {print $0}'  Scenario_forecasts.dat > Scenario_forecasts.dat.new
+mv Scenario_forecasts.dat.new Scenario_forecasts.dat
+  -->
 </Simulation>
