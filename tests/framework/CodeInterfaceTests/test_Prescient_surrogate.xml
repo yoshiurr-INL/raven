@@ -36,7 +36,11 @@
 
   <Distributions>
     <Uniform name="solar">
-      <lowerBound>0.25</lowerBound>
+      <lowerBound>0.5</lowerBound>
+      <upperBound>2.0</upperBound>
+    </Uniform>
+    <Uniform name="demand">
+      <lowerBound>0.5</lowerBound>
       <upperBound>2.0</upperBound>
     </Uniform>
   </Distributions>
@@ -45,8 +49,13 @@
     <Grid name="grid">
       <variable name="solar">
         <distribution>solar</distribution>
-        <grid construction="equal" steps="7" type="CDF">0.0 1.0</grid>
-        <!-- <grid construction="equal" steps="1" type="CDF">0.0 1.0</grid> -->
+        <!-- <grid construction="equal" steps="7" type="CDF">0.0 1.0</grid> -->
+        <grid construction="equal" steps="3" type="CDF">0.0 1.0</grid>
+      </variable>
+      <variable name="demand">
+        <distribution>demand</distribution>
+        <!-- <grid construction="equal" steps="7" type="CDF">0.0 1.0</grid> -->
+        <grid construction="equal" steps="3" type="CDF">0.0 1.0</grid>
       </variable>
     </Grid>
   </Samplers>
@@ -94,5 +103,9 @@ awk '/ 319_PV_1/ {print " "$1,$2,$3,"\$(solar*"$4")\$"} !/ 319_PV_1/ {print $0}'
 mv Scenario_actuals.dat.new Scenario_actuals.dat
 awk '/ 319_PV_1/ {print " "$1,$2,$3,"\$(solar*"$4")\$"} !/ 319_PV_1/ {print $0}'  Scenario_forecasts.dat > Scenario_forecasts.dat.new
 mv Scenario_forecasts.dat.new Scenario_forecasts.dat
+for F in Scenario_1.dat Scenario_actuals.dat Scenario_forecasts.dat; do
+  awk '/^ Clay/ {print " "$1,$2,"\$(demand*"$3")\$"} !/^ Clay/ {print $0}' $F > ${F}.new
+  mv ${F}.new $F
+done
   -->
 </Simulation>
