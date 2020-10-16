@@ -14,7 +14,7 @@
 
   <RunInfo>
     <WorkingDir>PrescientSurrogateTest</WorkingDir>
-    <Sequence>runPrescient</Sequence>
+    <Sequence>runPrescient, train</Sequence>
     <batchSize>2</batchSize>
   </RunInfo>
 
@@ -32,6 +32,12 @@
       <executable>
       </executable>
     </Code>
+    <ROM name="trainedROM" subType="SciKitLearn">
+      <Features>solar, demand</Features>
+      <Target>Price</Target>
+      <pivotParameter>Date_Hour</pivotParameter>
+      <SKLtype>linear_model|LinearRegression</SKLtype>
+    </ROM>
   </Models>
 
   <Distributions>
@@ -50,12 +56,14 @@
       <variable name="solar">
         <distribution>solar</distribution>
         <!-- <grid construction="equal" steps="7" type="CDF">0.0 1.0</grid> -->
-        <grid construction="equal" steps="3" type="CDF">0.0 1.0</grid>
+        <!-- <grid construction="equal" steps="3" type="CDF">0.0 1.0</grid> -->
+        <grid construction="equal" steps="1" type="CDF">0.0 1.0</grid>
       </variable>
       <variable name="demand">
         <distribution>demand</distribution>
         <!-- <grid construction="equal" steps="7" type="CDF">0.0 1.0</grid> -->
-        <grid construction="equal" steps="3" type="CDF">0.0 1.0</grid>
+        <!-- <grid construction="equal" steps="3" type="CDF">0.0 1.0</grid> -->
+        <grid construction="equal" steps="1" type="CDF">0.0 1.0</grid>
       </variable>
     </Grid>
   </Samplers>
@@ -74,6 +82,10 @@
       <Output class="DataObjects" type="HistorySet">samples</Output>
       <Output class="OutStreams" type="Print">out_prescient</Output>
     </MultiRun>
+    <RomTrainer name="train">
+      <Input class="DataObjects" type="HistorySet">samples</Input>
+      <Output class="Models" type="ROM">trainedROM</Output>
+    </RomTrainer>
   </Steps>
 
   <Databases>
@@ -82,7 +94,7 @@
 
   <DataObjects>
     <HistorySet name="samples">
-      <Input>solar</Input>
+      <Input>solar, demand</Input>
       <!-- <Output>Demand, Renewables available,Renewables used,Renewables penetration rate,Average price,Fixed costs,Generation costs,Load shedding,Over generation,Reserve shortfall,Renewables curtailment,Number on/offs,Sum on/off ramps,Sum nominal ramps</Output> -->
       <Output>Date_Hour, TotalCosts, FixedCosts, VariableCosts, LoadShedding, OverGeneration, ReserveShortfall, RenewablesUsed, RenewablesCurtailment, Demand, Price </Output>
       <options>
