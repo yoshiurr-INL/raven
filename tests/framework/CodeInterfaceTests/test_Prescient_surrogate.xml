@@ -14,7 +14,7 @@
 
   <RunInfo>
     <WorkingDir>PrescientSurrogateTest</WorkingDir>
-    <Sequence>runPrescient, train</Sequence>
+    <Sequence>runPrescient, train, resample</Sequence>
     <batchSize>2</batchSize>
   </RunInfo>
 
@@ -66,6 +66,16 @@
         <grid construction="equal" steps="1" type="CDF">0.0 1.0</grid>
       </variable>
     </Grid>
+    <Grid name="grid2">
+      <variable name="solar">
+        <distribution>solar</distribution>
+        <grid construction="equal" steps="7" type="CDF">0.0 1.0</grid>
+      </variable>
+      <variable name="demand">
+        <distribution>demand</distribution>
+        <grid construction="equal" steps="7" type="CDF">0.0 1.0</grid>
+      </variable>
+    </Grid>
   </Samplers>
 
   <Steps>
@@ -86,6 +96,13 @@
       <Input class="DataObjects" type="HistorySet">samples</Input>
       <Output class="Models" type="ROM">trainedROM</Output>
     </RomTrainer>
+    <MultiRun name="resample">
+      <Input class="DataObjects" type="PointSet">dataIn</Input>
+      <Model class="Models" type="ROM">trainedROM</Model>
+      <Sampler class="Samplers" type="Grid">grid2</Sampler>
+      <Output class="DataObjects" type="HistorySet">resampled</Output>
+      <Output class="OutStreams" type="Print">out_resampled</Output>
+    </MultiRun>
   </Steps>
 
   <Databases>
@@ -101,12 +118,34 @@
         <pivotParameter>Date_Hour</pivotParameter>
       </options>
     </HistorySet>
+    <HistorySet name="resampled">
+      <Input>solar, demand</Input>
+      <Output>Price</Output>
+      <options>
+        <pivotParameter>Date_Hour</pivotParameter>
+      </options>
+    </HistorySet>
+    <HistorySet name="inputPlaceHolder">
+      <Input>solar, demand</Input>
+      <Output>Date_Hour, Price</Output>
+      <options>
+        <pivotParameter>Date_Hour</pivotParameter>
+      </options>
+    </HistorySet>
+    <PointSet name="dataIn">
+      <Input>solar, demand</Input>
+      <Output>OutputPlaceHolder</Output>
+    </PointSet>
   </DataObjects>
 
   <OutStreams>
     <Print name="out_prescient">
       <type>csv</type>
       <source>samples</source>
+    </Print>
+    <Print name="out_resampled">
+      <type>csv</type>
+      <source>resampled</source>
     </Print>
   </OutStreams>
 
