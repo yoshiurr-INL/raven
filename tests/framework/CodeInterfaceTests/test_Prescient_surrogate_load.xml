@@ -14,7 +14,7 @@
 
   <RunInfo>
     <WorkingDir>PrescientSurrogateTest</WorkingDir>
-    <Sequence>runPrescient, train, resample</Sequence>
+    <Sequence>load, train, resample</Sequence>
     <batchSize>2</batchSize>
   </RunInfo>
 
@@ -25,6 +25,7 @@
     <Input name="actuals" type="PrescientInput" subDirectory="deterministic_with_network_scenarios_day/pyspdir_twostage/2020-07-10/">Scenario_actuals.dat</Input>
     <Input name="forcasts" type="PrescientInput" subDirectory="deterministic_with_network_scenarios_day/pyspdir_twostage/2020-07-10/">Scenario_forecasts.dat</Input>
     <Input name="scenarios" type="PrescientInput" subDirectory="deterministic_with_network_scenarios_day/pyspdir_twostage/2020-07-10/">scenarios.csv</Input>
+    <Input name="out_prescient">out_prescient.csv</Input>
   </Files>
 
   <Models>
@@ -52,20 +53,6 @@
   </Distributions>
 
   <Samplers>
-    <Grid name="grid">
-      <variable name="solar">
-        <distribution>solar</distribution>
-        <!-- <grid construction="equal" steps="7" type="CDF">0.0 1.0</grid> -->
-        <grid construction="equal" steps="3" type="CDF">0.0 1.0</grid>
-        <!-- <grid construction="equal" steps="1" type="CDF">0.0 1.0</grid> -->
-      </variable>
-      <variable name="demand">
-        <distribution>demand</distribution>
-        <!-- <grid construction="equal" steps="7" type="CDF">0.0 1.0</grid> -->
-        <grid construction="equal" steps="3" type="CDF">0.0 1.0</grid>
-        <!-- <grid construction="equal" steps="1" type="CDF">0.0 1.0</grid> -->
-      </variable>
-    </Grid>
     <Grid name="grid2">
       <variable name="solar">
         <distribution>solar</distribution>
@@ -79,7 +66,7 @@
   </Samplers>
 
   <Steps>
-    <MultiRun name="runPrescient">
+    <!-- <MultiRun name="runPrescient">
       <Input class="Files" type="PrescientInput">simulate</Input>
       <Input class="Files" type="PrescientInput">structure</Input>
       <Input class="Files" type="PrescientInput">scenario_1</Input>
@@ -91,7 +78,11 @@
       <Output class="Databases" type="HDF5">DB_prescient</Output>
       <Output class="DataObjects" type="HistorySet">samples</Output>
       <Output class="OutStreams" type="Print">out_prescient</Output>
-    </MultiRun>
+    </MultiRun> -->
+    <IOStep name="load">
+      <Input class="Files" type="">out_prescient</Input>
+      <Output class="DataObjects" type="HistorySet">samples</Output>
+    </IOStep>
     <RomTrainer name="train">
       <Input class="DataObjects" type="HistorySet">samples</Input>
       <Output class="Models" type="ROM">trainedROM</Output>
@@ -101,7 +92,7 @@
       <Model class="Models" type="ROM">trainedROM</Model>
       <Sampler class="Samplers" type="Grid">grid2</Sampler>
       <Output class="DataObjects" type="PointSet">resampled</Output>
-      <Output class="OutStreams" type="Print">out_resampled</Output>
+      <Output class="OutStreams" type="Print">out_resampled2</Output>
     </MultiRun>
   </Steps>
 
@@ -140,7 +131,7 @@
       <type>csv</type>
       <source>samples</source>
     </Print>
-    <Print name="out_resampled">
+    <Print name="out_resampled2">
       <type>csv</type>
       <source>resampled</source>
     </Print>
