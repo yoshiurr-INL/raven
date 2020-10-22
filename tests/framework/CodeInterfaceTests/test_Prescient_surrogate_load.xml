@@ -37,7 +37,9 @@
       <Features>solar, demand</Features>
       <Target>Price</Target>
       <pivotParameter>Date_Hour</pivotParameter>
-      <SKLtype>linear_model|LinearRegression</SKLtype>
+      <activation>logistic</activation>
+      <hidden_layer_sizes>100,100</hidden_layer_sizes>
+      <SKLtype>neural_network|MLPRegressor</SKLtype>
     </ROM>
   </Models>
 

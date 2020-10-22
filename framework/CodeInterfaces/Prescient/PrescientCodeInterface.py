@@ -96,6 +96,37 @@ class Prescient(CodeInterfaceBase):
         retval += value
     return retval
 
+  def _readBusData(self, filename):
+    """
+      Reads the bus data into a dictionary
+      @ In, filename, string, the bus_detail.csv file
+      @ Out, (retDict,busList), (dictionary,list), dictionary of each time,
+        and list of all the busses found.
+    """
+    inFile = open(filename, "r")
+    first = True
+    retDict = {}
+    busSet = set()
+    for line in inFile.readlines():
+      line = line.strip()
+      if first:
+        first = False
+        if line != "Date,Hour,Bus,Shortfall,Overgeneration,LMP,LMP DA":
+          assert False, "Unexpected first line of bus detail:" + line
+          a = 1/0 #because debug might be disabled
+        continue
+      splited = line.split(",")
+      date, hour, bus = splited[:3]
+      rest = splited[3:]
+      key = (date,hour)
+      busSet.add(bus)
+      timeDict = retDict.get(key,{})
+      timeDict[bus] = rest
+      retDict[key] = timeDict
+    busList = list(busSet)
+    busList.sort()
+    return retDict, busList
+
   def finalizeCodeOutput(self, command, codeLogFile, subDirectory):
     """
       Convert csv information to RAVEN's prefered formats
@@ -105,21 +136,34 @@ class Prescient(CodeInterfaceBase):
       @ Out, directory, string, the base name of the csv file
     """
     print("finalizeCodeOutput", command, codeLogFile, subDirectory)
-    to_read = "hourly_summary" #"Daily_summary"
+    toRead = "hourly_summary" #"Daily_summary"
     if self._output_directory is not None:
-      directory = os.path.join(subDirectory, self._output_directory, to_read)
+      directory = os.path.join(subDirectory, self._output_directory)
     else:
-      directory = os.path.join(subDirectory, to_read)
-    if to_read.lower().startswith("hourly"):
+      directory = subDirectory
+    readFile = os.path.join(directory, toRead)
+    if toRead.lower().startswith("hourly"):
+      busData, busList = self._readBusData(os.path.join(directory, "bus_detail.csv"))
       #Need to merge the date and hour
-      directoryNew = directory + "_merged"
-      outFile = open(directoryNew+".csv","w")
-      inFile = open(directory+".csv","r")
+      readFileNew = readFile + "_merged"
+      outFile = open(readFileNew+".csv","w")
+      inFile = open(readFile+".csv","r")
+      first = True
       for line in inFile.readlines():
-        splited = line.split(",", maxsplit=1)
-        outFile.write(splited[0].rstrip()+"_"+splited[1].lstrip())
-      directory = directoryNew
-    return directory
+        date, hour, rest = line.split(",", maxsplit=2)
+        outFile.write(date.rstrip()+"_"+hour.lstrip()+","+rest.rstrip())
+        if first:
+          first = False
+          for bus in busList:
+            for dataName in ["Shortfall","Overgeneration","LMP","LMP_DA"]:
+              outFile.write(","+bus+"_"+dataName)
+        else:
+          for bus in busList:
+            for data in busData[(date,hour)][bus]:
+              outFile.write(","+data)
+        outFile.write("\n")
+      readFile = readFileNew
+    return readFile
 
   def addDefaultExtension(self):
     """
