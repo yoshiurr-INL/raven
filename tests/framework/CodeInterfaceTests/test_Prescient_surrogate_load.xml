@@ -35,10 +35,10 @@
     </Code>
     <ROM name="trainedROM" subType="SciKitLearn">
       <Features>solar, demand</Features>
-      <Target>Price</Target>
+      <Target>Price, Clay_LMP, Clay_LMP_DA</Target>
       <pivotParameter>Date_Hour</pivotParameter>
       <activation>logistic</activation>
-      <hidden_layer_sizes>100,100</hidden_layer_sizes>
+      <hidden_layer_sizes>100</hidden_layer_sizes>
       <SKLtype>neural_network|MLPRegressor</SKLtype>
     </ROM>
   </Models>
@@ -106,14 +106,14 @@
     <HistorySet name="samples">
       <Input>solar, demand</Input>
       <!-- <Output>Demand, Renewables available,Renewables used,Renewables penetration rate,Average price,Fixed costs,Generation costs,Load shedding,Over generation,Reserve shortfall,Renewables curtailment,Number on/offs,Sum on/off ramps,Sum nominal ramps</Output> -->
-      <Output>Date_Hour, TotalCosts, FixedCosts, VariableCosts, LoadShedding, OverGeneration, ReserveShortfall, RenewablesUsed, RenewablesCurtailment, Demand, Price </Output>
+      <Output>Date_Hour, TotalCosts, FixedCosts, VariableCosts, LoadShedding, OverGeneration, ReserveShortfall, RenewablesUsed, RenewablesCurtailment, Demand, Price, Clay_LMP, Clay_LMP_DA </Output>
       <options>
         <pivotParameter>Date_Hour</pivotParameter>
       </options>
     </HistorySet>
     <PointSet name="resampled">
       <Input>solar, demand</Input>
-      <Output>Price</Output>
+      <Output>Price, Clay_LMP, Clay_LMP_DA</Output>
     </PointSet>
     <HistorySet name="inputPlaceHolder">
       <Input>solar, demand</Input>
