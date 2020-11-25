@@ -1,0 +1,485 @@
+<?xml version="1.0" ?>
+<Simulation>
+  <TestInfo>
+    <name>framework/CodeInterfaceTests/PrescientPopulate</name>
+    <author>@cogljj</author>
+    <created>2020-12-08</created>
+    <revisions>
+    </revisions>
+    <classesTested>CodeInterfaces.PrescientCodeInterface</classesTested>
+    <description>
+      Test the Prescient Code Interface.
+    </description>
+  </TestInfo>
+
+  <RunInfo>
+    <WorkingDir>PrescientPopulateTest</WorkingDir>
+    <Sequence>runPrescient</Sequence>
+    <batchSize>2</batchSize>
+  </RunInfo>
+
+  <!-- generated with for F in `ls deterministic_scenario_creator_with_network.txt sources_with_network.txt sources_with_network.txt templates/* timeseries_data_files/*`; do C=`basename $F`; B=`basename $F .txt`; B=`basename $B .dat`; D=`dirname $F`; echo '<Input name="'$B'" type="PrescientInput" subDirectory="'$D'">'$C'</Input>'; done -->
+  <Files>
+    <Input name="populate" type="PrescientRunnerInput">populate_with_network_deterministic_day.txt</Input>
+    <Input name="simulate" type="PrescientRunnerInput">simulate_with_network_deterministic_day.txt</Input>
+    <Input name="deterministic_scenario_creator_with_network" type="PrescientInput" subDirectory=".">deterministic_scenario_creator_with_network.txt</Input>
+    <Input name="sources_with_network" type="PrescientInput" subDirectory=".">sources_with_network.txt</Input>
+    <Input name="rts_with_network_template_hotstart" type="PrescientInput" subDirectory="templates">rts_with_network_template_hotstart.dat</Input>
+    <Input name="scenario_tree_template" type="PrescientInput" subDirectory="templates">scenario_tree_template.dat</Input>
+    <Input name="101_PV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">101_PV_1_forecasts_actuals.csv</Input>
+    <Input name="101_PV_2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">101_PV_2_forecasts_actuals.csv</Input>
+    <Input name="101_PV_3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">101_PV_3_forecasts_actuals.csv</Input>
+    <Input name="101_PV_4_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">101_PV_4_forecasts_actuals.csv</Input>
+    <Input name="102_PV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">102_PV_1_forecasts_actuals.csv</Input>
+    <Input name="102_PV_2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">102_PV_2_forecasts_actuals.csv</Input>
+    <Input name="103_PV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">103_PV_1_forecasts_actuals.csv</Input>
+    <Input name="104_PV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">104_PV_1_forecasts_actuals.csv</Input>
+    <Input name="113_PV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">113_PV_1_forecasts_actuals.csv</Input>
+    <Input name="118_RTPV_10_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">118_RTPV_10_forecasts_actuals.csv</Input>
+    <Input name="118_RTPV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">118_RTPV_1_forecasts_actuals.csv</Input>
+    <Input name="118_RTPV_2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">118_RTPV_2_forecasts_actuals.csv</Input>
+    <Input name="118_RTPV_3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">118_RTPV_3_forecasts_actuals.csv</Input>
+    <Input name="118_RTPV_4_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">118_RTPV_4_forecasts_actuals.csv</Input>
+    <Input name="118_RTPV_5_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">118_RTPV_5_forecasts_actuals.csv</Input>
+    <Input name="118_RTPV_6_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">118_RTPV_6_forecasts_actuals.csv</Input>
+    <Input name="118_RTPV_7_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">118_RTPV_7_forecasts_actuals.csv</Input>
+    <Input name="118_RTPV_8_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">118_RTPV_8_forecasts_actuals.csv</Input>
+    <Input name="118_RTPV_9_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">118_RTPV_9_forecasts_actuals.csv</Input>
+    <Input name="119_PV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">119_PV_1_forecasts_actuals.csv</Input>
+    <Input name="122_HYDRO_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">122_HYDRO_1_forecasts_actuals.csv</Input>
+    <Input name="122_HYDRO_2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">122_HYDRO_2_forecasts_actuals.csv</Input>
+    <Input name="122_HYDRO_3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">122_HYDRO_3_forecasts_actuals.csv</Input>
+    <Input name="122_HYDRO_4_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">122_HYDRO_4_forecasts_actuals.csv</Input>
+    <Input name="122_HYDRO_5_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">122_HYDRO_5_forecasts_actuals.csv</Input>
+    <Input name="122_HYDRO_6_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">122_HYDRO_6_forecasts_actuals.csv</Input>
+    <Input name="122_WIND_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">122_WIND_1_forecasts_actuals.csv</Input>
+    <Input name="201_HYDRO_4_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">201_HYDRO_4_forecasts_actuals.csv</Input>
+    <Input name="213_RTPV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">213_RTPV_1_forecasts_actuals.csv</Input>
+    <Input name="215_HYDRO_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">215_HYDRO_1_forecasts_actuals.csv</Input>
+    <Input name="215_HYDRO_2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">215_HYDRO_2_forecasts_actuals.csv</Input>
+    <Input name="215_HYDRO_3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">215_HYDRO_3_forecasts_actuals.csv</Input>
+    <Input name="215_PV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">215_PV_1_forecasts_actuals.csv</Input>
+    <Input name="222_HYDRO_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">222_HYDRO_1_forecasts_actuals.csv</Input>
+    <Input name="222_HYDRO_2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">222_HYDRO_2_forecasts_actuals.csv</Input>
+    <Input name="222_HYDRO_3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">222_HYDRO_3_forecasts_actuals.csv</Input>
+    <Input name="222_HYDRO_4_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">222_HYDRO_4_forecasts_actuals.csv</Input>
+    <Input name="222_HYDRO_5_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">222_HYDRO_5_forecasts_actuals.csv</Input>
+    <Input name="222_HYDRO_6_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">222_HYDRO_6_forecasts_actuals.csv</Input>
+    <Input name="303_WIND_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">303_WIND_1_forecasts_actuals.csv</Input>
+    <Input name="308_RTPV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">308_RTPV_1_forecasts_actuals.csv</Input>
+    <Input name="309_WIND_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">309_WIND_1_forecasts_actuals.csv</Input>
+    <Input name="310_PV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">310_PV_1_forecasts_actuals.csv</Input>
+    <Input name="310_PV_2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">310_PV_2_forecasts_actuals.csv</Input>
+    <Input name="312_PV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">312_PV_1_forecasts_actuals.csv</Input>
+    <Input name="313_PV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">313_PV_1_forecasts_actuals.csv</Input>
+    <Input name="313_PV_2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">313_PV_2_forecasts_actuals.csv</Input>
+    <Input name="313_RTPV_10_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">313_RTPV_10_forecasts_actuals.csv</Input>
+    <Input name="313_RTPV_11_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">313_RTPV_11_forecasts_actuals.csv</Input>
+    <Input name="313_RTPV_12_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">313_RTPV_12_forecasts_actuals.csv</Input>
+    <Input name="313_RTPV_13_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">313_RTPV_13_forecasts_actuals.csv</Input>
+    <Input name="313_RTPV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">313_RTPV_1_forecasts_actuals.csv</Input>
+    <Input name="313_RTPV_2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">313_RTPV_2_forecasts_actuals.csv</Input>
+    <Input name="313_RTPV_3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">313_RTPV_3_forecasts_actuals.csv</Input>
+    <Input name="313_RTPV_4_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">313_RTPV_4_forecasts_actuals.csv</Input>
+    <Input name="313_RTPV_5_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">313_RTPV_5_forecasts_actuals.csv</Input>
+    <Input name="313_RTPV_6_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">313_RTPV_6_forecasts_actuals.csv</Input>
+    <Input name="313_RTPV_7_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">313_RTPV_7_forecasts_actuals.csv</Input>
+    <Input name="313_RTPV_8_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">313_RTPV_8_forecasts_actuals.csv</Input>
+    <Input name="313_RTPV_9_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">313_RTPV_9_forecasts_actuals.csv</Input>
+    <Input name="314_PV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">314_PV_1_forecasts_actuals.csv</Input>
+    <Input name="314_PV_2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">314_PV_2_forecasts_actuals.csv</Input>
+    <Input name="314_PV_3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">314_PV_3_forecasts_actuals.csv</Input>
+    <Input name="314_PV_4_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">314_PV_4_forecasts_actuals.csv</Input>
+    <Input name="317_WIND_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">317_WIND_1_forecasts_actuals.csv</Input>
+    <Input name="319_PV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">319_PV_1_forecasts_actuals.csv</Input>
+    <Input name="320_PV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">320_PV_1_forecasts_actuals.csv</Input>
+    <Input name="320_RTPV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">320_RTPV_1_forecasts_actuals.csv</Input>
+    <Input name="320_RTPV_2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">320_RTPV_2_forecasts_actuals.csv</Input>
+    <Input name="320_RTPV_3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">320_RTPV_3_forecasts_actuals.csv</Input>
+    <Input name="320_RTPV_4_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">320_RTPV_4_forecasts_actuals.csv</Input>
+    <Input name="320_RTPV_5_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">320_RTPV_5_forecasts_actuals.csv</Input>
+    <Input name="320_RTPV_6_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">320_RTPV_6_forecasts_actuals.csv</Input>
+    <Input name="322_HYDRO_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">322_HYDRO_1_forecasts_actuals.csv</Input>
+    <Input name="322_HYDRO_2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">322_HYDRO_2_forecasts_actuals.csv</Input>
+    <Input name="322_HYDRO_3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">322_HYDRO_3_forecasts_actuals.csv</Input>
+    <Input name="322_HYDRO_4_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">322_HYDRO_4_forecasts_actuals.csv</Input>
+    <Input name="324_PV_1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">324_PV_1_forecasts_actuals.csv</Input>
+    <Input name="324_PV_2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">324_PV_2_forecasts_actuals.csv</Input>
+    <Input name="324_PV_3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">324_PV_3_forecasts_actuals.csv</Input>
+    <Input name="Bus_101_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_101_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_102_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_102_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_103_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_103_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_104_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_104_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_105_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_105_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_106_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_106_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_107_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_107_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_108_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_108_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_109_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_109_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_110_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_110_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_111_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_111_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_112_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_112_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_113_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_113_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_114_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_114_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_115_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_115_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_116_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_116_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_117_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_117_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_118_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_118_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_119_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_119_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_120_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_120_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_121_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_121_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_122_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_122_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_123_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_123_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_124_Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_124_Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Bus_201_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_201_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_202_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_202_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_203_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_203_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_204_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_204_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_205_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_205_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_206_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_206_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_207_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_207_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_208_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_208_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_209_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_209_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_210_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_210_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_211_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_211_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_212_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_212_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_213_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_213_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_214_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_214_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_215_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_215_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_216_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_216_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_217_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_217_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_218_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_218_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_219_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_219_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_220_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_220_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_221_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_221_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_222_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_222_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_223_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_223_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_224_Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_224_Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Bus_301_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_301_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_302_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_302_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_303_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_303_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_304_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_304_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_305_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_305_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_306_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_306_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_307_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_307_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_308_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_308_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_309_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_309_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_310_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_310_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_311_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_311_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_312_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_312_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_313_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_313_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_314_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_314_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_315_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_315_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_316_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_316_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_317_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_317_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_318_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_318_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_319_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_319_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_320_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_320_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_321_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_321_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_322_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_322_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_323_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_323_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_324_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_324_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="Bus_325_Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Bus_325_Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="HYDRO_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">HYDRO_forecasts_actuals.csv</Input>
+    <Input name="HYDRO_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">HYDRO_zone1_forecasts_actuals.csv</Input>
+    <Input name="HYDRO_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">HYDRO_zone2_forecasts_actuals.csv</Input>
+    <Input name="HYDRO_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">HYDRO_zone3_forecasts_actuals.csv</Input>
+    <Input name="Hydro_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Hydro_forecasts_actuals.csv</Input>
+    <Input name="Hydro_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Hydro_zone1_forecasts_actuals.csv</Input>
+    <Input name="Hydro_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Hydro_zone2_forecasts_actuals.csv</Input>
+    <Input name="Hydro_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Hydro_zone3_forecasts_actuals.csv</Input>
+    <Input name="Load_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Load_forecasts_actuals.csv</Input>
+    <Input name="Load_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Load_zone1_forecasts_actuals.csv</Input>
+    <Input name="Load_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Load_zone2_forecasts_actuals.csv</Input>
+    <Input name="Load_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">Load_zone3_forecasts_actuals.csv</Input>
+    <Input name="PV_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">PV_forecasts_actuals.csv</Input>
+    <Input name="PV_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">PV_zone1_forecasts_actuals.csv</Input>
+    <Input name="PV_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">PV_zone2_forecasts_actuals.csv</Input>
+    <Input name="PV_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">PV_zone3_forecasts_actuals.csv</Input>
+    <Input name="RTPV_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">RTPV_forecasts_actuals.csv</Input>
+    <Input name="RTPV_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">RTPV_zone1_forecasts_actuals.csv</Input>
+    <Input name="RTPV_zone2_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">RTPV_zone2_forecasts_actuals.csv</Input>
+    <Input name="RTPV_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">RTPV_zone3_forecasts_actuals.csv</Input>
+    <Input name="WIND_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">WIND_forecasts_actuals.csv</Input>
+    <Input name="WIND_zone1_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">WIND_zone1_forecasts_actuals.csv</Input>
+    <Input name="WIND_zone3_forecasts_actuals.csv" type="PrescientInput" subDirectory="timeseries_data_files">WIND_zone3_forecasts_actuals.csv</Input>
+    <Input name="disaggregate_HYDRO_allzone" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_HYDRO_allzone.txt</Input>
+    <Input name="disaggregate_HYDRO_zone_1" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_HYDRO_zone_1.txt</Input>
+    <Input name="disaggregate_HYDRO_zone_2" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_HYDRO_zone_2.txt</Input>
+    <Input name="disaggregate_HYDRO_zone_3" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_HYDRO_zone_3.txt</Input>
+    <Input name="disaggregate_Hydro_allzone" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_Hydro_allzone.txt</Input>
+    <Input name="disaggregate_Hydro_zone_1" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_Hydro_zone_1.txt</Input>
+    <Input name="disaggregate_Hydro_zone_2" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_Hydro_zone_2.txt</Input>
+    <Input name="disaggregate_Hydro_zone_3" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_Hydro_zone_3.txt</Input>
+    <Input name="disaggregate_PV_allzone" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_PV_allzone.txt</Input>
+    <Input name="disaggregate_PV_zone_1" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_PV_zone_1.txt</Input>
+    <Input name="disaggregate_PV_zone_2" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_PV_zone_2.txt</Input>
+    <Input name="disaggregate_PV_zone_3" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_PV_zone_3.txt</Input>
+    <Input name="disaggregate_RTPV_allzone" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_RTPV_allzone.txt</Input>
+    <Input name="disaggregate_RTPV_zone_1" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_RTPV_zone_1.txt</Input>
+    <Input name="disaggregate_RTPV_zone_2" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_RTPV_zone_2.txt</Input>
+    <Input name="disaggregate_RTPV_zone_3" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_RTPV_zone_3.txt</Input>
+    <Input name="disaggregate_WIND_allzone" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_WIND_allzone.txt</Input>
+    <Input name="disaggregate_WIND_zone_1" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_WIND_zone_1.txt</Input>
+    <Input name="disaggregate_WIND_zone_3" type="PrescientInput" subDirectory="timeseries_data_files">disaggregate_WIND_zone_3.txt</Input>
+
+  </Files>
+
+  <Models>
+    <Code name="TestPrescient" subType="Prescient">
+      <executable>
+      </executable>
+    </Code>
+  </Models>
+
+  <Distributions>
+    <Uniform name="dist">
+      <lowerBound>1.0</lowerBound>
+      <upperBound>1000.0</upperBound>
+    </Uniform>
+  </Distributions>
+
+  <Samplers>
+    <Grid name="grid">
+      <variable name="var">
+        <distribution>dist</distribution>
+        <grid construction="equal" steps="3" type="CDF">0.0 1.0</grid>
+      </variable>
+    </Grid>
+  </Samplers>
+
+  <!-- Created with for F in `ls deterministic_scenario_creator_with_network.txt sources_with_network.txt templates/* timeseries_data_files/*`; do B=`basename $F .txt`; B=`basename $B .dat`; D=`dirname $F`; echo '<Input class="Files" type="PrescientInput">'$B'</Input>'; done -->
+  <Steps>
+    <MultiRun name="runPrescient">
+      <Input class="Files" type="PrescientRunnerInput">populate</Input>
+      <Input class="Files" type="PrescientRunnerInput">simulate</Input>
+      <Input class="Files" type="PrescientInput">deterministic_scenario_creator_with_network</Input>
+      <Input class="Files" type="PrescientInput">sources_with_network</Input>
+      <Input class="Files" type="PrescientInput">rts_with_network_template_hotstart</Input>
+      <Input class="Files" type="PrescientInput">scenario_tree_template</Input>
+      <Input class="Files" type="PrescientInput">101_PV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">101_PV_2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">101_PV_3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">101_PV_4_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">102_PV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">102_PV_2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">103_PV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">104_PV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">113_PV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">118_RTPV_10_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">118_RTPV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">118_RTPV_2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">118_RTPV_3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">118_RTPV_4_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">118_RTPV_5_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">118_RTPV_6_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">118_RTPV_7_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">118_RTPV_8_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">118_RTPV_9_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">119_PV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">122_HYDRO_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">122_HYDRO_2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">122_HYDRO_3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">122_HYDRO_4_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">122_HYDRO_5_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">122_HYDRO_6_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">122_WIND_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">201_HYDRO_4_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">213_RTPV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">215_HYDRO_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">215_HYDRO_2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">215_HYDRO_3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">215_PV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">222_HYDRO_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">222_HYDRO_2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">222_HYDRO_3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">222_HYDRO_4_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">222_HYDRO_5_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">222_HYDRO_6_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">303_WIND_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">308_RTPV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">309_WIND_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">310_PV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">310_PV_2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">312_PV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">313_PV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">313_PV_2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">313_RTPV_10_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">313_RTPV_11_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">313_RTPV_12_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">313_RTPV_13_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">313_RTPV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">313_RTPV_2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">313_RTPV_3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">313_RTPV_4_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">313_RTPV_5_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">313_RTPV_6_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">313_RTPV_7_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">313_RTPV_8_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">313_RTPV_9_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">314_PV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">314_PV_2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">314_PV_3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">314_PV_4_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">317_WIND_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">319_PV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">320_PV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">320_RTPV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">320_RTPV_2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">320_RTPV_3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">320_RTPV_4_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">320_RTPV_5_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">320_RTPV_6_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">322_HYDRO_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">322_HYDRO_2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">322_HYDRO_3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">322_HYDRO_4_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">324_PV_1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">324_PV_2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">324_PV_3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_101_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_102_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_103_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_104_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_105_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_106_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_107_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_108_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_109_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_110_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_111_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_112_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_113_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_114_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_115_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_116_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_117_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_118_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_119_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_120_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_121_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_122_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_123_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_124_Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_201_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_202_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_203_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_204_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_205_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_206_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_207_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_208_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_209_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_210_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_211_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_212_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_213_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_214_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_215_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_216_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_217_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_218_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_219_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_220_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_221_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_222_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_223_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_224_Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_301_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_302_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_303_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_304_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_305_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_306_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_307_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_308_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_309_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_310_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_311_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_312_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_313_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_314_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_315_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_316_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_317_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_318_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_319_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_320_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_321_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_322_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_323_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_324_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Bus_325_Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">HYDRO_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">HYDRO_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">HYDRO_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">HYDRO_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Hydro_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Hydro_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Hydro_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Hydro_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Load_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Load_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Load_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">Load_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">PV_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">PV_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">PV_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">PV_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">RTPV_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">RTPV_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">RTPV_zone2_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">RTPV_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">WIND_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">WIND_zone1_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">WIND_zone3_forecasts_actuals.csv</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_HYDRO_allzone</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_HYDRO_zone_1</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_HYDRO_zone_2</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_HYDRO_zone_3</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_Hydro_allzone</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_Hydro_zone_1</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_Hydro_zone_2</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_Hydro_zone_3</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_PV_allzone</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_PV_zone_1</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_PV_zone_2</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_PV_zone_3</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_RTPV_allzone</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_RTPV_zone_1</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_RTPV_zone_2</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_RTPV_zone_3</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_WIND_allzone</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_WIND_zone_1</Input>
+      <Input class="Files" type="PrescientInput">disaggregate_WIND_zone_3</Input>
+
+      <Model class="Models" type="Code">TestPrescient</Model>
+      <Sampler class="Samplers" type="Grid">grid</Sampler>
+      <Output class="Databases" type="HDF5">DB_prescient</Output>
+      <Output class="DataObjects" type="HistorySet">samples</Output>
+      <Output class="OutStreams" type="Print">out_prescient</Output>
+    </MultiRun>
+  </Steps>
+
+  <Databases>
+    <HDF5 name="DB_prescient" readMode="overwrite"/>
+  </Databases>
+
+  <DataObjects>
+    <HistorySet name="samples">
+      <Input>var</Input>
+      <!-- <Output>Demand, Renewables available,Renewables used,Renewables penetration rate,Average price,Fixed costs,Generation costs,Load shedding,Over generation,Reserve shortfall,Renewables curtailment,Number on/offs,Sum on/off ramps,Sum nominal ramps</Output> -->
+      <Output>Date_Hour, TotalCosts, FixedCosts, VariableCosts, LoadShedding, OverGeneration, ReserveShortfall, RenewablesUsed, RenewablesCurtailment, Demand, Price </Output>
+      <options>
+        <pivotParameter>Date_Hour</pivotParameter>
+      </options>
+    </HistorySet>
+  </DataObjects>
+
+  <OutStreams>
+    <Print name="out_prescient">
+      <type>csv</type>
+      <source>samples</source>
+    </Print>
+  </OutStreams>
+
+</Simulation>

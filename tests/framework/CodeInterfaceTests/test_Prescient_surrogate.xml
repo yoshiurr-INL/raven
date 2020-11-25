@@ -19,7 +19,7 @@
   </RunInfo>
 
   <Files>
-    <Input name="simulate" type="PrescientInput">simulate_with_network_deterministic_day.txt</Input>
+    <Input name="simulate" type="PrescientRunnerInput">simulate_with_network_deterministic_day.txt</Input>
     <Input name="structure" type="PrescientInput" subDirectory="deterministic_with_network_scenarios_day/pyspdir_twostage/2020-07-10/">ScenarioStructure.dat</Input>
     <Input name="scenario_1" type="PrescientInput" subDirectory="deterministic_with_network_scenarios_day/pyspdir_twostage/2020-07-10/">Scenario_1.dat</Input>
     <Input name="actuals" type="PrescientInput" subDirectory="deterministic_with_network_scenarios_day/pyspdir_twostage/2020-07-10/">Scenario_actuals.dat</Input>

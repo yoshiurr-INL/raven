@@ -1,0 +1,4 @@
+source,proportion
+309_WIND_1,0.082
+317_WIND_1,0.461
+303_WIND_1,0.457

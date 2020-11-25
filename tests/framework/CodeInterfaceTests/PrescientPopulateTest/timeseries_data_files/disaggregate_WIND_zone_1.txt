@@ -1,0 +1,2 @@
+source,proportion
+122_WIND_1,1.0

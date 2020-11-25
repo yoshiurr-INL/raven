@@ -1,0 +1,1698 @@
+param NumTimePeriods := 48 ;
+
+param TimePeriodLength := 1 ;
+
+set StageSet := Stage_1 Stage_2 ;
+
+set CommitmentTimeInStage[Stage_1] := 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 ;
+
+set CommitmentTimeInStage[Stage_2] := ;
+
+set GenerationTimeInStage[Stage_1] := ;
+
+set GenerationTimeInStage[Stage_2] := 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 ;
+
+set Buses := 
+Abel
+Adams
+Adler
+Agricola
+Aiken
+Alber
+Alder
+Alger
+Ali
+Allen
+Anna
+Archer
+Arne
+Arnold
+Arthur
+Asser
+Aston
+Astor
+Attar
+Attila
+Attlee
+Aubrey
+Austen
+Avery
+Bach
+Bacon
+Baffin
+Bailey
+Bain
+Bajer
+Baker
+Balch
+Balzac
+Banks
+Bardeen
+Barkla
+Barlow
+Barry
+Barton
+Basov
+Bates
+Bayle
+Bede
+Beethoven
+Behring
+Bell
+Bloch
+Bordet
+Cabell
+Cabot
+Caesar
+Caine
+Calvin
+Camus
+Carew
+Carrel
+Carter
+Caruso
+Cary
+Caxton
+Cecil
+Chain
+Chase
+Chifa
+Chuhsi
+Clark
+Clay
+Clive
+Cobb
+Cole
+Comte
+Curie
+Curtiss
+;
+
+set TransmissionLines := 
+A1
+A2
+A3
+A4
+A5
+A6
+A7
+A8
+A9
+A10
+A11
+AB1
+A12-1
+A13-2
+A14
+A15
+A16
+A17
+A18
+A19
+A20
+A21
+A22
+AB2
+A23
+A24
+A25-1
+A25-2
+A26
+A27
+A28
+A29
+A30
+A31-1
+A31-2
+A32-1
+A32-2
+A33-1
+A33-2
+A34
+AB3
+B1
+B2
+B3
+B4
+B5
+B6
+B7
+B8
+B9
+B10
+B11
+B12-1
+B13-2
+B14
+B15
+B16
+B17
+B18
+B19
+B20
+B21
+B22
+B23
+B24
+B25-1
+B25-2
+B26
+B27
+B28
+B29
+B30
+B31-1
+B31-2
+B32-1
+B32-2
+B33-1
+B33-2
+B34
+C1
+C2
+C3
+C4
+C5
+C6
+C7
+C8
+C9
+C10
+C11
+C12-1
+C13-2
+C14
+C15
+C16
+C17
+C18
+C19
+C20
+C21
+C22
+C23
+C24
+C25-1
+C25-2
+C26
+C27
+C28
+C29
+C30
+C31-1
+C31-2
+C32-1
+C32-2
+C33-1
+C33-2
+C34
+CA-1
+CB-1
+C35
+;
+
+param: BusFrom BusTo ThermalLimit Impedence :=
+             A1            Abel           Adams   175.00000000      0.00014000
+             A2            Abel           Adler   175.00000000      0.00211000
+             A3            Abel           Aiken   175.00000000      0.00085000
+             A4           Adams        Agricola   175.00000000      0.00127000
+             A5           Adams           Alber   175.00000000      0.00192000
+             A6           Adler             Ali   175.00000000      0.00119000
+             A7           Adler           Avery   400.00000000      0.00084000
+             A8        Agricola             Ali   175.00000000      0.00104000
+             A9           Aiken           Allen   175.00000000      0.00088000
+            A10           Alber           Allen   175.00000000      0.00061000
+            A11           Alder           Alger   175.00000000      0.00061000
+            AB1           Alder          Baffin   175.00000000      0.00161000
+          A12-1           Alger             Ali   175.00000000      0.00165000
+          A13-2           Alger           Allen   175.00000000      0.00165000
+            A14             Ali            Anna   400.00000000      0.00084000
+            A15             Ali          Archer   400.00000000      0.00084000
+            A16           Allen            Anna   400.00000000      0.00084000
+            A17           Allen          Archer   400.00000000      0.00084000
+            A18            Anna            Arne   500.00000000      0.00048000
+            A19            Anna          Arnold   500.00000000      0.00042000
+            A20          Archer            Arne   500.00000000      0.00048000
+            A21          Archer          Austen   500.00000000      0.00097000
+            A22            Arne          Austen   500.00000000      0.00087000
+            AB2            Arne          Barton   500.00000000      0.00075000
+            A23          Arnold           Asser   500.00000000      0.00059000
+            A24          Arthur           Asser   500.00000000      0.00017000
+          A25-1          Arthur          Attlee   500.00000000      0.00049000
+          A25-2          Arthur          Attlee   500.00000000      0.00049000
+            A26          Arthur           Avery   500.00000000      0.00052000
+            A27           Asser           Aston   500.00000000      0.00026000
+            A28           Asser           Attar   500.00000000      0.00023000
+            A29           Aston           Astor   500.00000000      0.00014000
+            A30           Aston          Aubrey   500.00000000      0.00105000
+          A31-1           Astor          Attlee   500.00000000      0.00026000
+          A31-2           Astor          Attlee   500.00000000      0.00026000
+          A32-1           Attar          Attila   500.00000000      0.00040000
+          A32-2           Attar          Attila   500.00000000      0.00040000
+          A33-1          Attila          Austen   500.00000000      0.00022000
+          A33-2          Attila          Austen   500.00000000      0.00022000
+            A34          Attlee          Aubrey   500.00000000      0.00068000
+            AB3          Austen           Bates   500.00000000      0.00074000
+             B1            Bach           Bacon   175.00000000      0.00014000
+             B2            Bach          Baffin   175.00000000      0.00211000
+             B3            Bach            Bain   175.00000000      0.00085000
+             B4           Bacon          Bailey   175.00000000      0.00127000
+             B5           Bacon           Bajer   175.00000000      0.00192000
+             B6          Baffin          Balzac   175.00000000      0.00119000
+             B7          Baffin          Bordet   400.00000000      0.00084000
+             B8          Bailey          Balzac   175.00000000      0.00104000
+             B9            Bain           Banks   175.00000000      0.00088000
+            B10           Bajer           Banks   175.00000000      0.00061000
+            B11           Baker           Balch   175.00000000      0.00061000
+          B12-1           Balch          Balzac   175.00000000      0.00165000
+          B13-2           Balch           Banks   175.00000000      0.00165000
+            B14          Balzac         Bardeen   400.00000000      0.00084000
+            B15          Balzac          Barkla   400.00000000      0.00084000
+            B16           Banks         Bardeen   400.00000000      0.00084000
+            B17           Banks          Barkla   400.00000000      0.00084000
+            B18         Bardeen          Barlow   500.00000000      0.00048000
+            B19         Bardeen           Barry   500.00000000      0.00042000
+            B20          Barkla          Barlow   500.00000000      0.00048000
+            B21          Barkla           Bloch   500.00000000      0.00097000
+            B22          Barlow           Bloch   500.00000000      0.00087000
+            B23           Barry           Basov   500.00000000      0.00059000
+            B24          Barton           Basov   500.00000000      0.00017000
+          B25-1          Barton         Behring   500.00000000      0.00049000
+          B25-2          Barton         Behring   500.00000000      0.00049000
+            B26          Barton          Bordet   500.00000000      0.00052000
+            B27           Basov           Bates   500.00000000      0.00026000
+            B28           Basov            Bede   500.00000000      0.00023000
+            B29           Bates           Bayle   500.00000000      0.00014000
+            B30           Bates            Bell   500.00000000      0.00105000
+          B31-1           Bayle         Behring   500.00000000      0.00026000
+          B31-2           Bayle         Behring   500.00000000      0.00026000
+          B32-1            Bede       Beethoven   500.00000000      0.00040000
+          B32-2            Bede       Beethoven   500.00000000      0.00040000
+          B33-1       Beethoven           Bloch   500.00000000      0.00022000
+          B33-2       Beethoven           Bloch   500.00000000      0.00022000
+            B34         Behring            Bell   500.00000000      0.00068000
+             C1          Cabell           Cabot   175.00000000      0.00014000
+             C2          Cabell          Caesar   175.00000000      0.00211000
+             C3          Cabell          Calvin   175.00000000      0.00085000
+             C4           Cabot           Caine   175.00000000      0.00127000
+             C5           Cabot           Camus   175.00000000      0.00192000
+             C6          Caesar          Carter   175.00000000      0.00119000
+             C7          Caesar           Curie   400.00000000      0.00084000
+             C8           Caine          Carter   175.00000000      0.00104000
+             C9          Calvin          Caruso   175.00000000      0.00088000
+            C10           Camus          Caruso   175.00000000      0.00061000
+            C11           Carew          Carrel   175.00000000      0.00061000
+          C12-1          Carrel          Carter   175.00000000      0.00165000
+          C13-2          Carrel          Caruso   175.00000000      0.00165000
+            C14          Carter            Cary   400.00000000      0.00084000
+            C15          Carter          Caxton   400.00000000      0.00084000
+            C16          Caruso            Cary   400.00000000      0.00084000
+            C17          Caruso          Caxton   400.00000000      0.00084000
+            C18            Cary           Cecil   500.00000000      0.00048000
+            C19            Cary           Chain   500.00000000      0.00042000
+            C20          Caxton           Cecil   500.00000000      0.00048000
+            C21          Caxton           Comte   500.00000000      0.00097000
+            C22           Cecil           Comte   500.00000000      0.00087000
+            C23           Chain           Chifa   500.00000000      0.00059000
+            C24           Chase           Chifa   500.00000000      0.00017000
+          C25-1           Chase            Cobb   500.00000000      0.00049000
+          C25-2           Chase            Cobb   500.00000000      0.00049000
+            C26           Chase           Curie   500.00000000      0.00052000
+            C27           Chifa          Chuhsi   500.00000000      0.00026000
+            C28           Chifa            Clay   500.00000000      0.00023000
+            C29          Chuhsi           Clark   500.00000000      0.00014000
+            C30          Chuhsi            Cole   500.00000000      0.00105000
+          C31-1           Clark            Cobb   500.00000000      0.00026000
+          C31-2           Clark            Cobb   500.00000000      0.00026000
+          C32-1            Clay           Clive   500.00000000      0.00040000
+          C32-2            Clay           Clive   500.00000000      0.00040000
+          C33-1           Clive           Comte   500.00000000      0.00022000
+          C33-2           Clive           Comte   500.00000000      0.00022000
+            C34            Cobb            Cole   500.00000000      0.00068000
+           CA-1         Curtiss          Attlee   500.00000000      0.00097000
+           CB-1           Clark           Bloch   500.00000000      0.00104000
+            C35           Comte         Curtiss   722.00000000      0.00009000
+;
+
+set ThermalGenerators := 
+101_CT_1
+101_CT_2
+101_STEAM_3
+101_STEAM_4
+102_CT_1
+102_CT_2
+102_STEAM_3
+102_STEAM_4
+107_CC_1
+113_CT_1
+113_CT_2
+113_CT_3
+113_CT_4
+115_STEAM_1
+115_STEAM_2
+115_STEAM_3
+116_STEAM_1
+118_CC_1
+123_STEAM_2
+123_STEAM_3
+123_CT_1
+123_CT_4
+123_CT_5
+201_CT_1
+201_CT_2
+201_STEAM_3
+202_CT_1
+202_CT_2
+202_STEAM_3
+202_STEAM_4
+207_CT_1
+207_CT_2
+213_CC_3
+213_CT_1
+213_CT_2
+215_CT_4
+215_CT_5
+216_STEAM_1
+218_CC_1
+221_CC_1
+223_STEAM_1
+223_STEAM_2
+223_STEAM_3
+223_CT_4
+223_CT_5
+223_CT_6
+301_CT_1
+301_CT_2
+301_CT_3
+301_CT_4
+302_CT_1
+302_CT_2
+302_CT_3
+302_CT_4
+307_CT_1
+307_CT_2
+313_CC_1
+315_STEAM_1
+315_STEAM_2
+315_STEAM_3
+315_STEAM_4
+315_STEAM_5
+315_CT_6
+315_CT_7
+315_CT_8
+316_STEAM_1
+318_CC_1
+321_CC_1
+322_CT_5
+322_CT_6
+323_CC_1
+323_CC_2
+121_NUCLEAR_1
+;
+
+set ThermalGeneratorsAtBus[Abel] := 
+101_CT_1
+101_CT_2
+101_STEAM_3
+101_STEAM_4
+;
+
+set ThermalGeneratorsAtBus[Adams] := 
+102_CT_1
+102_CT_2
+102_STEAM_3
+102_STEAM_4
+;
+
+set ThermalGeneratorsAtBus[Adler] := 
+;
+
+set ThermalGeneratorsAtBus[Agricola] := 
+;
+
+set ThermalGeneratorsAtBus[Aiken] := 
+;
+
+set ThermalGeneratorsAtBus[Alber] := 
+;
+
+set ThermalGeneratorsAtBus[Alder] := 
+107_CC_1
+;
+
+set ThermalGeneratorsAtBus[Alger] := 
+;
+
+set ThermalGeneratorsAtBus[Ali] := 
+;
+
+set ThermalGeneratorsAtBus[Allen] := 
+;
+
+set ThermalGeneratorsAtBus[Anna] := 
+;
+
+set ThermalGeneratorsAtBus[Archer] := 
+;
+
+set ThermalGeneratorsAtBus[Arne] := 
+113_CT_1
+113_CT_2
+113_CT_3
+113_CT_4
+;
+
+set ThermalGeneratorsAtBus[Arnold] := 
+;
+
+set ThermalGeneratorsAtBus[Arthur] := 
+115_STEAM_1
+115_STEAM_2
+115_STEAM_3
+;
+
+set ThermalGeneratorsAtBus[Asser] := 
+116_STEAM_1
+;
+
+set ThermalGeneratorsAtBus[Aston] := 
+;
+
+set ThermalGeneratorsAtBus[Astor] := 
+118_CC_1
+;
+
+set ThermalGeneratorsAtBus[Attar] := 
+;
+
+set ThermalGeneratorsAtBus[Attila] := 
+;
+
+set ThermalGeneratorsAtBus[Attlee] := 
+121_NUCLEAR_1
+;
+
+set ThermalGeneratorsAtBus[Aubrey] := 
+;
+
+set ThermalGeneratorsAtBus[Austen] := 
+123_STEAM_2
+123_STEAM_3
+123_CT_1
+123_CT_4
+123_CT_5
+;
+
+set ThermalGeneratorsAtBus[Avery] := 
+;
+
+set ThermalGeneratorsAtBus[Bach] := 
+201_CT_1
+201_CT_2
+201_STEAM_3
+;
+
+set ThermalGeneratorsAtBus[Bacon] := 
+202_CT_1
+202_CT_2
+202_STEAM_3
+202_STEAM_4
+;
+
+set ThermalGeneratorsAtBus[Baffin] := 
+;
+
+set ThermalGeneratorsAtBus[Bailey] := 
+;
+
+set ThermalGeneratorsAtBus[Bain] := 
+;
+
+set ThermalGeneratorsAtBus[Bajer] := 
+;
+
+set ThermalGeneratorsAtBus[Baker] := 
+207_CT_1
+207_CT_2
+;
+
+set ThermalGeneratorsAtBus[Balch] := 
+;
+
+set ThermalGeneratorsAtBus[Balzac] := 
+;
+
+set ThermalGeneratorsAtBus[Banks] := 
+;
+
+set ThermalGeneratorsAtBus[Bardeen] := 
+;
+
+set ThermalGeneratorsAtBus[Barkla] := 
+;
+
+set ThermalGeneratorsAtBus[Barlow] := 
+213_CC_3
+213_CT_1
+213_CT_2
+;
+
+set ThermalGeneratorsAtBus[Barry] := 
+;
+
+set ThermalGeneratorsAtBus[Barton] := 
+215_CT_4
+215_CT_5
+;
+
+set ThermalGeneratorsAtBus[Basov] := 
+216_STEAM_1
+;
+
+set ThermalGeneratorsAtBus[Bates] := 
+;
+
+set ThermalGeneratorsAtBus[Bayle] := 
+218_CC_1
+;
+
+set ThermalGeneratorsAtBus[Bede] := 
+;
+
+set ThermalGeneratorsAtBus[Beethoven] := 
+;
+
+set ThermalGeneratorsAtBus[Behring] := 
+221_CC_1
+;
+
+set ThermalGeneratorsAtBus[Bell] := 
+;
+
+set ThermalGeneratorsAtBus[Bloch] := 
+223_STEAM_1
+223_STEAM_2
+223_STEAM_3
+223_CT_4
+223_CT_5
+223_CT_6
+;
+
+set ThermalGeneratorsAtBus[Bordet] := 
+;
+
+set ThermalGeneratorsAtBus[Cabell] := 
+301_CT_1
+301_CT_2
+301_CT_3
+301_CT_4
+;
+
+set ThermalGeneratorsAtBus[Cabot] := 
+302_CT_1
+302_CT_2
+302_CT_3
+302_CT_4
+;
+
+set ThermalGeneratorsAtBus[Caesar] := 
+;
+
+set ThermalGeneratorsAtBus[Caine] := 
+;
+
+set ThermalGeneratorsAtBus[Calvin] := 
+;
+
+set ThermalGeneratorsAtBus[Camus] := 
+;
+
+set ThermalGeneratorsAtBus[Carew] := 
+307_CT_1
+307_CT_2
+;
+
+set ThermalGeneratorsAtBus[Carrel] := 
+;
+
+set ThermalGeneratorsAtBus[Carter] := 
+;
+
+set ThermalGeneratorsAtBus[Caruso] := 
+;
+
+set ThermalGeneratorsAtBus[Cary] := 
+;
+
+set ThermalGeneratorsAtBus[Caxton] := 
+;
+
+set ThermalGeneratorsAtBus[Cecil] := 
+313_CC_1
+;
+
+set ThermalGeneratorsAtBus[Chain] := 
+;
+
+set ThermalGeneratorsAtBus[Chase] := 
+315_STEAM_1
+315_STEAM_2
+315_STEAM_3
+315_STEAM_4
+315_STEAM_5
+315_CT_6
+315_CT_7
+315_CT_8
+;
+
+set ThermalGeneratorsAtBus[Chifa] := 
+316_STEAM_1
+;
+
+set ThermalGeneratorsAtBus[Chuhsi] := 
+;
+
+set ThermalGeneratorsAtBus[Clark] := 
+318_CC_1
+;
+
+set ThermalGeneratorsAtBus[Clay] := 
+;
+
+set ThermalGeneratorsAtBus[Clive] := 
+;
+
+set ThermalGeneratorsAtBus[Cobb] := 
+321_CC_1
+;
+
+set ThermalGeneratorsAtBus[Cole] := 
+322_CT_5
+322_CT_6
+;
+
+set ThermalGeneratorsAtBus[Comte] := 
+323_CC_1
+323_CC_2
+;
+
+set ThermalGeneratorsAtBus[Curie] := 
+;
+
+set ThermalGeneratorsAtBus[Curtiss] := 
+;
+
+set NondispatchableGenerators := 
+122_HYDRO_1
+122_HYDRO_2
+122_HYDRO_3
+122_HYDRO_4
+122_HYDRO_5
+122_HYDRO_6
+201_HYDRO_4
+215_HYDRO_1
+215_HYDRO_2
+215_HYDRO_3
+222_HYDRO_1
+222_HYDRO_2
+222_HYDRO_3
+222_HYDRO_4
+222_HYDRO_5
+222_HYDRO_6
+322_HYDRO_1
+322_HYDRO_2
+322_HYDRO_3
+322_HYDRO_4
+320_PV_1
+314_PV_1
+314_PV_2
+313_PV_1
+314_PV_3
+314_PV_4
+313_PV_2
+310_PV_1
+324_PV_1
+312_PV_1
+310_PV_2
+324_PV_2
+324_PV_3
+113_PV_1
+319_PV_1
+215_PV_1
+102_PV_1
+101_PV_1
+102_PV_2
+104_PV_1
+212_CSP_1
+101_PV_2
+101_PV_3
+101_PV_4
+103_PV_1
+119_PV_1
+308_RTPV_1
+313_RTPV_1
+313_RTPV_2
+313_RTPV_3
+313_RTPV_4
+313_RTPV_5
+313_RTPV_6
+313_RTPV_7
+313_RTPV_8
+313_RTPV_9
+313_RTPV_10
+313_RTPV_11
+313_RTPV_12
+320_RTPV_1
+320_RTPV_2
+320_RTPV_3
+313_RTPV_13
+320_RTPV_4
+320_RTPV_5
+118_RTPV_1
+118_RTPV_2
+118_RTPV_3
+118_RTPV_4
+118_RTPV_5
+118_RTPV_6
+320_RTPV_6
+118_RTPV_7
+118_RTPV_8
+118_RTPV_9
+118_RTPV_10
+213_RTPV_1
+309_WIND_1
+317_WIND_1
+303_WIND_1
+122_WIND_1
+;
+
+set NondispatchableGeneratorsAtBus[Abel] := 
+101_PV_1
+101_PV_2
+101_PV_3
+101_PV_4
+;
+
+set NondispatchableGeneratorsAtBus[Adams] := 
+102_PV_1
+102_PV_2
+;
+
+set NondispatchableGeneratorsAtBus[Adler] := 
+103_PV_1
+;
+
+set NondispatchableGeneratorsAtBus[Agricola] := 
+104_PV_1
+;
+
+set NondispatchableGeneratorsAtBus[Aiken] := 
+;
+
+set NondispatchableGeneratorsAtBus[Alber] := 
+;
+
+set NondispatchableGeneratorsAtBus[Alder] := 
+;
+
+set NondispatchableGeneratorsAtBus[Alger] := 
+;
+
+set NondispatchableGeneratorsAtBus[Ali] := 
+;
+
+set NondispatchableGeneratorsAtBus[Allen] := 
+;
+
+set NondispatchableGeneratorsAtBus[Anna] := 
+;
+
+set NondispatchableGeneratorsAtBus[Archer] := 
+;
+
+set NondispatchableGeneratorsAtBus[Arne] := 
+113_PV_1
+;
+
+set NondispatchableGeneratorsAtBus[Arnold] := 
+;
+
+set NondispatchableGeneratorsAtBus[Arthur] := 
+;
+
+set NondispatchableGeneratorsAtBus[Asser] := 
+;
+
+set NondispatchableGeneratorsAtBus[Aston] := 
+;
+
+set NondispatchableGeneratorsAtBus[Astor] := 
+118_RTPV_1
+118_RTPV_2
+118_RTPV_3
+118_RTPV_4
+118_RTPV_5
+118_RTPV_6
+118_RTPV_7
+118_RTPV_8
+118_RTPV_9
+118_RTPV_10
+;
+
+set NondispatchableGeneratorsAtBus[Attar] := 
+119_PV_1
+;
+
+set NondispatchableGeneratorsAtBus[Attila] := 
+;
+
+set NondispatchableGeneratorsAtBus[Attlee] := 
+;
+
+set NondispatchableGeneratorsAtBus[Aubrey] := 
+122_HYDRO_1
+122_HYDRO_2
+122_HYDRO_3
+122_HYDRO_4
+122_HYDRO_5
+122_HYDRO_6
+122_WIND_1
+;
+
+set NondispatchableGeneratorsAtBus[Austen] := 
+;
+
+set NondispatchableGeneratorsAtBus[Avery] := 
+;
+
+set NondispatchableGeneratorsAtBus[Bach] := 
+201_HYDRO_4
+;
+
+set NondispatchableGeneratorsAtBus[Bacon] := 
+;
+
+set NondispatchableGeneratorsAtBus[Baffin] := 
+;
+
+set NondispatchableGeneratorsAtBus[Bailey] := 
+;
+
+set NondispatchableGeneratorsAtBus[Bain] := 
+;
+
+set NondispatchableGeneratorsAtBus[Bajer] := 
+;
+
+set NondispatchableGeneratorsAtBus[Baker] := 
+;
+
+set NondispatchableGeneratorsAtBus[Balch] := 
+;
+
+set NondispatchableGeneratorsAtBus[Balzac] := 
+;
+
+set NondispatchableGeneratorsAtBus[Banks] := 
+;
+
+set NondispatchableGeneratorsAtBus[Bardeen] := 
+;
+
+set NondispatchableGeneratorsAtBus[Barkla] := 
+212_CSP_1
+;
+
+set NondispatchableGeneratorsAtBus[Barlow] := 
+213_RTPV_1
+;
+
+set NondispatchableGeneratorsAtBus[Barry] := 
+;
+
+set NondispatchableGeneratorsAtBus[Barton] := 
+215_HYDRO_1
+215_HYDRO_2
+215_HYDRO_3
+215_PV_1
+;
+
+set NondispatchableGeneratorsAtBus[Basov] := 
+;
+
+set NondispatchableGeneratorsAtBus[Bates] := 
+;
+
+set NondispatchableGeneratorsAtBus[Bayle] := 
+;
+
+set NondispatchableGeneratorsAtBus[Bede] := 
+;
+
+set NondispatchableGeneratorsAtBus[Beethoven] := 
+;
+
+set NondispatchableGeneratorsAtBus[Behring] := 
+;
+
+set NondispatchableGeneratorsAtBus[Bell] := 
+222_HYDRO_1
+222_HYDRO_2
+222_HYDRO_3
+222_HYDRO_4
+222_HYDRO_5
+222_HYDRO_6
+;
+
+set NondispatchableGeneratorsAtBus[Bloch] := 
+;
+
+set NondispatchableGeneratorsAtBus[Bordet] := 
+;
+
+set NondispatchableGeneratorsAtBus[Cabell] := 
+;
+
+set NondispatchableGeneratorsAtBus[Cabot] := 
+;
+
+set NondispatchableGeneratorsAtBus[Caesar] := 
+303_WIND_1
+;
+
+set NondispatchableGeneratorsAtBus[Caine] := 
+;
+
+set NondispatchableGeneratorsAtBus[Calvin] := 
+;
+
+set NondispatchableGeneratorsAtBus[Camus] := 
+;
+
+set NondispatchableGeneratorsAtBus[Carew] := 
+;
+
+set NondispatchableGeneratorsAtBus[Carrel] := 
+308_RTPV_1
+;
+
+set NondispatchableGeneratorsAtBus[Carter] := 
+309_WIND_1
+;
+
+set NondispatchableGeneratorsAtBus[Caruso] := 
+310_PV_1
+310_PV_2
+;
+
+set NondispatchableGeneratorsAtBus[Cary] := 
+;
+
+set NondispatchableGeneratorsAtBus[Caxton] := 
+312_PV_1
+;
+
+set NondispatchableGeneratorsAtBus[Cecil] := 
+313_PV_1
+313_PV_2
+313_RTPV_1
+313_RTPV_2
+313_RTPV_3
+313_RTPV_4
+313_RTPV_5
+313_RTPV_6
+313_RTPV_7
+313_RTPV_8
+313_RTPV_9
+313_RTPV_10
+313_RTPV_11
+313_RTPV_12
+313_RTPV_13
+;
+
+set NondispatchableGeneratorsAtBus[Chain] := 
+314_PV_1
+314_PV_2
+314_PV_3
+314_PV_4
+;
+
+set NondispatchableGeneratorsAtBus[Chase] := 
+;
+
+set NondispatchableGeneratorsAtBus[Chifa] := 
+;
+
+set NondispatchableGeneratorsAtBus[Chuhsi] := 
+317_WIND_1
+;
+
+set NondispatchableGeneratorsAtBus[Clark] := 
+;
+
+set NondispatchableGeneratorsAtBus[Clay] := 
+319_PV_1
+;
+
+set NondispatchableGeneratorsAtBus[Clive] := 
+320_PV_1
+320_RTPV_1
+320_RTPV_2
+320_RTPV_3
+320_RTPV_4
+320_RTPV_5
+320_RTPV_6
+;
+
+set NondispatchableGeneratorsAtBus[Cobb] := 
+;
+
+set NondispatchableGeneratorsAtBus[Cole] := 
+322_HYDRO_1
+322_HYDRO_2
+322_HYDRO_3
+322_HYDRO_4
+;
+
+set NondispatchableGeneratorsAtBus[Comte] := 
+;
+
+set NondispatchableGeneratorsAtBus[Curie] := 
+324_PV_1
+324_PV_2
+324_PV_3
+;
+
+set NondispatchableGeneratorsAtBus[Curtiss] := 
+;
+
+param MustRun := 
+121_NUCLEAR_1 1
+;
+
+param ThermalGeneratorType := 
+101_CT_1 O
+101_CT_2 O
+101_STEAM_3 C
+101_STEAM_4 C
+102_CT_1 O
+102_CT_2 O
+102_STEAM_3 C
+102_STEAM_4 C
+107_CC_1 G
+113_CT_1 G
+113_CT_2 G
+113_CT_3 G
+113_CT_4 G
+115_STEAM_1 O
+115_STEAM_2 O
+115_STEAM_3 C
+116_STEAM_1 C
+118_CC_1 G
+123_STEAM_2 C
+123_STEAM_3 C
+123_CT_1 G
+123_CT_4 G
+123_CT_5 G
+201_CT_1 O
+201_CT_2 O
+201_STEAM_3 C
+202_CT_1 O
+202_CT_2 O
+202_STEAM_3 C
+202_STEAM_4 C
+207_CT_1 G
+207_CT_2 G
+213_CC_3 G
+213_CT_1 G
+213_CT_2 G
+215_CT_4 G
+215_CT_5 G
+216_STEAM_1 C
+218_CC_1 G
+221_CC_1 G
+223_STEAM_1 C
+223_STEAM_2 C
+223_STEAM_3 C
+223_CT_4 G
+223_CT_5 G
+223_CT_6 G
+301_CT_1 O
+301_CT_2 O
+301_CT_3 G
+301_CT_4 G
+302_CT_1 O
+302_CT_2 O
+302_CT_3 G
+302_CT_4 G
+307_CT_1 G
+307_CT_2 G
+313_CC_1 G
+315_STEAM_1 O
+315_STEAM_2 O
+315_STEAM_3 O
+315_STEAM_4 O
+315_STEAM_5 O
+315_CT_6 G
+315_CT_7 G
+315_CT_8 G
+316_STEAM_1 C
+318_CC_1 G
+321_CC_1 G
+322_CT_5 G
+322_CT_6 G
+323_CC_1 G
+323_CC_2 G
+121_NUCLEAR_1 N
+;
+
+param NondispatchableGeneratorType := 
+122_HYDRO_1 H
+122_HYDRO_2 H
+122_HYDRO_3 H
+122_HYDRO_4 H
+122_HYDRO_5 H
+122_HYDRO_6 H
+201_HYDRO_4 H
+215_HYDRO_1 H
+215_HYDRO_2 H
+215_HYDRO_3 H
+222_HYDRO_1 H
+222_HYDRO_2 H
+222_HYDRO_3 H
+222_HYDRO_4 H
+222_HYDRO_5 H
+222_HYDRO_6 H
+322_HYDRO_1 H
+322_HYDRO_2 H
+322_HYDRO_3 H
+322_HYDRO_4 H
+320_PV_1 S
+314_PV_1 S
+314_PV_2 S
+313_PV_1 S
+314_PV_3 S
+314_PV_4 S
+313_PV_2 S
+310_PV_1 S
+324_PV_1 S
+312_PV_1 S
+310_PV_2 S
+324_PV_2 S
+324_PV_3 S
+113_PV_1 S
+319_PV_1 S
+215_PV_1 S
+102_PV_1 S
+101_PV_1 S
+102_PV_2 S
+104_PV_1 S
+212_CSP_1 S
+101_PV_2 S
+101_PV_3 S
+101_PV_4 S
+103_PV_1 S
+119_PV_1 S
+308_RTPV_1 S
+313_RTPV_1 S
+313_RTPV_2 S
+313_RTPV_3 S
+313_RTPV_4 S
+313_RTPV_5 S
+313_RTPV_6 S
+313_RTPV_7 S
+313_RTPV_8 S
+313_RTPV_9 S
+313_RTPV_10 S
+313_RTPV_11 S
+313_RTPV_12 S
+320_RTPV_1 S
+320_RTPV_2 S
+320_RTPV_3 S
+313_RTPV_13 S
+320_RTPV_4 S
+320_RTPV_5 S
+118_RTPV_1 S
+118_RTPV_2 S
+118_RTPV_3 S
+118_RTPV_4 S
+118_RTPV_5 S
+118_RTPV_6 S
+320_RTPV_6 S
+118_RTPV_7 S
+118_RTPV_8 S
+118_RTPV_9 S
+118_RTPV_10 S
+213_RTPV_1 S
+309_WIND_1 W
+317_WIND_1 W
+303_WIND_1 W
+122_WIND_1 W
+;
+
+param: MinimumPowerOutput MaximumPowerOutput MinimumUpTime MinimumDownTime NominalRampUpLimit NominalRampDownLimit StartupRampLimit ShutdownRampLimit := 
+       101_CT_1       8.00      20.00  1  1     180.00     180.00       8.00       8.00
+       101_CT_2       8.00      20.00  1  1     180.00     180.00       8.00       8.00
+    101_STEAM_3      30.00      76.00  8  4     120.00     120.00      30.00      30.00
+    101_STEAM_4      30.00      76.00  8  4     120.00     120.00      30.00      30.00
+       102_CT_1       8.00      20.00  1  1     180.00     180.00       8.00       8.00
+       102_CT_2       8.00      20.00  1  1     180.00     180.00       8.00       8.00
+    102_STEAM_3      30.00      76.00  8  4     120.00     120.00      30.00      30.00
+    102_STEAM_4      30.00      76.00  8  4     120.00     120.00      30.00      30.00
+       107_CC_1     170.00     355.00  8  5     248.40     248.40     170.00     170.00
+       113_CT_1      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       113_CT_2      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       113_CT_3      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       113_CT_4      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+    115_STEAM_1       5.00      12.00  4  2      60.00      60.00       5.00       5.00
+    115_STEAM_2       5.00      12.00  4  2      60.00      60.00       5.00       5.00
+    115_STEAM_3      62.00     155.00  8  8     180.00     180.00      62.00      62.00
+    116_STEAM_1      62.00     155.00  8  8     180.00     180.00      62.00      62.00
+       118_CC_1     170.00     355.00  8  5     248.40     248.40     170.00     170.00
+    123_STEAM_2      62.00     155.00  8  8     180.00     180.00      62.00      62.00
+    123_STEAM_3     140.00     350.00 24 48     240.00     240.00     140.00     140.00
+       123_CT_1      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       123_CT_4      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       123_CT_5      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       201_CT_1       8.00      20.00  1  1     180.00     180.00       8.00       8.00
+       201_CT_2       8.00      20.00  1  1     180.00     180.00       8.00       8.00
+    201_STEAM_3      30.00      76.00  8  4     120.00     120.00      30.00      30.00
+       202_CT_1       8.00      20.00  1  1     180.00     180.00       8.00       8.00
+       202_CT_2       8.00      20.00  1  1     180.00     180.00       8.00       8.00
+    202_STEAM_3      30.00      76.00  8  4     120.00     120.00      30.00      30.00
+    202_STEAM_4      30.00      76.00  8  4     120.00     120.00      30.00      30.00
+       207_CT_1      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       207_CT_2      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       213_CC_3     170.00     355.00  8  5     248.40     248.40     170.00     170.00
+       213_CT_1      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       213_CT_2      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       215_CT_4      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       215_CT_5      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+    216_STEAM_1      62.00     155.00  8  8     180.00     180.00      62.00      62.00
+       218_CC_1     170.00     355.00  8  5     248.40     248.40     170.00     170.00
+       221_CC_1     170.00     355.00  8  5     248.40     248.40     170.00     170.00
+    223_STEAM_1      62.00     155.00  8  8     180.00     180.00      62.00      62.00
+    223_STEAM_2      62.00     155.00  8  8     180.00     180.00      62.00      62.00
+    223_STEAM_3     140.00     350.00 24 48     240.00     240.00     140.00     140.00
+       223_CT_4      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       223_CT_5      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       223_CT_6      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       301_CT_1       8.00      20.00  1  1     180.00     180.00       8.00       8.00
+       301_CT_2       8.00      20.00  1  1     180.00     180.00       8.00       8.00
+       301_CT_3      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       301_CT_4      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       302_CT_1       8.00      20.00  1  1     180.00     180.00       8.00       8.00
+       302_CT_2       8.00      20.00  1  1     180.00     180.00       8.00       8.00
+       302_CT_3      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       302_CT_4      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       307_CT_1      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       307_CT_2      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       313_CC_1     170.00     355.00  8  5     248.40     248.40     170.00     170.00
+    315_STEAM_1       5.00      12.00  4  2      60.00      60.00       5.00       5.00
+    315_STEAM_2       5.00      12.00  4  2      60.00      60.00       5.00       5.00
+    315_STEAM_3       5.00      12.00  4  2      60.00      60.00       5.00       5.00
+    315_STEAM_4       5.00      12.00  4  2      60.00      60.00       5.00       5.00
+    315_STEAM_5       5.00      12.00  4  2      60.00      60.00       5.00       5.00
+       315_CT_6      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       315_CT_7      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       315_CT_8      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+    316_STEAM_1      62.00     155.00  8  8     180.00     180.00      62.00      62.00
+       318_CC_1     170.00     355.00  8  5     248.40     248.40     170.00     170.00
+       321_CC_1     170.00     355.00  8  5     248.40     248.40     170.00     170.00
+       322_CT_5      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       322_CT_6      22.00      55.00  3  3     222.00     222.00      22.00      22.00
+       323_CC_1     170.00     355.00  8  5     248.40     248.40     170.00     170.00
+       323_CC_2     170.00     355.00  8  5     248.40     248.40     170.00     170.00
+  121_NUCLEAR_1     396.00     400.00 24 48    1200.00    1200.00     396.00     396.00
+;
+
+set StartupLags[101_CT_1] := 1 ;
+set StartupCosts[101_CT_1] :=        51.75 ;
+set StartupLags[101_CT_2] := 1 ;
+set StartupCosts[101_CT_2] :=        51.75 ;
+set StartupLags[101_STEAM_3] := 4 10 12 ;
+set StartupCosts[101_STEAM_3] :=      7144.02     10276.95     11172.01 ;
+set StartupLags[101_STEAM_4] := 4 10 12 ;
+set StartupCosts[101_STEAM_4] :=      7144.02     10276.95     11172.01 ;
+set StartupLags[102_CT_1] := 1 ;
+set StartupCosts[102_CT_1] :=        51.75 ;
+set StartupLags[102_CT_2] := 1 ;
+set StartupCosts[102_CT_2] :=        51.75 ;
+set StartupLags[102_STEAM_3] := 4 10 12 ;
+set StartupCosts[102_STEAM_3] :=      7144.02     10276.95     11172.01 ;
+set StartupLags[102_STEAM_4] := 4 10 12 ;
+set StartupCosts[102_STEAM_4] :=      7144.02     10276.95     11172.01 ;
+set StartupLags[107_CC_1] := 5 ;
+set StartupCosts[107_CC_1] :=     28046.68 ;
+set StartupLags[113_CT_1] := 3 ;
+set StartupCosts[113_CT_1] :=      5665.23 ;
+set StartupLags[113_CT_2] := 3 ;
+set StartupCosts[113_CT_2] :=      5665.23 ;
+set StartupLags[113_CT_3] := 3 ;
+set StartupCosts[113_CT_3] :=      5665.23 ;
+set StartupLags[113_CT_4] := 3 ;
+set StartupCosts[113_CT_4] :=      5665.23 ;
+set StartupLags[115_STEAM_1] := 2 4 12 ;
+set StartupCosts[115_STEAM_1] :=       393.28       455.37       703.76 ;
+set StartupLags[115_STEAM_2] := 2 4 12 ;
+set StartupCosts[115_STEAM_2] :=       393.28       455.37       703.76 ;
+set StartupLags[115_STEAM_3] := 8 11 60 ;
+set StartupCosts[115_STEAM_3] :=     14569.83     15722.80     22784.80 ;
+set StartupLags[116_STEAM_1] := 8 11 60 ;
+set StartupCosts[116_STEAM_1] :=     14569.83     15722.80     22784.80 ;
+set StartupLags[118_CC_1] := 5 ;
+set StartupCosts[118_CC_1] :=     28046.68 ;
+set StartupLags[123_STEAM_2] := 8 11 60 ;
+set StartupCosts[123_STEAM_2] :=     14569.83     15722.80     22784.80 ;
+set StartupLags[123_STEAM_3] := 48 96 ;
+set StartupCosts[123_STEAM_3] :=     21381.74     36749.81 ;
+set StartupLags[123_CT_1] := 3 ;
+set StartupCosts[123_CT_1] :=      5665.23 ;
+set StartupLags[123_CT_4] := 3 ;
+set StartupCosts[123_CT_4] :=      5665.23 ;
+set StartupLags[123_CT_5] := 3 ;
+set StartupCosts[123_CT_5] :=      5665.23 ;
+set StartupLags[201_CT_1] := 1 ;
+set StartupCosts[201_CT_1] :=        51.75 ;
+set StartupLags[201_CT_2] := 1 ;
+set StartupCosts[201_CT_2] :=        51.75 ;
+set StartupLags[201_STEAM_3] := 4 10 12 ;
+set StartupCosts[201_STEAM_3] :=      7144.02     10276.95     11172.01 ;
+set StartupLags[202_CT_1] := 1 ;
+set StartupCosts[202_CT_1] :=        51.75 ;
+set StartupLags[202_CT_2] := 1 ;
+set StartupCosts[202_CT_2] :=        51.75 ;
+set StartupLags[202_STEAM_3] := 4 10 12 ;
+set StartupCosts[202_STEAM_3] :=      7144.02     10276.95     11172.01 ;
+set StartupLags[202_STEAM_4] := 4 10 12 ;
+set StartupCosts[202_STEAM_4] :=      7144.02     10276.95     11172.01 ;
+set StartupLags[207_CT_1] := 3 ;
+set StartupCosts[207_CT_1] :=      5665.23 ;
+set StartupLags[207_CT_2] := 3 ;
+set StartupCosts[207_CT_2] :=      5665.23 ;
+set StartupLags[213_CC_3] := 5 ;
+set StartupCosts[213_CC_3] :=     28046.68 ;
+set StartupLags[213_CT_1] := 3 ;
+set StartupCosts[213_CT_1] :=      5665.23 ;
+set StartupLags[213_CT_2] := 3 ;
+set StartupCosts[213_CT_2] :=      5665.23 ;
+set StartupLags[215_CT_4] := 3 ;
+set StartupCosts[215_CT_4] :=      5665.23 ;
+set StartupLags[215_CT_5] := 3 ;
+set StartupCosts[215_CT_5] :=      5665.23 ;
+set StartupLags[216_STEAM_1] := 8 11 60 ;
+set StartupCosts[216_STEAM_1] :=     14569.83     15722.80     22784.80 ;
+set StartupLags[218_CC_1] := 5 ;
+set StartupCosts[218_CC_1] :=     28046.68 ;
+set StartupLags[221_CC_1] := 5 ;
+set StartupCosts[221_CC_1] :=     28046.68 ;
+set StartupLags[223_STEAM_1] := 8 11 60 ;
+set StartupCosts[223_STEAM_1] :=     14569.83     15722.80     22784.80 ;
+set StartupLags[223_STEAM_2] := 8 11 60 ;
+set StartupCosts[223_STEAM_2] :=     14569.83     15722.80     22784.80 ;
+set StartupLags[223_STEAM_3] := 48 96 ;
+set StartupCosts[223_STEAM_3] :=     21381.74     36749.81 ;
+set StartupLags[223_CT_4] := 3 ;
+set StartupCosts[223_CT_4] :=      5665.23 ;
+set StartupLags[223_CT_5] := 3 ;
+set StartupCosts[223_CT_5] :=      5665.23 ;
+set StartupLags[223_CT_6] := 3 ;
+set StartupCosts[223_CT_6] :=      5665.23 ;
+set StartupLags[301_CT_1] := 1 ;
+set StartupCosts[301_CT_1] :=        51.75 ;
+set StartupLags[301_CT_2] := 1 ;
+set StartupCosts[301_CT_2] :=        51.75 ;
+set StartupLags[301_CT_3] := 3 ;
+set StartupCosts[301_CT_3] :=      5665.23 ;
+set StartupLags[301_CT_4] := 3 ;
+set StartupCosts[301_CT_4] :=      5665.23 ;
+set StartupLags[302_CT_1] := 1 ;
+set StartupCosts[302_CT_1] :=        51.75 ;
+set StartupLags[302_CT_2] := 1 ;
+set StartupCosts[302_CT_2] :=        51.75 ;
+set StartupLags[302_CT_3] := 3 ;
+set StartupCosts[302_CT_3] :=      5665.23 ;
+set StartupLags[302_CT_4] := 3 ;
+set StartupCosts[302_CT_4] :=      5665.23 ;
+set StartupLags[307_CT_1] := 3 ;
+set StartupCosts[307_CT_1] :=      5665.23 ;
+set StartupLags[307_CT_2] := 3 ;
+set StartupCosts[307_CT_2] :=      5665.23 ;
+set StartupLags[313_CC_1] := 5 ;
+set StartupCosts[313_CC_1] :=     28046.68 ;
+set StartupLags[315_STEAM_1] := 2 4 12 ;
+set StartupCosts[315_STEAM_1] :=       393.28       455.37       703.76 ;
+set StartupLags[315_STEAM_2] := 2 4 12 ;
+set StartupCosts[315_STEAM_2] :=       393.28       455.37       703.76 ;
+set StartupLags[315_STEAM_3] := 2 4 12 ;
+set StartupCosts[315_STEAM_3] :=       393.28       455.37       703.76 ;
+set StartupLags[315_STEAM_4] := 2 4 12 ;
+set StartupCosts[315_STEAM_4] :=       393.28       455.37       703.76 ;
+set StartupLags[315_STEAM_5] := 2 4 12 ;
+set StartupCosts[315_STEAM_5] :=       393.28       455.37       703.76 ;
+set StartupLags[315_CT_6] := 3 ;
+set StartupCosts[315_CT_6] :=      5665.23 ;
+set StartupLags[315_CT_7] := 3 ;
+set StartupCosts[315_CT_7] :=      5665.23 ;
+set StartupLags[315_CT_8] := 3 ;
+set StartupCosts[315_CT_8] :=      5665.23 ;
+set StartupLags[316_STEAM_1] := 8 11 60 ;
+set StartupCosts[316_STEAM_1] :=     14569.83     15722.80     22784.80 ;
+set StartupLags[318_CC_1] := 5 ;
+set StartupCosts[318_CC_1] :=     28046.68 ;
+set StartupLags[321_CC_1] := 5 ;
+set StartupCosts[321_CC_1] :=     28046.68 ;
+set StartupLags[322_CT_5] := 3 ;
+set StartupCosts[322_CT_5] :=      5665.23 ;
+set StartupLags[322_CT_6] := 3 ;
+set StartupCosts[322_CT_6] :=      5665.23 ;
+set StartupLags[323_CC_1] := 5 ;
+set StartupCosts[323_CC_1] :=     28046.68 ;
+set StartupLags[323_CC_2] := 5 ;
+set StartupCosts[323_CC_2] :=     28046.68 ;
+set StartupLags[121_NUCLEAR_1] := 48 ;
+set StartupCosts[121_NUCLEAR_1] :=     63999.82 ;
+
+set CostPiecewisePoints[101_CT_1] :=          8.0         12.0         16.0         20.0 ;
+set CostPiecewiseValues[101_CT_1] :=      1085.78      1477.23      1869.52      2298.06 ;
+set CostPiecewisePoints[101_CT_2] :=          8.0         12.0         16.0         20.0 ;
+set CostPiecewiseValues[101_CT_2] :=      1085.78      1477.23      1869.52      2298.06 ;
+set CostPiecewisePoints[101_STEAM_3] :=         30.0         45.3         60.7         76.0 ;
+set CostPiecewiseValues[101_STEAM_3] :=       841.58      1058.71      1320.06      1596.57 ;
+set CostPiecewisePoints[101_STEAM_4] :=         30.0         45.3         60.7         76.0 ;
+set CostPiecewiseValues[101_STEAM_4] :=       841.58      1058.71      1320.06      1596.57 ;
+set CostPiecewisePoints[102_CT_1] :=          8.0         12.0         16.0         20.0 ;
+set CostPiecewiseValues[102_CT_1] :=      1212.04      1567.93      1946.60      2344.93 ;
+set CostPiecewisePoints[102_CT_2] :=          8.0         12.0         16.0         20.0 ;
+set CostPiecewiseValues[102_CT_2] :=      1212.04      1567.93      1946.60      2344.93 ;
+set CostPiecewisePoints[102_STEAM_3] :=         30.0         45.3         60.7         76.0 ;
+set CostPiecewiseValues[102_STEAM_3] :=       735.10      1017.59      1338.62      1683.12 ;
+set CostPiecewisePoints[102_STEAM_4] :=         30.0         45.3         60.7         76.0 ;
+set CostPiecewiseValues[102_STEAM_4] :=       735.10      1017.59      1338.62      1683.12 ;
+set CostPiecewisePoints[107_CC_1] :=        170.0        231.7        293.3        355.0 ;
+set CostPiecewiseValues[107_CC_1] :=      4772.50      6204.35      7854.66      9738.37 ;
+set CostPiecewisePoints[113_CT_1] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[113_CT_1] :=      1122.43      1417.43      1742.49      2075.88 ;
+set CostPiecewisePoints[113_CT_2] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[113_CT_2] :=      1122.43      1417.43      1742.49      2075.88 ;
+set CostPiecewisePoints[113_CT_3] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[113_CT_3] :=      1122.43      1417.43      1742.49      2075.88 ;
+set CostPiecewisePoints[113_CT_4] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[113_CT_4] :=      1122.43      1417.43      1742.49      2075.88 ;
+set CostPiecewisePoints[115_STEAM_1] :=          5.0          7.3          9.7         12.0 ;
+set CostPiecewiseValues[115_STEAM_1] :=       897.29      1183.65      1483.77      1791.15 ;
+set CostPiecewisePoints[115_STEAM_2] :=          5.0          7.3          9.7         12.0 ;
+set CostPiecewiseValues[115_STEAM_2] :=       897.29      1183.65      1483.77      1791.15 ;
+set CostPiecewisePoints[115_STEAM_3] :=         62.0         93.0        124.0        155.0 ;
+set CostPiecewiseValues[115_STEAM_3] :=      1500.20      2132.60      2829.88      3668.44 ;
+set CostPiecewisePoints[116_STEAM_1] :=         62.0         93.0        124.0        155.0 ;
+set CostPiecewiseValues[116_STEAM_1] :=      1735.07      2345.32      3011.01      3751.15 ;
+set CostPiecewisePoints[118_CC_1] :=        170.0        231.7        293.3        355.0 ;
+set CostPiecewiseValues[118_CC_1] :=      4795.62      6188.62      7898.32      9901.23 ;
+set CostPiecewisePoints[123_STEAM_2] :=         62.0         93.0        124.0        155.0 ;
+set CostPiecewiseValues[123_STEAM_2] :=      1437.42      2039.74      2751.76      3775.85 ;
+set CostPiecewisePoints[123_STEAM_3] :=        140.0        210.0        280.0        350.0 ;
+set CostPiecewiseValues[123_STEAM_3] :=      3582.87      4981.72      6497.03      8137.68 ;
+set CostPiecewisePoints[123_CT_1] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[123_CT_1] :=      1088.23      1377.15      1704.99      2046.98 ;
+set CostPiecewisePoints[123_CT_4] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[123_CT_4] :=      1088.23      1377.15      1704.99      2046.98 ;
+set CostPiecewisePoints[123_CT_5] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[123_CT_5] :=      1088.23      1377.15      1704.99      2046.98 ;
+set CostPiecewisePoints[201_CT_1] :=          8.0         12.0         16.0         20.0 ;
+set CostPiecewiseValues[201_CT_1] :=      1157.23      1487.13      1822.74      2269.09 ;
+set CostPiecewisePoints[201_CT_2] :=          8.0         12.0         16.0         20.0 ;
+set CostPiecewiseValues[201_CT_2] :=      1157.23      1487.13      1822.74      2269.09 ;
+set CostPiecewisePoints[201_STEAM_3] :=         30.0         45.3         60.7         76.0 ;
+set CostPiecewiseValues[201_STEAM_3] :=       823.76      1163.21      1524.25      1918.36 ;
+set CostPiecewisePoints[202_CT_1] :=          8.0         12.0         16.0         20.0 ;
+set CostPiecewiseValues[202_CT_1] :=      1131.23      1455.62      1805.10      2196.47 ;
+set CostPiecewisePoints[202_CT_2] :=          8.0         12.0         16.0         20.0 ;
+set CostPiecewiseValues[202_CT_2] :=      1131.23      1455.62      1805.10      2196.47 ;
+set CostPiecewisePoints[202_STEAM_3] :=         30.0         45.3         60.7         76.0 ;
+set CostPiecewiseValues[202_STEAM_3] :=       751.27      1074.35      1402.19      1819.49 ;
+set CostPiecewisePoints[202_STEAM_4] :=         30.0         45.3         60.7         76.0 ;
+set CostPiecewiseValues[202_STEAM_4] :=       751.27      1074.35      1402.19      1819.49 ;
+set CostPiecewisePoints[207_CT_1] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[207_CT_1] :=      1116.11      1492.56      1897.96      2366.39 ;
+set CostPiecewisePoints[207_CT_2] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[207_CT_2] :=      1116.11      1492.56      1897.96      2366.39 ;
+set CostPiecewisePoints[213_CC_3] :=        170.0        231.7        293.3        355.0 ;
+set CostPiecewiseValues[213_CC_3] :=      5170.31      6689.47      8360.61     10458.98 ;
+set CostPiecewisePoints[213_CT_1] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[213_CT_1] :=      1122.43      1417.43      1742.49      2075.88 ;
+set CostPiecewisePoints[213_CT_2] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[213_CT_2] :=      1122.43      1417.43      1742.49      2075.88 ;
+set CostPiecewisePoints[215_CT_4] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[215_CT_4] :=      1216.85      1501.97      1800.73      2160.80 ;
+set CostPiecewisePoints[215_CT_5] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[215_CT_5] :=      1216.85      1501.97      1800.73      2160.80 ;
+set CostPiecewisePoints[216_STEAM_1] :=         62.0         93.0        124.0        155.0 ;
+set CostPiecewiseValues[216_STEAM_1] :=      1426.14      2001.92      2679.08      3412.47 ;
+set CostPiecewisePoints[218_CC_1] :=        170.0        231.7        293.3        355.0 ;
+set CostPiecewiseValues[218_CC_1] :=      7523.52      8815.79     10150.73     11987.44 ;
+set CostPiecewisePoints[221_CC_1] :=        170.0        231.7        293.3        355.0 ;
+set CostPiecewiseValues[221_CC_1] :=      4551.12      5978.18      7599.75      9828.60 ;
+set CostPiecewisePoints[223_STEAM_1] :=         62.0         93.0        124.0        155.0 ;
+set CostPiecewiseValues[223_STEAM_1] :=      1423.00      2013.06      2623.44      3256.43 ;
+set CostPiecewisePoints[223_STEAM_2] :=         62.0         93.0        124.0        155.0 ;
+set CostPiecewiseValues[223_STEAM_2] :=      1423.00      2013.06      2623.44      3256.43 ;
+set CostPiecewisePoints[223_STEAM_3] :=        140.0        210.0        280.0        350.0 ;
+set CostPiecewiseValues[223_STEAM_3] :=      3323.32      4643.59      6258.49      7981.71 ;
+set CostPiecewisePoints[223_CT_4] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[223_CT_4] :=      1692.76      2103.04      2540.25      2996.75 ;
+set CostPiecewisePoints[223_CT_5] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[223_CT_5] :=      1692.76      2103.04      2540.25      2996.75 ;
+set CostPiecewisePoints[223_CT_6] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[223_CT_6] :=      1692.76      2103.04      2540.25      2996.75 ;
+set CostPiecewisePoints[301_CT_1] :=          8.0         12.0         16.0         20.0 ;
+set CostPiecewiseValues[301_CT_1] :=      1208.23      1557.25      1956.04      2377.51 ;
+set CostPiecewisePoints[301_CT_2] :=          8.0         12.0         16.0         20.0 ;
+set CostPiecewiseValues[301_CT_2] :=      1208.23      1557.25      1956.04      2377.51 ;
+set CostPiecewisePoints[301_CT_3] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[301_CT_3] :=      1119.44      1432.61      1754.76      2235.93 ;
+set CostPiecewisePoints[301_CT_4] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[301_CT_4] :=      1119.44      1432.61      1754.76      2235.93 ;
+set CostPiecewisePoints[302_CT_1] :=          8.0         12.0         16.0         20.0 ;
+set CostPiecewiseValues[302_CT_1] :=      1208.23      1557.25      1956.04      2377.51 ;
+set CostPiecewisePoints[302_CT_2] :=          8.0         12.0         16.0         20.0 ;
+set CostPiecewiseValues[302_CT_2] :=      1208.23      1557.25      1956.04      2377.51 ;
+set CostPiecewisePoints[302_CT_3] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[302_CT_3] :=      1316.56      1688.27      2110.48      2535.46 ;
+set CostPiecewisePoints[302_CT_4] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[302_CT_4] :=      1316.56      1688.27      2110.48      2535.46 ;
+set CostPiecewisePoints[307_CT_1] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[307_CT_1] :=      1141.93      1448.77      1770.20      2160.42 ;
+set CostPiecewisePoints[307_CT_2] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[307_CT_2] :=      1141.93      1448.77      1770.20      2160.42 ;
+set CostPiecewisePoints[313_CC_1] :=        170.0        231.7        293.3        355.0 ;
+set CostPiecewiseValues[313_CC_1] :=      5243.00      6213.64      7861.80      9944.34 ;
+set CostPiecewisePoints[315_STEAM_1] :=          5.0          7.3          9.7         12.0 ;
+set CostPiecewiseValues[315_STEAM_1] :=       745.67       919.18      1160.14      1445.57 ;
+set CostPiecewisePoints[315_STEAM_2] :=          5.0          7.3          9.7         12.0 ;
+set CostPiecewiseValues[315_STEAM_2] :=       745.67       919.18      1160.14      1445.57 ;
+set CostPiecewisePoints[315_STEAM_3] :=          5.0          7.3          9.7         12.0 ;
+set CostPiecewiseValues[315_STEAM_3] :=       745.67       919.18      1160.14      1445.57 ;
+set CostPiecewisePoints[315_STEAM_4] :=          5.0          7.3          9.7         12.0 ;
+set CostPiecewiseValues[315_STEAM_4] :=       745.67       919.18      1160.14      1445.57 ;
+set CostPiecewisePoints[315_STEAM_5] :=          5.0          7.3          9.7         12.0 ;
+set CostPiecewiseValues[315_STEAM_5] :=       745.67       919.18      1160.14      1445.57 ;
+set CostPiecewisePoints[315_CT_6] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[315_CT_6] :=       884.44      1174.86      1470.71      1821.12 ;
+set CostPiecewisePoints[315_CT_7] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[315_CT_7] :=       884.44      1174.86      1470.71      1821.12 ;
+set CostPiecewisePoints[315_CT_8] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[315_CT_8] :=       884.44      1174.86      1470.71      1821.12 ;
+set CostPiecewisePoints[316_STEAM_1] :=         62.0         93.0        124.0        155.0 ;
+set CostPiecewiseValues[316_STEAM_1] :=      1552.62      2207.24      2867.16      3712.68 ;
+set CostPiecewisePoints[318_CC_1] :=        170.0        231.7        293.3        355.0 ;
+set CostPiecewiseValues[318_CC_1] :=      5254.90      6911.24      8591.48     10536.84 ;
+set CostPiecewisePoints[321_CC_1] :=        170.0        231.7        293.3        355.0 ;
+set CostPiecewiseValues[321_CC_1] :=      4775.80      6178.39      7774.35      9868.88 ;
+set CostPiecewisePoints[322_CT_5] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[322_CT_5] :=      1031.70      1288.38      1579.88      1886.72 ;
+set CostPiecewisePoints[322_CT_6] :=         22.0         33.0         44.0         55.0 ;
+set CostPiecewiseValues[322_CT_6] :=      1031.70      1288.38      1579.88      1886.72 ;
+set CostPiecewisePoints[323_CC_1] :=        170.0        231.7        293.3        355.0 ;
+set CostPiecewiseValues[323_CC_1] :=      4877.57      6508.25      8373.35     10330.93 ;
+set CostPiecewisePoints[323_CC_2] :=        170.0        231.7        293.3        355.0 ;
+set CostPiecewiseValues[323_CC_2] :=      4877.57      6508.25      8373.35     10330.93 ;
+set CostPiecewisePoints[121_NUCLEAR_1] :=        396.0        400.0 ;
+set CostPiecewiseValues[121_NUCLEAR_1] :=      3208.99      3209.00 ;
+
+param: UnitOnT0State PowerGeneratedT0 :=
+       101_CT_1 -28         0.00
+       101_CT_2 -28         0.00
+    101_STEAM_3 168        30.00
+    101_STEAM_4 168        30.00
+       102_CT_1 -168         0.00
+       102_CT_2 -168         0.00
+    102_STEAM_3 168        30.00
+    102_STEAM_4 168        30.00
+       107_CC_1 168       170.00
+       113_CT_1 -168         0.00
+       113_CT_2 -168         0.00
+       113_CT_3 -168         0.00
+       113_CT_4 -168         0.00
+    115_STEAM_1 -168         0.00
+    115_STEAM_2 -168         0.00
+    115_STEAM_3 168        62.00
+    116_STEAM_1 168        62.00
+       118_CC_1 168       170.00
+    123_STEAM_2 168        62.00
+    123_STEAM_3 168       140.00
+       123_CT_1 -168         0.00
+       123_CT_4 -168         0.00
+       123_CT_5 -168         0.00
+       201_CT_1 -168         0.00
+       201_CT_2 -168         0.00
+    201_STEAM_3 168        30.00
+       202_CT_1 -168         0.00
+       202_CT_2 -28         0.00
+    202_STEAM_3 168        30.00
+    202_STEAM_4 168        30.00
+       207_CT_1 -168         0.00
+       207_CT_2 -168         0.00
+       213_CC_3 -168         0.00
+       213_CT_1 -168         0.00
+       213_CT_2 -168         0.00
+       215_CT_4 -168         0.00
+       215_CT_5 -168         0.00
+    216_STEAM_1 168        62.00
+       218_CC_1 -168         0.00
+       221_CC_1 168       170.00
+    223_STEAM_1 168        62.00
+    223_STEAM_2 168        62.00
+    223_STEAM_3 168       140.00
+       223_CT_4 -168         0.00
+       223_CT_5 -168         0.00
+       223_CT_6 -168         0.00
+       301_CT_1 -168         0.00
+       301_CT_2 -168         0.00
+       301_CT_3 -168         0.00
+       301_CT_4 -168         0.00
+       302_CT_1 -168         0.00
+       302_CT_2 -168         0.00
+       302_CT_3 -168         0.00
+       302_CT_4 -168         0.00
+       307_CT_1 -168         0.00
+       307_CT_2 -168         0.00
+       313_CC_1  34       170.00
+    315_STEAM_1 -168         0.00
+    315_STEAM_2 -168         0.00
+    315_STEAM_3 -168         0.00
+    315_STEAM_4 -168         0.00
+    315_STEAM_5 -168         0.00
+       315_CT_6 -168         0.00
+       315_CT_7 -24         0.00
+       315_CT_8 -24         0.00
+    316_STEAM_1 168        62.00
+       318_CC_1 -168         0.00
+       321_CC_1 168       170.00
+       322_CT_5 -168         0.00
+       322_CT_6 -168         0.00
+       323_CC_1  33       170.00
+       323_CC_2   9       170.00
+  121_NUCLEAR_1 168       396.00
+;
+
