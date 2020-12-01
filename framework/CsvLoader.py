@@ -78,7 +78,7 @@ class CsvLoader(MessageHandler.MessageUser):
     """
     # first try reading the file
     try:
-      df = pd.read_csv(myFile)
+      df = pd.read_csv(myFile, sep=' *, *')
     except pd.errors.EmptyDataError:
       # no data in file
       self.raiseAWarning(f'Tried to read data from "{myFile}", but the file is empty!')
