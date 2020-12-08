@@ -34,14 +34,19 @@ class Prescient(CodeInterfaceBase):
   def generateCommand(self, input, exe, clargs=None, fargs=None, preExec=None):
     print(input, exe, clargs, fargs, preExec)
     print("generateCommand")
-    return ([("parallel", "runner.py "+input[0].getAbsFile())], os.path.join(input[0].getPath(), "output"))
+    runnerInput = []
+    for inp in input:
+      if inp.getType() == 'PrescientRunnerInput':
+        runnerInput.append(("parallel", "runner.py "+inp.getAbsFile()))
+
+    return (runnerInput, os.path.join(input[0].getPath(), "output"))
 
   def createNewInput(self, inputs, oinputs, samplerType, **Kwargs):
     print(inputs, oinputs, samplerType, Kwargs)
     print("createNewInput")
     self._output_directory = None
     for singleInput in inputs:
-      if singleInput.getExt() == 'txt':
+      if singleInput.getType() == 'PrescientRunnerInput':
         print("Need to modify", singleInput, "to fix", prescientLocation)
         newLines = []
         for line in open(singleInput.getAbsFile(),"r").readlines():
@@ -64,12 +69,12 @@ class Prescient(CodeInterfaceBase):
         newFile.close()
       else:
         print("SampledVars", Kwargs["SampledVars"])
+        print("Modifying", singleInput)
         data = open(singleInput.getAbsFile(),"r").read()
         for var in Kwargs["SampledVars"]:
           data = data.replace("$"+var+"$", str(Kwargs["SampledVars"][var]))
         data = self.__process_data(data, Kwargs["SampledVars"])
         open(singleInput.getAbsFile(),"w").write(data)
-        print("Huh?", singleInput)
     return inputs
 
   def __process_data(self, data, samples):
