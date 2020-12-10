@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-  Specialized implementation of DataSet to accomodate outputs that share a pivot parameter (e.g. time)
+  Specialized implementation of DataSet to accommodate outputs that share a pivot parameter (e.g. time)
 """
 #For future compatibility with Python 3
 from __future__ import division, print_function, unicode_literals, absolute_import

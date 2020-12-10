@@ -58,13 +58,17 @@ class MCSSolver(ExternalModelPluginBase):
       @ In, xmlNode, xml.etree.ElementTree.Element, XML node that needs to be read
       @ Out, None
     """
-    container.filename = None
+    container.filename   = None
+    container.topEventID = None
+    container.timeID     = None
     container.mapping    = {}
     container.invMapping = {}
 
     for child in xmlNode:
       if child.tag == 'topEventID':
         container.topEventID = child.text.strip()
+      elif child.tag == 'timeID':
+        container.timeID = child.text.strip()
       elif child.tag == 'solverOrder':
         try:
           self.solverOrder = int(child.text.strip())
@@ -94,10 +98,10 @@ class MCSSolver(ExternalModelPluginBase):
     
     self.timeDepData = None
     for input in inputs:
-      if input.type == 'PointSet':
-        self.timeDepData = input.asDataset(outType='dict')['data']
+      if input.type == 'HistorySet':
+        self.timeDepData = input.asDataset()
       else:
-        mcsIDs, probability, mcsList, beList = mcsReader(input)
+        mcsIDs, probability, mcsList, self.beList = mcsReader(input)
 
     self.topEventTerms = {}
 
@@ -123,6 +127,9 @@ class MCSSolver(ExternalModelPluginBase):
     return kwargs
   
   def run(self, container, inputs):
+    """
+    """  
+    
     if self.timeDepData is None:
       self.runStatic(container, inputs)
     else:
@@ -148,15 +155,17 @@ class MCSSolver(ExternalModelPluginBase):
   def runDynamic(self, container, inputs):
     """
     """
-    histVars=[]
-    for t in time:
+    teProbability = np.zeros([self.timeDepData[container.timeID].shape[0]])
+    for index,t in enumerate(self.timeDepData[container.timeID]):
       inputForSolver = {}
       for key in container.invMapping.keys():
-        if key in histVars and key[t]>0:
+        print(key,index)
+        print(self.timeDepData[key][index]>0)
+        if key in self.timeDepData.data_vars and self.timeDepData[key][index]>0:
           inputForSolver[key] = 1.0
         else:
           inputForSolver[key] = inputs[container.invMapping[key]]
-      teProbability[t] = self.McsSolver(inputForSolver)
+      teProbability[index] = self.McsSolver(inputForSolver)
     
     return teProbability
     

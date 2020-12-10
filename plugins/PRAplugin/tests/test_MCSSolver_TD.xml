@@ -34,7 +34,8 @@
     <ExternalModel name="MCSmodel" subType="PRAplugin.MCSSolver">
       <variables>statusBE1,statusBE2,statusBE3,statusBE4,TOP</variables>
       <solverOrder>3</solverOrder>
-      <topEventID>TOP</topEventID>>
+      <topEventID>TOP</topEventID>
+      <timeID>time</timeID>
       <map var='statusBE1'>BE1</map>
       <map var='statusBE2'>BE2</map>
       <map var='statusBE3'>BE3</map>
@@ -78,10 +79,10 @@
   </OutStreams>
 
   <DataObjects>
-    <PointSet name="maintenanceSchedule_historySet">
+    <HistorySet name="maintenanceSchedule_historySet">
       <Input>var1,var2</Input>
       <Output>time,BE1,BE2,BE3,BE4</Output>
-    </PointSet>
+    </HistorySet>
     <PointSet name="inputPlaceHolder">
       <Input>statusBE1,statusBE2,statusBE3,statusBE4</Input>
       <Output>OutputPlaceHolder</Output>
