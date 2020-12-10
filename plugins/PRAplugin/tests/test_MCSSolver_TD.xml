@@ -57,10 +57,10 @@
   <Steps>
     <IOStep name="importSchedule">
       <Input   class="Files"       type=""                 >maintenanceSchedule</Input>
-      <Output  class="DataObjects" type="PointSet"         >maintenanceSchedule_pointset</Output>
+      <Output  class="DataObjects" type="HistorySet"       >maintenanceSchedule_historySet</Output>
     </IOStep>
     <MultiRun name="simRun">
-      <Output  class="DataObjects"  type="PointSet"        >maintenanceSchedule_pointset</Output>
+      <Input   class="DataObjects"  type="HistorySet"      >maintenanceSchedule_historySet</Input>
       <Input   class="Files"        type="MCSlist"         >MCSlistFile</Input>
       <Model   class="Models"       type="ExternalModel"   >MCSmodel</Model>
       <Sampler class="Samplers"     type="MonteCarlo"      >MC_external</Sampler>
@@ -78,9 +78,9 @@
   </OutStreams>
 
   <DataObjects>
-    <PointSet name="maintenanceSchedule_pointset">
-      <Input>BE</Input>
-      <Output>t_init,t_end</Output>
+    <PointSet name="maintenanceSchedule_historySet">
+      <Input>var1,var2</Input>
+      <Output>time,BE1,BE2,BE3,BE4</Output>
     </PointSet>
     <PointSet name="inputPlaceHolder">
       <Input>statusBE1,statusBE2,statusBE3,statusBE4</Input>

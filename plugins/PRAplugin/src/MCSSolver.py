@@ -39,6 +39,7 @@ class MCSSolver(ExternalModelPluginBase):
       @ Out, None
     """
     ExternalModelPluginBase.__init__(self)
+    self.TimeDependentMode= True
 
   def initialize(self, container, runInfoDict, inputFiles):
     """
@@ -88,10 +89,15 @@ class MCSSolver(ExternalModelPluginBase):
            a mandatory key is the sampledVars'that contains a dictionary {'name variable':value}
       @ Out, kwargs, dict, dictionary which contains the information coming from the sampler
     """
-    if len(inputs) > 1:
+    if len(inputs) > 2:
       raise IOError("MCSSolver: More than one file has been passed to the MCS solver")
-
-    mcsIDs, probability, mcsList, beList = mcsReader(inputs[0])
+    
+    self.timeDepData = None
+    for input in inputs:
+      if input.type == 'PointSet':
+        self.timeDepData = input.asDataset(outType='dict')['data']
+      else:
+        mcsIDs, probability, mcsList, beList = mcsReader(input)
 
     self.topEventTerms = {}
 
@@ -115,8 +121,15 @@ class MCSSolver(ExternalModelPluginBase):
       self.topEventTerms[order]=basicEventCombined
 
     return kwargs
-
+  
   def run(self, container, inputs):
+    if self.timeDepData is None:
+      self.runStatic(container, inputs)
+    else:
+      self.runDynamic(container, inputs)
+      
+
+  def runStatic(self, container, inputs):
     """
       This method determines the status of the TopEvent of the FT provided the status of its Basic Events
       @ In, container, object, self-like object where all the variables can be stored
@@ -126,7 +139,31 @@ class MCSSolver(ExternalModelPluginBase):
     inputForSolver = {}
     for key in container.invMapping.keys():
       inputForSolver[key] = inputs[container.invMapping[key]]
+      
+    teProbability = self.McsSolver(inputForSolver)
 
+    container.__dict__[container.topEventID] = np.asarray(float(teProbability))
+
+
+  def runDynamic(self, container, inputs):
+    """
+    """
+    histVars=[]
+    for t in time:
+      inputForSolver = {}
+      for key in container.invMapping.keys():
+        if key in histVars and key[t]>0:
+          inputForSolver[key] = 1.0
+        else:
+          inputForSolver[key] = inputs[container.invMapping[key]]
+      teProbability[t] = self.McsSolver(inputForSolver)
+    
+    return teProbability
+    
+  def McsSolver(self, inputDict):
+    """
+    """  
+    
     teProbability = 0.0
     multiplier = 1.0
 
@@ -135,11 +172,11 @@ class MCSSolver(ExternalModelPluginBase):
       orderProbability=0
       for term in self.topEventTerms[order]:
         # map the sampled values of the basic event probabilities to the MCS basic events ID
-        termValues = list(map(inputForSolver.get,term))
+        termValues = list(map(inputDict.get,term))
         orderProbability = orderProbability + np.prod(termValues)
       teProbability = teProbability + multiplier * orderProbability
-      multiplier = -1.0 * multiplier
-
-    container.__dict__[container.topEventID] = np.asarray(float(teProbability))
-
-
+      multiplier = -1.0 * multiplier   
+      
+    return float(teProbability) 
+    
+       

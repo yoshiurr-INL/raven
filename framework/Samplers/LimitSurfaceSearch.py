@@ -160,7 +160,7 @@ class LimitSurfaceSearch(AdaptiveSampler):
                                                 #  candidates will be selected,
                                                 #  if there are more local
                                                 #  maxima than this value, then
-                                                #  we wiil only take the top
+                                                #  we will only take the top
                                                 #  persistence ones, if there
                                                 #  are fewer, then we will only
                                                 #  grab that many and then force
@@ -169,7 +169,7 @@ class LimitSurfaceSearch(AdaptiveSampler):
                                                 #  the extracted limit surface
                                                 #  to include in the candidate
                                                 #  set
-    self.simplification = 0                     # Pre-rank simpligication level
+    self.simplification = 0                     # Pre-rank simplification level
                                                 #  (% of range space)
     self.threshold      = 0                     # Post-rank function value
                                                 #  cutoff (%  of range space)
@@ -412,7 +412,7 @@ class LimitSurfaceSearch(AdaptiveSampler):
                                         {'computeCells':self.tolerance != self.subGridTol})
     matrixShape = self.limitSurfacePP.getTestMatrix().shape
     self.persistenceMatrix[self.name+"LSpp"]  = np.zeros(matrixShape) #matrix that for each point of the testing grid tracks the persistence of the limit surface position
-    self.oldTestMatrix[self.name+"LSpp"]      = np.zeros(matrixShape) #swap matrix fro convergence test
+    self.oldTestMatrix[self.name+"LSpp"]      = np.zeros(matrixShape) #swap matrix for convergence test
     self.hangingPoints                        = np.ndarray((0, self.nVar))
     self.raiseADebug('Initialization done')
 
