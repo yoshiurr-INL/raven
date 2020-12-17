@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <Simulation verbosity="debug">
   <TestInfo>
-    <name>framework/Optimizers/GeneticAlgorithms/GA_knapsackBase</name>
+    <name>framework/Optimizers/GeneticAlgorithms/GA_knapsackBaseUnifXover</name>
     <author>mandd</author>
     <created>2020-12-02</created>
     <classesTested>GeneticAlgorithm</classesTested>
@@ -11,7 +11,7 @@
   </TestInfo>
 
   <RunInfo>
-    <WorkingDir>simpleKnapsack</WorkingDir>
+    <WorkingDir>simpleKnapsackUnifXover</WorkingDir>
     <Sequence>opt, print, printExport</Sequence>
     <batchSize>1</batchSize>
     <internalParallel>False</internalParallel>
@@ -64,8 +64,8 @@
       <GAparams>
         <populationSize>45</populationSize>
         <reproduction nParents="8">
-          <crossover type="onePointCrossover">
-            <crossoverProb>0.9</crossoverProb>
+          <crossover type="uniformCrossover">
+            <crossoverProb>1.0</crossoverProb>
           </crossover>
           <mutation type="swapMutator">
             <mutationProb>0.1</mutationProb>

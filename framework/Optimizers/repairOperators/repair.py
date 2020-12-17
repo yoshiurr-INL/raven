@@ -21,6 +21,7 @@
 """
 
 import numpy as np
+import copy
 
 # @profile
 def replacementRepair(offSprings,**kwargs):
@@ -33,7 +34,7 @@ def replacementRepair(offSprings,**kwargs):
     @ Out, children, np.array, children resulting from the crossover. Shape is nParents x len(chromosome) i.e, number of Genes/Vars
   """
   nChildren,nGenes = np.shape(offSprings)
-  children = offSprings
+  children = copy.deepcopy(offSprings)
   # read distribution info
   distInfo = kwargs['distInfo']
 
@@ -47,9 +48,8 @@ def replacementRepair(offSprings,**kwargs):
           children[chrom,ind] = x
           duplicated.add(x)
         else:
-          if (distInfo[offSprings['Gene'].data[ind]].strategy == 'withOutReplacement'):
-            # pool = set(range(int(distInfo[kwargs['variables'][ind]].lowerBound),int(distInfo[kwargs['variables'][ind]].upperBound)+1)) - unique
-            y = distInfo[kwargs['variables'][ind]].selectedRvs(list(duplicated))#int(np.random.choice(list(pool)))
+          if (distInfo[offSprings['Gene'].data[ind]].strategy == 'withoutReplacement'):
+            y = distInfo[kwargs['variables'][ind]].selectedRvs(list(duplicated))
             children[chrom,ind] = y
             duplicated.add(y)
   return children
@@ -58,10 +58,12 @@ __repairs = {}
 __repairs['replacementRepair']  = replacementRepair
 
 def returnInstance(cls, name):
+  """
+    Method designed to return class instance
+    @ In, cls, class type
+    @ In, name, string, name of class
+    @ Out, __crossovers[name], instance of class
+  """
   if name not in __repairs:
     cls.raiseAnError (IOError, "{} MECHANISM NOT IMPLEMENTED!!!!!".format(name))
   return __repairs[name]
-
-
-
-

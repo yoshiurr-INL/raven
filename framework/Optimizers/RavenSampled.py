@@ -240,33 +240,20 @@ class RavenSampled(Optimizer):
         self.values[var] = val # TODO should be np.atleast_1d?
         ptProb = self.distDict[var].pdf(val)
         # sampler-required meta information # TODO should we not require this?
-      #   self.inputInfo['ProbabilityWeight-{}'.format(var)] = ptProb
-      #   self.inputInfo['SampledVarsPb'][var] = ptProb
-      # self.inputInfo['ProbabilityWeight'] = 1 # TODO assume all weight 1? Not well-distributed samples
-      # self.inputInfo['PointProbability'] = np.prod([x for x in self.inputInfo['SampledVarsPb'].values()])
-      # self.inputInfo['SamplerType'] = self.type
         inputInfo['ProbabilityWeight-{}'.format(var)] = ptProb
         inputInfo['SampledVarsPb'][var] = ptProb
       inputInfo['ProbabilityWeight'] = 1 # TODO assume all weight 1? Not well-distributed samples
       inputInfo['PointProbability'] = np.prod([x for x in inputInfo['SampledVarsPb'].values()])
       inputInfo['SamplerType'] = self.type
-      # self.inputInfo['batchId'] = self.batchId
       if self.inputInfo['batchMode']:
-        # self.inputInfo['SampledVars'] = self.values
-        # self.inputInfo['batchId'] = self.batchId
-        # batchData.append(copy.deepcopy(self.inputInfo))
         inputInfo['SampledVars'] = self.values
         inputInfo['batchId'] = self.batchId
         batchData.append(copy.deepcopy(inputInfo))
-        # self._incrementCounter()
       else:
         inputInfo['SampledVars'] = self.values
         inputInfo['batchId'] = self.batchId
         self.inputInfo.update(inputInfo)
     if self.batch > 1:
-    #  for subBatch in batchData:
-    #    if 'batchInfo' in subBatch:
-    #      del subBatch['batchInfo']
       self.inputInfo['batchInfo'] = {'nRuns': self.batch, 'batchRealizations': batchData, 'batchId': str('gen_' + str(self.batchId))}
 
   # @profile
@@ -298,7 +285,6 @@ class RavenSampled(Optimizer):
     # trim down opt point to the useful parts
     # TODO making a new dict might be costly, maybe worth just passing whole point?
     ## testing suggests no big deal on smaller problem
-    # rlz = dict((var, full[var]) for var in (list(self.toBeSampled.keys()) + [self._objectiveVar] + list(self.dependentSample.keys())))
     # the sign of the objective function is flipped in case we do maximization
     # so get the correct-signed value into the realization
     if self._minMax == 'max':
@@ -339,7 +325,6 @@ class RavenSampled(Optimizer):
         bestTraj = traj
         bestValue = val
     # further check active unfinished trajectories
-    # for traj in self._activeTraj:
     traj = 0
     opt = self._optPointHistory[traj][-1][0]
     val = opt[self._objectiveVar]

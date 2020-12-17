@@ -42,8 +42,8 @@ def rouletteWheel(population,**kwargs):
     @ Out, selectedParents, xr.DataArray, selected parents, i.e. np.shape(selectedParents) = nParents x nGenes.
   """
   # Arguments
-  pop = population.copy()
-  fitness = kwargs['fitness'].copy()
+  pop = copy.deepcopy(population)
+  fitness = copy.deepcopy(kwargs['fitness'])
   nParents= kwargs['nParents']
   # if nparents = population size then do nothing (whole population are parents)
   if nParents == pop.shape[0]:
@@ -56,14 +56,11 @@ def rouletteWheel(population,**kwargs):
         dims=['chromosome','Gene'],
         coords={'chromosome':np.arange(nParents),
                 'Gene': kwargs['variables']})
-  # imagine a wheel that is partitioned according to the selection
-  # probabilities
+  # imagine a wheel that is partitioned according to the selection probabilities
 
   for i in range(nParents):
     # set a random pointer
     roulettePointer = randomUtils.random(dim=1, samples=1)
-    # Rotate the wheel
-
     # initialize Probability
     counter = 0
     selectionProb = fitness.data/np.sum(fitness.data) # Share of the pie (rouletteWheel)
@@ -87,9 +84,9 @@ def tournamentSelection(population,**kwargs):
           variables, list, variable names
     @ Out, newPopulation, xr.DataArray, selected parents,
   """
-  fitness = kwargs['fitness']
+  fitness = copy.deepcopy(kwargs['fitness'])
   nParents= kwargs['nParents']
-  pop = population.copy()
+  pop = copy.deepcopy(population)
 
   popSize = population.values.shape[0]
 
@@ -102,11 +99,8 @@ def tournamentSelection(population,**kwargs):
   if nParents >= popSize/2.0:
     # generate combination of 2 with replacement
     selectionList = np.atleast_2d(randomUtils.randomChoice(list(range(0,popSize)), 2*nParents, replace=False))
-    # randomUtils.randomChoice(np.array(np.arange(0,popSize)))
-                      # (np.arange(0,popSize), 2*nParents, replace=False)
   else: # nParents < popSize/2.0
     # generate combination of 2 without replacement
-    # mandd: raise a debug
     selectionList = np.atleast_2d(randomUtils.randomChoice(list(range(0,popSize)), 2*nParents))
 
   selectionList = selectionList.reshape(nParents,2)
@@ -122,7 +116,7 @@ def tournamentSelection(population,**kwargs):
 
 def rankSelection(population,**kwargs):
   """
-    Rank Selection mechanism for parent selection [MANDD: THIS METHOD IS NOT YET COMPLETED]
+    Rank Selection mechanism for parent selection
 
     @ In, population, xr.DataArray, populations containing all chromosomes (individuals) candidate to be parents, i.e. population.values.shape = populationSize x nGenes.
     @ In, kwargs, dict, dictionary of parameters for this mutation method:
@@ -130,9 +124,8 @@ def rankSelection(population,**kwargs):
           nParents, int, number of required parents.
     @ Out, newPopulation, xr.DataArray, selected parents,
   """
-  fitness = kwargs['fitness'].copy()
-
-  pop = population.copy()
+  fitness = copy.deepcopy(kwargs['fitness'])
+  pop = copy.deepcopy(population)
 
   index = np.arange(0,pop.shape[0])
   rank = np.arange(0,pop.shape[0])
@@ -153,6 +146,12 @@ __parentSelectors['rankSelection'] = rankSelection
 __parentSelectors['tournamentSelection'] = tournamentSelection
 
 def returnInstance(cls, name):
+  """
+    Method designed to return class instance
+    @ In, cls, class type
+    @ In, name, string, name of class
+    @ Out, __crossovers[name], instance of class
+  """
   if name not in __parentSelectors:
     cls.raiseAnError (IOError, "{} MECHANISM NOT IMPLEMENTED!!!!!".format(name))
   return __parentSelectors[name]
