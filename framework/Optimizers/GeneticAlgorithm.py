@@ -452,11 +452,12 @@ class GeneticAlgorithm(RavenSampled):
       # Make sure no children are exactly similar to parents
       flag = True
       counter = 0
+      print('before while loop:', np.shape(children)[0])
       while flag and counter < self._populationSize:
         counter += 1
         repeated =[]
         for i in range(np.shape(population.data)[0]):
-          for j in range(i,np.shape(children.data)[0]):
+          for j in range(np.shape(children.data)[0]):
             if all(population.data[i,:]==children.data[j,:]):
               repeated.append(j)
         repeated = list(set(repeated))
@@ -467,6 +468,7 @@ class GeneticAlgorithm(RavenSampled):
           flag = False
 
       self.batch = np.shape(children)[0]
+      print('after while loop:', self.batch)
 
       daChildren = xr.DataArray(children,
                               dims=['chromosome','Gene'],

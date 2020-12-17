@@ -579,6 +579,7 @@ class JobHandler(MessageHandler.MessageUser):
       ## check if batches are ready to be returned
       for groupId in list(self.__batching.keys()):
         if len(self.__batching[groupId]['finished']) ==  self.__batching[groupId]['size']:
+          print('finished Job', len(self.__batching[groupId]['finished']))
           doneBatch = self.__batching.pop(groupId)
           finished.append(doneBatch['finished'])
 
