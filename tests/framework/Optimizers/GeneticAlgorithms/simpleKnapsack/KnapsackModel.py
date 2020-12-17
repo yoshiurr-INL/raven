@@ -13,7 +13,8 @@
 # limitations under the License.
 
 import numpy as np
-
+import threading
+localLock = threading.RLock()
 def run(self,Input):
   """
     Evaluate a simple function.
@@ -46,4 +47,3 @@ def run(self,Input):
 
   #counterNeg = np.sum(knapsackCapacities<0, axis=0)
   #self.planValue = self.planValue - counterNeg * (10.)
-
