@@ -154,15 +154,27 @@ class Prescient(CodeInterfaceBase):
       outFile = open(readFileNew+".csv","w")
       inFile = open(readFile+".csv","r")
       first = True
+      hasNetDemand = False
       for line in inFile.readlines():
         date, hour, rest = line.split(",", maxsplit=2)
         outFile.write(date.rstrip()+"_"+hour.lstrip()+","+rest.rstrip())
         if first:
+          if ",RenewablesUsed," in rest and ",Demand," in rest:
+            hasNetDemand = True
+            restSplit = rest.split(",")
+            renewablesUsedIndex = restSplit.index("RenewablesUsed")
+            demandIndex = restSplit.index("Demand")
+            outFile.write(","+"NetDemand")
           first = False
           for bus in busList:
             for dataName in ["Shortfall","Overgeneration","LMP","LMP_DA"]:
               outFile.write(","+bus+"_"+dataName)
         else:
+          if hasNetDemand:
+            #Calculate the demand - renewables used to get net demand
+            restSplit = rest.split(",")
+            netDemand = float(restSplit[demandIndex]) - float(restSplit[renewablesUsedIndex])
+            outFile.write(","+str(netDemand))
           for bus in busList:
             for data in busData[(date,hour)][bus]:
               outFile.write(","+data)
