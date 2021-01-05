@@ -14,7 +14,7 @@
 
   <RunInfo>
     <WorkingDir>PrescientSurrogateTest</WorkingDir>
-    <Sequence>load, train, convert, resample</Sequence>
+    <Sequence>load, convert, train, resample</Sequence>
     <batchSize>2</batchSize>
   </RunInfo>
 
@@ -36,7 +36,7 @@
     <ROM name="trainedROM" subType="SciKitLearn">
       <Features>NetDemand</Features>
       <Target>TotalCosts, Price, Clay_LMP, Clay_LMP_DA</Target>
-      <pivotParameter>Date_Hour</pivotParameter>
+      <!-- <pivotParameter>Date_Hour</pivotParameter> -->
       <!-- <SKLtype>linear_model|LinearRegression</SKLtype> -->
 <!--      <activation>logistic</activation>
       <hidden_layer_sizes>10,10,10</hidden_layer_sizes>
@@ -113,16 +113,16 @@
       <Input class="Files" type="">out_prescient</Input>
       <Output class="DataObjects" type="HistorySet">samples</Output>
     </IOStep>
-    <RomTrainer name="train">
-      <Input class="DataObjects" type="HistorySet">samples</Input>
-      <Output class="Models" type="ROM">trainedROM</Output>
-    </RomTrainer>
     <PostProcess name="convert">
       <Input class="DataObjects" type="HistorySet">samples</Input>
       <Model class="Models" type="PostProcessor">converttoPS</Model>
       <Output class="DataObjects" type="PointSet">converted</Output>
       <Output class="OutStreams" type="Print">out_converted</Output>
     </PostProcess>
+    <RomTrainer name="train">
+      <Input class="DataObjects" type="PointSet">converted</Input>
+      <Output class="Models" type="ROM">trainedROM</Output>
+    </RomTrainer>
     <MultiRun name="resample">
       <Input class="DataObjects" type="PointSet">dataIn</Input>
       <Model class="Models" type="ROM">trainedROM</Model>
