@@ -14,8 +14,8 @@
 
   <RunInfo>
     <WorkingDir>PrescientSurrogateTest</WorkingDir>
-    <Sequence>runPrescient, train, resample</Sequence>
-    <batchSize>3</batchSize>
+    <Sequence>load, train, convert, resample</Sequence>
+    <batchSize>2</batchSize>
   </RunInfo>
 
   <Files>
@@ -25,6 +25,7 @@
     <Input name="actuals" type="PrescientInput" subDirectory="deterministic_with_network_scenarios_day/pyspdir_twostage/2020-07-10/">Scenario_actuals.dat</Input>
     <Input name="forcasts" type="PrescientInput" subDirectory="deterministic_with_network_scenarios_day/pyspdir_twostage/2020-07-10/">Scenario_forecasts.dat</Input>
     <Input name="scenarios" type="PrescientInput" subDirectory="deterministic_with_network_scenarios_day/pyspdir_twostage/2020-07-10/">scenarios.csv</Input>
+    <Input name="out_prescient">out_prescient.csv</Input>
   </Files>
 
   <Models>
@@ -33,11 +34,33 @@
       </executable>
     </Code>
     <ROM name="trainedROM" subType="SciKitLearn">
-      <Features>solar, demand</Features>
-      <Target>Price, Clay_LMP, Clay_LMP_DA</Target>
+      <Features>NetDemand</Features>
+      <Target>TotalCosts, Price, Clay_LMP, Clay_LMP_DA</Target>
       <pivotParameter>Date_Hour</pivotParameter>
-      <SKLtype>linear_model|LinearRegression</SKLtype>
+      <!-- <SKLtype>linear_model|LinearRegression</SKLtype> -->
+<!--      <activation>logistic</activation>
+      <hidden_layer_sizes>10,10,10</hidden_layer_sizes>
+      <SKLtype>neural_network|MLPRegressor</SKLtype> -->
+<SKLtype>svm|SVR</SKLtype> 
+<!--     <SKLtype>neighbors|RadiusNeighborsRegressor</SKLtype> -->
+      <!-- <SKLtype>GaussianProcess|GaussianProcess</SKLtype> -->
     </ROM>
+     <!-- <ROM name="trainedROM" subType="KerasMLPClassifier">
+      <Features>NetDemand</Features>
+      <Target>TotalCosts</Target>  , Price, Clay_LMP, Clay_LMP_DA</Target> 
+      <pivotParameter>Date_Hour</pivotParameter>
+      <Dense name="layer1">
+        <dim_out>20</dim_out>
+      </Dense>
+      <Dense name="outLayer">
+      </Dense>
+      <layer_layout>layer1, outLayer</layer_layout>
+      </ROM> -->
+     <PostProcessor name="converttoPS" subType="InterfacedPostProcessor">
+      <method>HStoPSOperator</method>
+      <pivotParameter>Date_Hour</pivotParameter>
+      <operator>all</operator>
+    </PostProcessor>
   </Models>
 
   <Distributions>
@@ -49,37 +72,31 @@
       <lowerBound>0.5</lowerBound>
       <upperBound>2.0</upperBound>
     </Uniform>
+    <Uniform name="renewables">
+      <lowerBound>0</lowerBound>
+      <upperBound>3000</upperBound>
+    </Uniform>
+    <Uniform name="raw_demand">
+      <lowerBound>3500</lowerBound>
+      <upperBound>6500</upperBound>
+    </Uniform>
+    <Uniform name="net_demand">
+      <lowerBound>1500</lowerBound>
+      <upperBound>5000</upperBound>
+    </Uniform>
   </Distributions>
 
   <Samplers>
-    <Grid name="grid">
-      <variable name="solar">
-        <distribution>solar</distribution>
-        <!-- <grid construction="equal" steps="7" type="CDF">0.0 1.0</grid> -->
-        <grid construction="equal" steps="3" type="CDF">0.0 1.0</grid>
-        <!-- <grid construction="equal" steps="1" type="CDF">0.0 1.0</grid> -->
-      </variable>
-      <variable name="demand">
-        <distribution>demand</distribution>
-        <!-- <grid construction="equal" steps="7" type="CDF">0.0 1.0</grid> -->
-        <grid construction="equal" steps="3" type="CDF">0.0 1.0</grid>
-        <!-- <grid construction="equal" steps="1" type="CDF">0.0 1.0</grid> -->
-      </variable>
-    </Grid>
     <Grid name="grid2">
-      <variable name="solar">
-        <distribution>solar</distribution>
-        <grid construction="equal" steps="7" type="CDF">0.0 1.0</grid>
-      </variable>
-      <variable name="demand">
-        <distribution>demand</distribution>
-        <grid construction="equal" steps="7" type="CDF">0.0 1.0</grid>
+      <variable name="NetDemand">
+        <distribution>net_demand</distribution>
+        <grid construction="equal" steps="49" type="CDF">0.0 1.0</grid>
       </variable>
     </Grid>
   </Samplers>
 
   <Steps>
-    <MultiRun name="runPrescient">
+    <!-- <MultiRun name="runPrescient">
       <Input class="Files" type="PrescientInput">simulate</Input>
       <Input class="Files" type="PrescientInput">structure</Input>
       <Input class="Files" type="PrescientInput">scenario_1</Input>
@@ -91,17 +108,27 @@
       <Output class="Databases" type="HDF5">DB_prescient</Output>
       <Output class="DataObjects" type="HistorySet">samples</Output>
       <Output class="OutStreams" type="Print">out_prescient</Output>
-    </MultiRun>
+    </MultiRun> -->
+    <IOStep name="load">
+      <Input class="Files" type="">out_prescient</Input>
+      <Output class="DataObjects" type="HistorySet">samples</Output>
+    </IOStep>
     <RomTrainer name="train">
       <Input class="DataObjects" type="HistorySet">samples</Input>
       <Output class="Models" type="ROM">trainedROM</Output>
     </RomTrainer>
+    <PostProcess name="convert">
+      <Input class="DataObjects" type="HistorySet">samples</Input>
+      <Model class="Models" type="PostProcessor">converttoPS</Model>
+      <Output class="DataObjects" type="PointSet">converted</Output>
+      <Output class="OutStreams" type="Print">out_converted</Output>
+    </PostProcess>
     <MultiRun name="resample">
       <Input class="DataObjects" type="PointSet">dataIn</Input>
       <Model class="Models" type="ROM">trainedROM</Model>
       <Sampler class="Samplers" type="Grid">grid2</Sampler>
       <Output class="DataObjects" type="PointSet">resampled</Output>
-      <Output class="OutStreams" type="Print">out_resampled</Output>
+      <Output class="OutStreams" type="Print">out_resampled_raw2</Output>
     </MultiRun>
   </Steps>
 
@@ -119,19 +146,24 @@
       </options>
     </HistorySet>
     <PointSet name="resampled">
-      <Input>solar, demand</Input>
-      <Output>Price, Clay_LMP, Clay_LMP_DA</Output>
+      <Input>NetDemand</Input>
+      <Output>TotalCosts, Price, Clay_LMP, Clay_LMP_DA</Output>
     </PointSet>
-    <HistorySet name="inputPlaceHolder">
-      <Input>solar, demand</Input>
+    <!-- <HistorySet name="inputPlaceHolder">
+      <Input>RenewablesUsed, Demand</Input>
       <Output>Date_Hour, Price</Output>
       <options>
         <pivotParameter>Date_Hour</pivotParameter>
       </options>
-    </HistorySet>
+    </HistorySet> -->
     <PointSet name="dataIn">
-      <Input>solar, demand</Input>
+      <Input>NetDemand</Input>
       <Output>OutputPlaceHolder</Output>
+    </PointSet>
+    <PointSet name="converted">
+      <Input>solar, demand, Date_Hour</Input>
+      <!-- <Output>Demand, Renewables available,Renewables used,Renewables penetration rate,Average price,Fixed costs,Generation costs,Load shedding,Over generation,Reserve shortfall,Renewables curtailment,Number on/offs,Sum on/off ramps,Sum nominal ramps</Output> -->
+      <Output>TotalCosts, FixedCosts, VariableCosts, LoadShedding, OverGeneration, ReserveShortfall, RenewablesUsed, RenewablesCurtailment, Demand, Price, NetDemand, Clay_LMP, Clay_LMP_DA </Output>
     </PointSet>
   </DataObjects>
 
@@ -140,9 +172,13 @@
       <type>csv</type>
       <source>samples</source>
     </Print>
-    <Print name="out_resampled">
+    <Print name="out_resampled_raw2">
       <type>csv</type>
       <source>resampled</source>
+    </Print>
+    <Print name="out_converted">
+      <type>csv</type>
+      <source>converted</source>
     </Print>
   </OutStreams>
 
