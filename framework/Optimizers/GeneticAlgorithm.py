@@ -36,7 +36,10 @@ import copy
 from utils import mathUtils, randomUtils, InputData, InputTypes
 from .RavenSampled import RavenSampled
 from .parentSelectors.parentSelectors import returnInstance as parentSelectionReturnInstance
-from .crossOverOperators.crossovers import returnInstance as crossoversReturnInstance
+# from .crossOverOperators.crossovers import returnInstance as crossoversReturnInstance
+from .crossOverOperators import knownTypes as crossoverKnownTypes
+from .crossOverOperators import returnInstance as crossoverReturnInstance
+from .crossOverOperators import returnClass as crossoverReturnClass
 from .mutators.mutators import returnInstance as mutatorsReturnInstance
 from .survivorSelectors.survivorSelectors import returnInstance as survivorSelectionReturnInstance
 from .fitness.fitness import returnInstance as fitnessReturnInstance
@@ -296,7 +299,7 @@ class GeneticAlgorithm(RavenSampled):
     else:
       self._crossoverPoints = crossoverNode.findFirst('points').value
     self._crossoverProb = crossoverNode.findFirst('crossoverProb').value
-    self._crossoverInstance = crossoversReturnInstance(self,name = self._crossoverType)
+    self._crossoverInstance = crossoverReturnInstance(self, Type = self._crossoverType)
     # mutation node
     mutationNode = reproductionNode.findFirst('mutation')
     self._mutationType = mutationNode.parameterValues['type']
