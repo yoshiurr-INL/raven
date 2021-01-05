@@ -40,7 +40,7 @@ class OnePointCrossover(Crossovers):
   ###############
   # Run Methods #
   ###############
-  def Cross(self,parents,**kwargs):
+  def cross(self,parents,**kwargs):
     """
       Method designed to perform crossover by swapping chromosome portions before/after specified or sampled location
       @ In, parents, xr.DataArray, parents involved in the mating process.
