@@ -105,20 +105,23 @@ class Prescient(CodeInterfaceBase):
     """
       Reads the bus data into a dictionary
       @ In, filename, string, the bus_detail.csv file
-      @ Out, (retDict,busList), (dictionary,list), dictionary of each time,
-        and list of all the busses found.
+      @ Out, (retDict,busList,datalist), (dictionary,list,list),
+        dictionary of each time, list of all the busses found and
+        the data that each bus has
     """
     inFile = open(filename, "r")
     first = True
     retDict = {}
     busSet = set()
+    dataList = []
     for line in inFile.readlines():
       line = line.strip()
       if first:
         first = False
-        if line != "Date,Hour,Bus,Shortfall,Overgeneration,LMP,LMP DA":
+        if not line.startswith("Date,Hour,Bus,"): # != "Date,Hour,Bus,Shortfall,Overgeneration,LMP,LMP DA":
           assert False, "Unexpected first line of bus detail:" + line
           a = 1/0 #because debug might be disabled
+        dataList = [s.replace(" ","_") for s in line.split(",")[3:]]
         continue
       splited = line.split(",")
       date, hour, bus = splited[:3]
@@ -130,7 +133,7 @@ class Prescient(CodeInterfaceBase):
       retDict[key] = timeDict
     busList = list(busSet)
     busList.sort()
-    return retDict, busList
+    return retDict, busList, dataList
 
   def finalizeCodeOutput(self, command, codeLogFile, subDirectory):
     """
@@ -148,7 +151,7 @@ class Prescient(CodeInterfaceBase):
       directory = subDirectory
     readFile = os.path.join(directory, toRead)
     if toRead.lower().startswith("hourly"):
-      busData, busList = self._readBusData(os.path.join(directory, "bus_detail.csv"))
+      busData, busList, busDataList = self._readBusData(os.path.join(directory, "bus_detail.csv"))
       #Need to merge the date and hour
       readFileNew = readFile + "_merged"
       outFile = open(readFileNew+".csv","w")
@@ -167,7 +170,7 @@ class Prescient(CodeInterfaceBase):
             outFile.write(","+"NetDemand")
           first = False
           for bus in busList:
-            for dataName in ["Shortfall","Overgeneration","LMP","LMP_DA"]:
+            for dataName in busDataList:
               outFile.write(","+bus+"_"+dataName)
         else:
           if hasNetDemand:
