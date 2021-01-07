@@ -31,17 +31,45 @@ except Exception as inst:
 from CodeInterfaceBaseClass import CodeInterfaceBase
 
 class Prescient(CodeInterfaceBase):
-  def generateCommand(self, input, exe, clargs=None, fargs=None, preExec=None):
-    print(input, exe, clargs, fargs, preExec)
+  """
+    This class is used to run the Prescient production cost modeling
+    platform.
+    https://github.com/grid-parity-exchange/Prescient
+    It can perterb Prescient inputs and read the data in the
+    bus_detail.csv and the hourly_summary.csv
+  """
+
+  def generateCommand(self, inputFiles, exe, clargs=None, fargs=None, preExec=None):
+    """
+      See base class.  Collects all the clargs and the executable to produce the command-line call.
+      Returns tuple of commands and base file name for run.
+      Commands are a list of tuples, indicating parallel/serial and the execution command to use.
+      @ In, inputFiles, list, List of input files (length of the list depends on the number of inputs have been added in the Step is running this code).  Ones of type 'PrescientRunnerInput' will be passed to the runner.py as command line arguments
+      @ In, executable, string, executable name with absolute path (e.g. /home/path_to_executable/code.exe)
+      @ In, clargs, dict, optional, dictionary containing the command-line flags the user can specify in the input (e.g. under the node < Code >< clargstype =0 input0arg =0 i0extension =0 .inp0/ >< /Code >)
+      @ In, fargs, dict, optional, a dictionary containing the axuiliary input file variables the user can specify in the input (e.g. under the node < Code >< fileargstype =0 input0arg =0 aux0extension =0 .aux0/ >< /Code >)
+      @ In, preExec, string, optional, a string the command that needs to be pre-executed before the actual command here defined
+      @ Out, returnCommand, tuple, tuple containing the generated command. returnCommand[0] is a list of commands to run the code (string), returnCommand[1] is the name of the output root
+    """
+    print(inputFiles, exe, clargs, fargs, preExec)
     print("generateCommand")
     runnerInput = []
-    for inp in input:
+    for inp in inputFiles:
       if inp.getType() == 'PrescientRunnerInput':
         runnerInput.append(("parallel", "runner.py "+inp.getAbsFile()))
 
-    return (runnerInput, os.path.join(input[0].getPath(), "output"))
+    return (runnerInput, os.path.join(inputFiles[0].getPath(), "output"))
 
   def createNewInput(self, inputs, oinputs, samplerType, **Kwargs):
+    """
+      This method is used to generate an input based on the information passed in.
+      @ In, inputs, list,  list of current input files (input files from last this method call)
+      @ In, oinputs, list, list of the original input files
+      @ In, samplerType, string, Sampler type (e.g. MonteCarlo, Adaptive, etc. see manual Samplers section)
+      @ In, Kwargs, dictionary, kwarded dictionary of parameters. In this dictionary there is another dictionary called "SampledVars"
+            where RAVEN stores the variables that got sampled (e.g. Kwargs['SampledVars'] => {'var1':10,'var2':40})
+      @ Out, newInputFiles, list, list of newer input files, list of the new input files (modified and not)
+    """
     print(inputs, oinputs, samplerType, Kwargs)
     print("createNewInput")
     self._output_directory = None
@@ -79,7 +107,9 @@ class Prescient(CodeInterfaceBase):
 
   def __process_data(self, data, samples):
     """
-      Processes the data and does some simple arithmetic
+      Processes the input data and does some simple arithmetic
+      This is used on the input files to allow more flexible perturbations
+      This allow arithmetic like var*2.0+1.0
       @ In, data, string, the string to process
       @ In, samples, dict, the dictionary of variable values
       @ Out, retval, string, the string with values replaced
@@ -103,7 +133,7 @@ class Prescient(CodeInterfaceBase):
 
   def _readBusData(self, filename):
     """
-      Reads the bus data into a dictionary
+      Reads the electricity bus data into a dictionary
       @ In, filename, string, the bus_detail.csv file
       @ Out, (retDict,busList,datalist), (dictionary,list,list),
         dictionary of each time, list of all the busses found and
@@ -138,6 +168,7 @@ class Prescient(CodeInterfaceBase):
   def finalizeCodeOutput(self, command, codeLogFile, subDirectory):
     """
       Convert csv information to RAVEN's prefered formats
+      Joins together two different csv files and also reorders it a bit.
       @ In, command, ignored
       @ In, codeLogFile, ignored
       @ In, subDirectory, string, the subdirectory where the information is.
