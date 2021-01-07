@@ -5613,7 +5613,7 @@ param: Demand :=
  Comte 1 0.0
  Curie 1 0.0
  Curtiss 1 0.0
- Abel 2 51.129707592631576
+ Abel 2 $(var+51.129707592631576)$
  Adams 2 45.922052189678354
  Adler 2 85.21617932105262
  Agricola 2 35.033318165321624
@@ -5686,7 +5686,7 @@ param: Demand :=
  Comte 2 0.0
  Curie 2 0.0
  Curtiss 2 0.0
- Abel 3 49.00386847263157
+ Abel 3 $(var*1.02+49.00386847263157)$
  Adams 3 44.01273372078946
  Adler 3 81.67311412105263
  Agricola 3 33.57672469421052
@@ -5759,7 +5759,7 @@ param: Demand :=
  Comte 3 0.0
  Curie 3 0.0
  Curtiss 3 0.0
- Abel 4 47.897940606315785
+ Abel 4 $(var*2.0)$
  Adams 4 43.01944665567251
  Adler 4 79.82990101052631
  Agricola 4 32.818959304327485

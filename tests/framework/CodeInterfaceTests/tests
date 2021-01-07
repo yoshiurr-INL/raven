@@ -167,4 +167,13 @@
    test_interface_only = True
    rel_err = 0.0001
  [../]
+
+ [./PrescientInterfaceTest]
+   type = 'RavenFramework'
+   input = 'test_Prescient_code_interface.xml'
+   csv = 'PrescientInterfaceTest/out_prescient_0.csv PrescientInterfaceTest/out_prescient_1.csv'
+   rel_err = 0.0001
+   required_executable = 'runner.py'
+   max_time = 600
+ [../]
 []

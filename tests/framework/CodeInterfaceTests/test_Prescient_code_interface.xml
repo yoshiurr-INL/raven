@@ -45,7 +45,7 @@
     <Grid name="grid">
       <variable name="var">
         <distribution>dist</distribution>
-        <grid construction="equal" steps="3" type="CDF">0.0 1.0</grid>
+        <grid construction="equal" steps="1" type="CDF">0.0 1.0</grid>
       </variable>
     </Grid>
   </Samplers>
