@@ -346,7 +346,7 @@ class JobHandler(MessageHandler.MessageUser):
       # TODO: create method in Runner to set flags,ids,etc in the instanciated runner
       internalJob.groupId = groupId
       if groupId not in self.__batching:
-        self.__batching[groupId] = {"counter": 0, "ids": [], "size": groupInfo['size'], 'finished': []}
+        self.__batching[groupId] = {"counter": 0, "ids": [], "size": groupInfo['size'], 'finished': set()}
       self.__batching[groupId]["counter"] += 1
       if self.__batching[groupId]["counter"] > self.__batching[groupId]["size"]:
         self.raiseAnError(RuntimeError, "group id {} is full. Size reached:".format(groupId))
@@ -592,7 +592,7 @@ class JobHandler(MessageHandler.MessageUser):
         if run.groupId in self.__batching:
           print('====> run.groupId in self.__batching: ' + str(run))
           print('====> run.groupId' + str(run.groupId))
-          self.__batching[run.groupId]['finished'].append(run)
+          self.__batching[run.groupId]['finished'].add(run)
         else:
           finished.append(run)
           print('====> run.groupId NOT in self.__batching: ' + str(run))
@@ -609,7 +609,7 @@ class JobHandler(MessageHandler.MessageUser):
       for groupId in list(self.__batching.keys()):
         if len(self.__batching[groupId]['finished']) == self.__batching[groupId]['size']:
           doneBatch = self.__batching.pop(groupId)
-          finished.append(doneBatch['finished'])
+          finished.extend(doneBatch['finished'])
           print('*************')
           print(self.__batching)
 
