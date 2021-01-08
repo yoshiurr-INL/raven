@@ -4742,3 +4742,82 @@ searches for the default SPH solver parameter name: '\texttt{NIISphSolver\_1}'. 
 Neutrino input file, the Neutrino interface must also be changed. Similarly, the Neutrino interface searches for the
 output in the default Measurement field name: '\texttt{MeasurementField\_1}'. Again, this would need to modified in the interface
 if the measurement field name was changed.
+
+\subsection{Prescient Interface}
+\label{subsec:prescientInterface}
+
+\subsubsection{General Information}
+The Prescient Interface is used to run the open source Prescient
+production cost modeling platform available from
+\url{https://github.com/grid-parity-exchange/Prescient}
+
+This allows inputs to be perturbed and data to be read out.
+
+For perturbing inputs, there are two formats allowed.  The first is a
+sampled variable can be placed between \$ like \verb'$var$' The second
+requires parentheses and allows the sampled variable to have a
+constant added or a multiplication factor like \verb'$(var+3.2)$' or
+\verb'$(var*2.1)$' or \verb'$(var*5.0+7.0)$'
+
+
+\subsubsection{Files}
+
+There are two types of inputs in the \xmlNode{Files} section.  The
+\xmlAttr{type="PrescientRunnerInput"} ones are passed as an argument
+to the \code{runner.py} The \xmlAttr{type="PrescientInput"} are just
+used as additional inputs that have the data in them perturbed.
+
+\begin{lstlisting}[style=XML]
+  <Files>
+  <Input name="simulate" type="PrescientRunnerInput"
+  >simulate_day.txt</Input>
+    <Input name="structure" type="PrescientInput"
+    subDirectory="scenarios/pyspdir_twostage/2020-07-10/"
+    >ScenarioStructure.dat</Input>
+    <Input name="scenario_1" type="PrescientInput"
+    subDirectory="scenarios/pyspdir_twostage/2020-07-10/"
+    >Scenario_1.dat</Input>
+    <Input name="actuals" type="PrescientInput"
+    subDirectory="scenarios/pyspdir_twostage/2020-07-10/"
+    >Scenario_actuals.dat</Input>
+    <Input name="forcasts" type="PrescientInput"
+    subDirectory="scenarios/pyspdir_twostage/2020-07-10/"
+    >Scenario_forecasts.dat</Input>
+    <Input name="scenarios" type="PrescientInput"
+    subDirectory="scenarios/pyspdir_twostage/2020-07-10/"
+    >scenarios.csv</Input>
+  </Files>
+\end{lstlisting}
+
+\subsubsection{Models}
+
+\begin{lstlisting}[style=XML]
+  <Models>
+    <Code name="TestPrescient" subType="Prescient">
+      <executable>
+      </executable>
+    </Code>
+  </Models>
+\end{lstlisting}
+
+\subsubsection{Installation of Libraries}
+
+\begin{lstlisting}[style=bash]
+  #first clone raven, Egret and Prescient into a directory
+  git clone git@github.com:idaholab/raven.git
+  git clone git@github.com:grid-parity-exchange/Prescient.git
+  git clone git@github.com:grid-parity-exchange/Egret.git
+  #Switch to raven directory
+  cd raven
+  #install raven libraries
+  ./scripts/establish_conda_env.sh --install
+  #switch to using raven libraries
+  source ./scripts/establish_conda_env.sh --load
+  #Switch to Prescient and install
+  cd ../Prescient
+  python setup.py develop --user
+  conda install -c conda-forge coincbc
+  #Switch to Egret and install
+  cd ../Egret/
+  pip install --user -e .
+\end{lstlisting}
