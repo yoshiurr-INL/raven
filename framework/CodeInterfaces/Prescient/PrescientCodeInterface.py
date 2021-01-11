@@ -95,7 +95,7 @@ class Prescient(CodeInterfaceBase):
         for line in newLines:
           newFile.write(line)
         newFile.close()
-      else:
+      elif singleInput.getType() == 'PrescientInput':
         print("SampledVars", Kwargs["SampledVars"])
         print("Modifying", singleInput)
         data = open(singleInput.getAbsFile(),"r").read()
@@ -103,6 +103,8 @@ class Prescient(CodeInterfaceBase):
           data = data.replace("$"+var+"$", str(Kwargs["SampledVars"][var]))
         data = self.__process_data(data, Kwargs["SampledVars"])
         open(singleInput.getAbsFile(),"w").write(data)
+      else:
+        print("Unknown input type", singleInput)
     return inputs
 
   def __process_data(self, data, samples):
@@ -116,11 +118,11 @@ class Prescient(CodeInterfaceBase):
     """
     #"this is a $(a)$ and $(a+2)$ and $(a-2)$ and $(b_var)$ and $(a*-2.0)$"
     #"and $(a*2+1)$"
-    splited = re.split("\$\(([a-z0-9._*+-]*)\)\$", data)
+    splited = re.split("\\$\\(([a-z0-9._*+-]*)\\)\\$", data)
     retval = ""
     for i, value in enumerate(splited):
       if i % 2 == 1:
-        name, mult, add = re.match("([a-z_][a-z0-9_]*)(\*-?[0-9.]+)?([+-]?[0-9.]+)?", value).groups()
+        name, mult, add = re.match("([a-z_][a-z0-9_]*)(\\*-?[0-9.]+)?([+-]?[0-9.]+)?", value).groups()
         num = samples[name]
         if mult is not None:
           num *= float(mult[1:])

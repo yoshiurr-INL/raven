@@ -4757,15 +4757,20 @@ For perturbing inputs, there are two formats allowed.  The first is a
 sampled variable can be placed between \$ like \verb'$var$' The second
 requires parentheses and allows the sampled variable to have a
 constant added or a multiplication factor like \verb'$(var+3.2)$' or
-\verb'$(var*2.1)$' or \verb'$(var*5.0+7.0)$'
+\verb'$(var*2.1)$' or \verb'$(var*5.0+7.0)$' or \verb'$(a*-2.0)$'
+These can be placed in any of the .dat or .csv files that are listed
+in the \xmlNode{Files} section as \xmlAttr{type="PrescientInput"}
 
 
 \subsubsection{Files}
 
 There are two types of inputs in the \xmlNode{Files} section.  The
 \xmlAttr{type="PrescientRunnerInput"} ones are passed as an argument
-to the \code{runner.py} The \xmlAttr{type="PrescientInput"} are just
-used as additional inputs that have the data in them perturbed.
+to the \code{runner.py} If multiple PrescientRunnerInput files are
+specified then \code{runner.py} will be called multiple times (which
+can be used to run a populate and then simulate command).  The
+\xmlAttr{type="PrescientInput"} are just used as additional inputs
+that have the data in them perturbed.
 
 \begin{lstlisting}[style=XML]
   <Files>
@@ -4791,6 +4796,9 @@ used as additional inputs that have the data in them perturbed.
 
 \subsubsection{Models}
 
+The \xmlNode{Code} model can be used with the
+\xmlAttr{subType="Prescient"} to run the Prescient Code Interface.
+
 \begin{lstlisting}[style=XML]
   <Models>
     <Code name="TestPrescient" subType="Prescient">
@@ -4801,6 +4809,13 @@ used as additional inputs that have the data in them perturbed.
 \end{lstlisting}
 
 \subsubsection{Installation of Libraries}
+
+Installing Prescient so that RAVEN can run it requires that RAVEN and
+Prescient have a superset of the libraries that they use so that both
+can run.  One way to set this up is to install RAVEN, and then source
+the conda load script and inside of the conda raven libraries
+environment do the Prescient and Egret install.  This is shown in the
+following listing:
 
 \begin{lstlisting}[style=bash]
   #first clone raven, Egret and Prescient into a directory
@@ -4821,3 +4836,7 @@ used as additional inputs that have the data in them perturbed.
   cd ../Egret/
   pip install --user -e .
 \end{lstlisting}
+
+Note that the path to \code{runner.py} may need to be added to the PATH variable via a command like: \verb'PATH="$PATH:$HOME/.local/bin"'
+
+
