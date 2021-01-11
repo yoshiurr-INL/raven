@@ -215,10 +215,10 @@ class RavenFramework(Tester):
         return False
       i += 2
 
-    if len(self.required_executable) > 0 and \
-       not os.path.exists(self.required_executable):
-      self.set_skip('skipped (Missing executable: "'+self.required_executable+'")')
-      return False
+    #if len(self.required_executable) > 0 and \
+    #   not os.path.exists(self.required_executable):
+    #  self.set_skip('skipped (Missing executable: "'+self.required_executable+'")')
+    #  return False
     try:
       if len(self.required_executable) > 0 and \
          subprocess.call([self.required_executable], stdout=subprocess.PIPE) != 0:
