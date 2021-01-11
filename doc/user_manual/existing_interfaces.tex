@@ -4766,8 +4766,8 @@ in the \xmlNode{Files} section as \xmlAttr{type="PrescientInput"}
 
 There are two types of inputs in the \xmlNode{Files} section.  The
 \xmlAttr{type="PrescientRunnerInput"} ones are passed as an argument
-to the \code{runner.py} If multiple PrescientRunnerInput files are
-specified then \code{runner.py} will be called multiple times (which
+to the \texttt{runner.py} If multiple PrescientRunnerInput files are
+specified then \texttt{runner.py} will be called multiple times (which
 can be used to run a populate and then simulate command).  The
 \xmlAttr{type="PrescientInput"} are just used as additional inputs
 that have the data in them perturbed.
@@ -4817,7 +4817,7 @@ the conda load script and inside of the conda raven libraries
 environment do the Prescient and Egret install.  This is shown in the
 following listing:
 
-\begin{lstlisting}[style=bash]
+\begin{lstlisting}
   #first clone raven, Egret and Prescient into a directory
   git clone git@github.com:idaholab/raven.git
   git clone git@github.com:grid-parity-exchange/Prescient.git
@@ -4837,4 +4837,4 @@ following listing:
   pip install --user -e .
 \end{lstlisting}
 
-Note that the path to \code{runner.py} may need to be added to the PATH variable via a command like: \verb'PATH="$PATH:$HOME/.local/bin"'
+Note that the path to \texttt{runner.py} may need to be added to the PATH variable via a command like: \verb'PATH="$PATH:$HOME/.local/bin"'
