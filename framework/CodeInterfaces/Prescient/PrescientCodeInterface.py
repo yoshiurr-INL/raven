@@ -51,8 +51,8 @@ class Prescient(CodeInterfaceBase):
       @ In, preExec, string, optional, a string the command that needs to be pre-executed before the actual command here defined
       @ Out, returnCommand, tuple, tuple containing the generated command. returnCommand[0] is a list of commands to run the code (string), returnCommand[1] is the name of the output root
     """
-    print(inputFiles, exe, clargs, fargs, preExec)
-    print("generateCommand")
+    #print(inputFiles, exe, clargs, fargs, preExec)
+    #print("generateCommand")
     runnerInput = []
     for inp in inputFiles:
       if inp.getType() == 'PrescientRunnerInput':
@@ -70,12 +70,12 @@ class Prescient(CodeInterfaceBase):
             where RAVEN stores the variables that got sampled (e.g. Kwargs['SampledVars'] => {'var1':10,'var2':40})
       @ Out, newInputFiles, list, list of newer input files, list of the new input files (modified and not)
     """
-    print(inputs, oinputs, samplerType, Kwargs)
-    print("createNewInput")
+    #print(inputs, oinputs, samplerType, Kwargs)
+    #print("createNewInput")
     self._output_directory = None
     for singleInput in inputs:
       if singleInput.getType() == 'PrescientRunnerInput':
-        print("Need to modify", singleInput, "to fix", prescientLocation)
+        #print("Need to modify", singleInput, "to fix", prescientLocation)
         newLines = []
         for line in open(singleInput.getAbsFile(),"r").readlines():
           if line.lstrip().startswith("--model-directory=") and prescientLocation is not None:
@@ -96,15 +96,15 @@ class Prescient(CodeInterfaceBase):
           newFile.write(line)
         newFile.close()
       elif singleInput.getType() == 'PrescientInput':
-        print("SampledVars", Kwargs["SampledVars"])
-        print("Modifying", singleInput)
+        #print("SampledVars", Kwargs["SampledVars"])
+        #print("Modifying", singleInput)
         data = open(singleInput.getAbsFile(),"r").read()
         for var in Kwargs["SampledVars"]:
           data = data.replace("$"+var+"$", str(Kwargs["SampledVars"][var]))
         data = self.__process_data(data, Kwargs["SampledVars"])
         open(singleInput.getAbsFile(),"w").write(data)
       else:
-        print("Unknown input type", singleInput)
+        print("Unknown Prescient input type", singleInput)
     return inputs
 
   def __process_data(self, data, samples):
@@ -176,7 +176,7 @@ class Prescient(CodeInterfaceBase):
       @ In, subDirectory, string, the subdirectory where the information is.
       @ Out, directory, string, the base name of the csv file
     """
-    print("finalizeCodeOutput", command, codeLogFile, subDirectory)
+    #print("finalizeCodeOutput", command, codeLogFile, subDirectory)
     toRead = "hourly_summary" #"Daily_summary"
     if self._output_directory is not None:
       directory = os.path.join(subDirectory, self._output_directory)
