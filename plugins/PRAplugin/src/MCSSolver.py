@@ -43,7 +43,7 @@ class MCSSolver(ExternalModelPluginBase):
 
   def initialize(self, container, runInfoDict, inputFiles):
     """
-      Method to initialize the Event-Tree model
+      Method to initialize the MCS solver model
       @ In, container, object, self-like object where all the variables can be stored
       @ In, runInfoDict, dict, dictionary containing all the RunInfo parameters (XML node <RunInfo>)
       @ In, inputFiles, list, list of input files (if any)
@@ -128,7 +128,12 @@ class MCSSolver(ExternalModelPluginBase):
   
   def run(self, container, inputs):
     """
-    """  
+      This method performs the calculation of the TopEvent of the FT provided the status of its Basic Events.
+      Depending on the nature of the problem it performs either a static of time dependent calculation.
+      @ In, container, object, self-like object where all the variables can be stored
+      @ In, inputs, dict, dictionary of inputs from RAVEN
+      @ Out, None
+    """
     
     if self.timeDepData is None:
       self.runStatic(container, inputs)
@@ -139,6 +144,7 @@ class MCSSolver(ExternalModelPluginBase):
   def runStatic(self, container, inputs):
     """
       This method determines the status of the TopEvent of the FT provided the status of its Basic Events
+      for a static calculation
       @ In, container, object, self-like object where all the variables can be stored
       @ In, inputs, dict, dictionary of inputs from RAVEN
       @ Out, None
@@ -154,25 +160,33 @@ class MCSSolver(ExternalModelPluginBase):
 
   def runDynamic(self, container, inputs):
     """
+      This method determines the status of the TopEvent of the FT provided the status of its Basic Events
+      for a time dependent calculation
+      @ In, container, object, self-like object where all the variables can be stored
+      @ In, inputs, dict, dictionary of inputs from RAVEN
+      @ Out, None
     """
     teProbability = np.zeros([self.timeDepData[container.timeID].shape[0]])
+    
     for index,t in enumerate(self.timeDepData[container.timeID]):
       inputForSolver = {}
       for key in container.invMapping.keys():
-        print(key,index)
-        print(self.timeDepData[key][index]>0)
-        if key in self.timeDepData.data_vars and self.timeDepData[key][index]>0:
+        if key in self.timeDepData.data_vars and self.timeDepData[key][0].values[index]>0:
           inputForSolver[key] = 1.0
         else:
           inputForSolver[key] = inputs[container.invMapping[key]]
       teProbability[index] = self.McsSolver(inputForSolver)
     
-    return teProbability
+    container.__dict__[container.timeID]     = self.timeDepData[container.timeID].values
+    container.__dict__[container.topEventID] = teProbability
     
   def McsSolver(self, inputDict):
     """
-    """  
-    
+      This method determines the status of the TopEvent of the FT provided the status of its Basic Events
+      for a time dependent calculation
+      @ In, inputs, inputDict, dictionary containing the probability value of all basic events 
+      @ Out, teProbability, float, probability value of the top event
+    """ 
     teProbability = 0.0
     multiplier = 1.0
 

@@ -32,7 +32,7 @@
 
   <Models>
     <ExternalModel name="MCSmodel" subType="PRAplugin.MCSSolver">
-      <variables>statusBE1,statusBE2,statusBE3,statusBE4,TOP</variables>
+      <variables>statusBE1,statusBE2,statusBE3,statusBE4,TOP,time</variables>
       <solverOrder>3</solverOrder>
       <topEventID>TOP</topEventID>
       <timeID>time</timeID>
@@ -65,7 +65,7 @@
       <Input   class="Files"        type="MCSlist"         >MCSlistFile</Input>
       <Model   class="Models"       type="ExternalModel"   >MCSmodel</Model>
       <Sampler class="Samplers"     type="MonteCarlo"      >MC_external</Sampler>
-      <Output  class="DataObjects"  type="PointSet"        >sim_PS</Output>
+      <Output  class="DataObjects"  type="HistorySet"      >sim_PS</Output>
       <Output  class="OutStreams"   type="Print"           >Print_sim_PS</Output>
     </MultiRun>
   </Steps>
@@ -87,10 +87,13 @@
       <Input>statusBE1,statusBE2,statusBE3,statusBE4</Input>
       <Output>OutputPlaceHolder</Output>
     </PointSet>
-    <PointSet name="sim_PS">
+    <HistorySet name="sim_PS">
       <Input>statusBE1,statusBE2,statusBE3,statusBE4</Input>
       <Output>TOP</Output>
-    </PointSet>
+      <options>
+          <pivotParameter>time</pivotParameter>
+      </options>
+    </HistorySet>
   </DataObjects>
 
 </Simulation>
