@@ -21,6 +21,8 @@ Created on June 24, 2020
 import numpy as np
 import itertools
 import math
+import xarray as xr
+import copy
 #External Modules End-----------------------------------------------------------
 
 #Internal Modules---------------------------------------------------------------
@@ -50,7 +52,6 @@ class MCSSolver(ExternalModelPluginBase):
       @ Out, None
     """
 
-
   def _readMoreXML(self, container, xmlNode):
     """
       Method to read the portion of the XML that belongs to the MCS solver model
@@ -63,12 +64,21 @@ class MCSSolver(ExternalModelPluginBase):
     container.timeID     = None
     container.mapping    = {}
     container.invMapping = {}
+    container.tInitial   = None
+    container.tEnd       = None 
+    container.beId       = None 
 
     for child in xmlNode:
       if child.tag == 'topEventID':
         container.topEventID = child.text.strip()
       elif child.tag == 'timeID':
-        container.timeID = child.text.strip()
+        container.timeID = child.text.strip()  
+      elif child.tag == 'tInitial':
+        container.tInitial = child.text.strip()
+      elif child.tag == 'tEnd':
+        container.tEnd = child.text.strip()     
+      elif child.tag == 'BE_ID':
+        container.beId = child.text.strip()
       elif child.tag == 'solverOrder':
         try:
           self.solverOrder = int(child.text.strip())
@@ -100,6 +110,8 @@ class MCSSolver(ExternalModelPluginBase):
     for input in inputs:
       if input.type == 'HistorySet':
         self.timeDepData = input.asDataset()
+      elif input.type == 'PointSet':
+        self.timeDepData = self.generateHistorySetFromSchedule(container,input.asDataset())
       else:
         mcsIDs, probability, mcsList, self.beList = mcsReader(input)
 
@@ -134,12 +146,10 @@ class MCSSolver(ExternalModelPluginBase):
       @ In, inputs, dict, dictionary of inputs from RAVEN
       @ Out, None
     """
-    
     if self.timeDepData is None:
       self.runStatic(container, inputs)
     else:
       self.runDynamic(container, inputs)
-      
 
   def runStatic(self, container, inputs):
     """
@@ -201,5 +211,31 @@ class MCSSolver(ExternalModelPluginBase):
       multiplier = -1.0 * multiplier   
       
     return float(teProbability) 
+  
+  def generateHistorySetFromSchedule(self, container, inputDataset):
+    """
+      This method generate an historySet from the a pointSet which contains initial and final time of the
+      basic events
+      @ In, inputDataset, dict, dictionary of inputs from RAVEN
+      @ Out, basicEventHistorySet, Dataset, xarray dataset which contains time series for each basic event
+    """         
+    timeArray = np.concatenate([inputDataset[container.tInitial],inputDataset[container.tEnd]])
+    timeArraySorted = np.sort(timeArray,axis=0)
+    timeArrayCleaned = np.unique(timeArraySorted)
     
-       
+    keys = list(container.invMapping.keys())
+    dataVars={}
+    for key in keys:
+      dataVars[key]=(['RAVEN_sample_ID',container.timeID],np.zeros((1,timeArrayCleaned.shape[0])))
+
+    basicEventHistorySet = xr.Dataset(data_vars = dataVars,
+                                      coords    = dict(time=timeArrayCleaned,
+                                                       RAVEN_sample_ID=np.zeros(1)))
+  
+    for index,key in enumerate(inputDataset[container.beId].values):
+      tin  = inputDataset[container.tInitial][index].values
+      tend = inputDataset[container.tEnd][index].values
+      indexes = np.where(np.logical_and(timeArrayCleaned>=tin,timeArrayCleaned<=tend))
+      basicEventHistorySet[key][0][indexes] = 1.0
+      
+    return basicEventHistorySet
