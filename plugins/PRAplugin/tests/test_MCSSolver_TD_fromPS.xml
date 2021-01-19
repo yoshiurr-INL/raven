@@ -32,17 +32,17 @@
 
   <Models>
     <ExternalModel name="MCSmodel" subType="PRAplugin.MCSSolver">
-      <variables>statusBE1,statusBE2,statusBE3,statusBE4,TOP,time</variables>
+      <variables>pBE1,pBE2,pBE3,pBE4,TOP,time,BE1,BE2,BE3,BE4</variables>
       <solverOrder>3</solverOrder>
       <BE_ID>BE</BE_ID>
       <tInitial>tIn</tInitial>
       <tEnd>tEnd</tEnd>
       <topEventID>TOP</topEventID>
       <timeID>time</timeID>
-      <map var='statusBE1'>BE1</map>
-      <map var='statusBE2'>BE2</map>
-      <map var='statusBE3'>BE3</map>
-      <map var='statusBE4'>BE4</map>
+      <map var='pBE1'>BE1</map>
+      <map var='pBE2'>BE2</map>
+      <map var='pBE3'>BE3</map>
+      <map var='pBE4'>BE4</map>
     </ExternalModel>
   </Models>
 
@@ -51,10 +51,10 @@
       <samplerInit>
         <limit>1</limit>
       </samplerInit>
-      <constant name="statusBE1">0.1</constant>
-      <constant name="statusBE2">0.2</constant>
-      <constant name="statusBE3">0.3</constant>
-      <constant name="statusBE4">0.4</constant>
+      <constant name="pBE1">0.1</constant>
+      <constant name="pBE2">0.2</constant>
+      <constant name="pBE3">0.3</constant>
+      <constant name="pBE4">0.4</constant>
     </MonteCarlo>
   </Samplers>
 
@@ -68,15 +68,15 @@
       <Input   class="Files"        type="MCSlist"         >MCSlistFile</Input>
       <Model   class="Models"       type="ExternalModel"   >MCSmodel</Model>
       <Sampler class="Samplers"     type="MonteCarlo"      >MC_external</Sampler>
-      <Output  class="DataObjects"  type="HistorySet"      >sim_PS</Output>
-      <Output  class="OutStreams"   type="Print"           >Print_sim_PS</Output>
+      <Output  class="DataObjects"  type="HistorySet"      >sim_HS</Output>
+      <Output  class="OutStreams"   type="Print"           >Print_sim_HS</Output>
     </MultiRun>
   </Steps>
 
   <OutStreams>
-    <Print name="Print_sim_PS">
+    <Print name="Print_sim_HS">
       <type>csv</type>
-      <source>sim_PS</source>
+      <source>sim_HS</source>
       <what>input,output</what>
     </Print>
   </OutStreams>
@@ -87,12 +87,12 @@
       <Output>tIn,tEnd</Output>
     </PointSet>
     <PointSet name="inputPlaceHolder">
-      <Input>statusBE1,statusBE2,statusBE3,statusBE4</Input>
+      <Input>pBE1,pBE2,pBE3,pBE4</Input>
       <Output>OutputPlaceHolder</Output>
     </PointSet>
-    <HistorySet name="sim_PS">
-      <Input>statusBE1,statusBE2,statusBE3,statusBE4</Input>
-      <Output>TOP</Output>
+    <HistorySet name="sim_HS">
+      <Input>pBE1,pBE2,pBE3,pBE4</Input>
+      <Output>BE1,BE2,BE3,BE4,TOP</Output>
       <options>
           <pivotParameter>time</pivotParameter>
       </options>

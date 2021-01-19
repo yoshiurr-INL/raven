@@ -67,6 +67,7 @@ class MCSSolver(ExternalModelPluginBase):
     container.tInitial   = None
     container.tEnd       = None 
     container.beId       = None 
+    container.tdFromPS   = False
 
     for child in xmlNode:
       if child.tag == 'topEventID':
@@ -112,6 +113,7 @@ class MCSSolver(ExternalModelPluginBase):
         self.timeDepData = input.asDataset()
       elif input.type == 'PointSet':
         self.timeDepData = self.generateHistorySetFromSchedule(container,input.asDataset())
+        container.tdFromPS = True
       else:
         mcsIDs, probability, mcsList, self.beList = mcsReader(input)
 
@@ -186,6 +188,10 @@ class MCSSolver(ExternalModelPluginBase):
         else:
           inputForSolver[key] = inputs[container.invMapping[key]]
       teProbability[index] = self.McsSolver(inputForSolver)
+      
+    if container.tdFromPS:
+      for key in container.invMapping.keys():
+        container.__dict__[key] = self.timeDepData[key][0].values
     
     container.__dict__[container.timeID]     = self.timeDepData[container.timeID].values
     container.__dict__[container.topEventID] = teProbability
@@ -217,6 +223,7 @@ class MCSSolver(ExternalModelPluginBase):
       This method generate an historySet from the a pointSet which contains initial and final time of the
       basic events
       @ In, inputDataset, dict, dictionary of inputs from RAVEN
+      @ In, container, object, self-like object where all the variables can be stored
       @ Out, basicEventHistorySet, Dataset, xarray dataset which contains time series for each basic event
     """         
     timeArray = np.concatenate([inputDataset[container.tInitial],inputDataset[container.tEnd]])
@@ -235,7 +242,7 @@ class MCSSolver(ExternalModelPluginBase):
     for index,key in enumerate(inputDataset[container.beId].values):
       tin  = inputDataset[container.tInitial][index].values
       tend = inputDataset[container.tEnd][index].values
-      indexes = np.where(np.logical_and(timeArrayCleaned>=tin,timeArrayCleaned<=tend))
+      indexes = np.where(np.logical_and(timeArrayCleaned>tin,timeArrayCleaned<=tend))
       basicEventHistorySet[key][0][indexes] = 1.0
-      
+    
     return basicEventHistorySet
