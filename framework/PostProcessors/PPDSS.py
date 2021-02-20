@@ -275,6 +275,7 @@ class PPDSS(PostProcessor):
         measureList.append((newfeatureData, newtargetData))
       else:
         newfeatureData = np.asarray([featureOmegaNorm[cnt],featureProcessTimeNormScaled,featureBeta[cnt]])
+        newtargetData = np.asarray([newtargetOmegaNorm,newtargetD,newtargetBeta])
         measureList.append((newfeatureData, newtargetData))
 
     return measureList
