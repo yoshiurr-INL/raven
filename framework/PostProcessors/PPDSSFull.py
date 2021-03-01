@@ -271,7 +271,7 @@ class PPDSSFull(PostProcessor):
       @ Out, interp1dData, 1d array data of interpolated data
     """
     checkArray = np.asarray(np.zeros(len(processTime))+1, dtype=int)
-    interp1dData = np.asarray(np.zeros(len(interp1dGrid)), dtype=int)
+    interp1dData = np.asarray(np.zeros(len(interp1dGrid)))
 
     for cnt in range(len(interp1dGrid)):
       for cnt2 in range(len(processTime)):
