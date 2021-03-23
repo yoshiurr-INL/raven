@@ -124,7 +124,9 @@ class PPDSSv2(PostProcessor):
     hasPointSet = False
     hasHistorySet = False
     #Check for invalid types
+    count = 0
     for currentInput in currentInputs:
+      count += 1
       inputType = None
       if hasattr(currentInput, 'type'):
         inputType = currentInput.type
